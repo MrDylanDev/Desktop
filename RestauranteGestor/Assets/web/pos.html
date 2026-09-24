@@ -11,7 +11,7 @@
 <div class="relative flex-1">
 <div class="flex items-center bg-surface-container-high rounded-xl px-3.5 py-2.5 shadow-sm">
 <span class="material-symbols-outlined text-primary text-[24px] mr-2.5">search</span>
-<input class="bg-transparent border-0 outline-none text-on-surface placeholder:text-outline font-body-lg text-body-lg w-full tracking-wide" id="search-input" placeholder="Escanear código o buscar plato (ej. 'Napolitana', 'Bife')..." type="text"/>
+<input class="bg-transparent border-0 outline-none text-on-surface placeholder:text-outline font-body-lg text-body-lg w-full tracking-wide" id="search-input" placeholder="Buscar plato o producto..." type="text"/>
 <button class="text-outline hover:text-on-surface p-1 rounded-lg transition-colors" id="clear-search-btn" title="Limpiar búsqueda" type="button">
 <span class="material-symbols-outlined text-[20px]">backspace</span>
 </button>
@@ -23,7 +23,7 @@
 <div class="flex items-center gap-2 overflow-x-auto pb-1 shrink-0 scrollbar-none">
 <button class="cat-btn bg-primary text-on-primary font-label-tactile text-label-tactile px-5 py-3 rounded-xl flex items-center gap-2.5 shrink-0 shadow-sm transition-transform active:scale-95" onclick="filterCategory('all', this)">
 <span class="material-symbols-outlined text-[20px]">restaurant_menu</span>
-<span>Todos (28)</span>
+<span>Todos (8)</span>
 </button>
 <button class="cat-btn bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-tactile text-label-tactile px-5 py-3 rounded-xl flex items-center gap-2.5 shrink-0 transition-transform active:scale-95" onclick="filterCategory('pizzas', this)">
 <span class="material-symbols-outlined text-secondary text-[22px]">local_pizza</span>
@@ -207,8 +207,8 @@
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-secondary text-[24px]">room_service</span>
 <div>
-<span class="font-headline-md text-headline-md text-on-surface font-bold leading-none">Comanda #1042</span>
-<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Mozo: Roberto G. • Terminal #01</p>
+<span class="font-headline-md text-headline-md text-on-surface font-bold leading-none">Comanda actual</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Cajero: — • Terminal #01</p>
 </div>
 </div>
 <span class="bg-tertiary-container text-on-tertiary font-label-sm text-label-sm font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Abierta</span>
@@ -216,7 +216,7 @@
 <!-- Mode: MVP solo salón (Delivery = Fase 3) -->
 <div class="flex items-center gap-2 bg-surface-container-lowest p-2 rounded-xl">
 <span class="material-symbols-outlined text-secondary text-[20px]">table_restaurant</span>
-<span class="font-label-tactile text-body-md text-on-surface" id="pos-mesa-badge">Mesa #08 - Salón</span>
+<span class="font-label-tactile text-body-md text-on-surface" id="pos-mesa-badge">Mesa no seleccionada</span>
 </div>
 </div>
 <!-- Ticket Items List (Scrollable Area) -->
@@ -355,7 +355,7 @@
 <span class="material-symbols-outlined text-[18px]">call_split</span>
 <span>Dividir Cuenta</span>
 </button>
-<button class="py-2 px-3 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface font-label-tactile text-label-tactile flex items-center justify-center gap-1 transition-colors" type="button">
+<button class="py-2 px-3 rounded-lg bg-surface-container-high text-on-surface-variant font-label-tactile text-label-tactile flex items-center justify-center gap-1 opacity-50 cursor-not-allowed" type="button" disabled title="Próximamente">
 <span class="material-symbols-outlined text-[18px]">percent</span>
 <span>Desc.</span>
 </button>
@@ -367,7 +367,7 @@
 <button class="w-full min-h-14 py-3.5 px-4 bg-primary-container hover:opacity-95 active:scale-[0.98] text-on-primary-container rounded-xl font-label-tactile text-headline-md font-bold flex items-center justify-between shadow-xl transition-all" id="btn-checkout" onclick="executeCheckout()" type="button">
 <div class="flex items-center gap-2.5">
 <span class="material-symbols-outlined text-[28px]">print</span>
-<span>COBRAR E IMPRIMIR</span>
+<span>COBRAR</span>
 </div>
 <div class="flex items-center gap-2">
 <span class="bg-surface-container-lowest/30 text-on-primary-container px-2 py-1 rounded text-label-sm font-label-sm">SPACE</span>
@@ -423,20 +423,17 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
 </div>
 <button class="w-full min-h-14 py-3.5 bg-tertiary-container hover:opacity-95 text-on-tertiary rounded-xl font-label-tactile text-headline-md font-bold flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95" onclick="confirmFinalPayment()" type="button" id="btn-final-pay">
 <span class="material-symbols-outlined text-[26px]">done_all</span>
-<span id="btn-final-pay-label">FINALIZAR Y ABRIR CAJÓN</span>
+<span id="btn-final-pay-label">FINALIZAR PAGO</span>
 </button>
 </div>
 </div>
 <script>
     // In-memory Ticket State
-    let ticket = [
-      { id: 1, name: 'Pizza Napolitana Familiar', price: 14.50, qty: 1, note: 'Sin ajo extra' },
-      { id: 2, name: 'Bife de Chorizo 400g', price: 22.00, qty: 2, note: 'Punto Medio' }
-    ];
+    let ticket = [];
     let tipPercent = 0.00;
     let paymentInput = '58.50';
     let paymentMode = 'efectivo'; // efectivo | tarjeta (tarjeta = solo registro, datáfono externo)
-    let mesaActual = 'Mesa #08 - Salón';
+    let mesaActual = 'Mesa no seleccionada';
     try {
       const q = new URLSearchParams(location.search);
       const m = q.get('mesa');
@@ -448,6 +445,10 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
     function renderTicket() {
       const container = document.getElementById('ticket-items-container');
       container.innerHTML = '';
+
+      if (ticket.length === 0) {
+        container.innerHTML = '<div class="h-full min-h-[180px] flex flex-col items-center justify-center text-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-[42px] text-outline">receipt_long</span><div class="font-label-tactile text-body-lg text-on-surface">La comanda está vacía</div><div class="text-body-md">Selecciona productos para comenzar.</div></div>';
+      }
 
       ticket.forEach(item => {
         const itemTotal = (item.price * item.qty).toFixed(2);
@@ -494,17 +495,32 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
 
     function calculateTotals() {
       const subtotal = ticket.reduce((sum, item) => sum + (item.price * item.qty), 0);
-      const tipAmount = subtotal * tipPercent;
-      const grandTotal = subtotal + tipAmount;
-
-      document.getElementById('subtotal-val').innerText = `$${subtotal.toFixed(2)}`;
       const taxSel = document.getElementById('tax-select');
       const taxRate = taxSel ? parseFloat(taxSel.value) || 0 : 0.08;
-      document.getElementById('tax-val').innerText = `$${(subtotal * taxRate).toFixed(2)}`;
+      const discount = 0;
+      const taxableAmount = Math.max(0, subtotal - discount);
+      const taxAmount = taxableAmount * taxRate;
+      const tipAmount = taxableAmount * tipPercent;
+      const grandTotal = taxableAmount + taxAmount + tipAmount;
+
+      document.getElementById('subtotal-val').innerText = `$${subtotal.toFixed(2)}`;
+      document.getElementById('discount-val').innerText = `-$${discount.toFixed(2)}`;
+      document.getElementById('tax-val').innerText = `$${taxAmount.toFixed(2)}`;
       document.getElementById('grand-total').innerText = `$${grandTotal.toFixed(2)}`;
-      
+
       const modalInv = document.getElementById('modal-invoice-total');
       if (modalInv) modalInv.innerText = `$${grandTotal.toFixed(2)}`;
+    }
+
+    function getOrderTotals() {
+      const subtotal = ticket.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const taxSel = document.getElementById('tax-select');
+      const taxRate = taxSel ? parseFloat(taxSel.value) || 0 : 0.08;
+      const discount = 0;
+      const taxableAmount = Math.max(0, subtotal - discount);
+      const tax = taxableAmount * taxRate;
+      const tip = taxableAmount * tipPercent;
+      return { subtotal, discount, tax, tip, total: taxableAmount + tax + tip };
     }
 
     function updateQty(id, delta) {
@@ -607,19 +623,19 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
       if (numpad) numpad.style.display = isCard ? 'none' : '';
       if (note) note.classList.toggle('hidden', !isCard);
       if (title) title.innerText = isCard ? 'Cobro con Tarjeta' : 'Cobro en Ventanilla';
-      if (label) label.innerText = isCard ? 'CONFIRMAR PAGO CON TARJETA' : 'FINALIZAR Y ABRIR CAJÓN';
+      if (label) label.innerText = isCard ? 'CONFIRMAR PAGO CON TARJETA' : 'FINALIZAR PAGO';
     }
 
     function setFastCash(val) {
       paymentMode = 'efectivo'; // atajo de billetes implica efectivo
-      paymentInput = val.toFixed(2);
       executeCheckout();
+      paymentInput = val.toFixed(2);
       updateModalDisplays();
     }
 
     function executeCheckout() {
       const modal = document.getElementById('checkout-modal');
-      const total = ticket.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + tipPercent);
+      const total = getOrderTotals().total;
       if (total <= 0) {
         alert('Agregue artículos al ticket antes de cobrar.');
         return;
@@ -647,7 +663,7 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
     }
 
     function updateModalDisplays() {
-      const total = ticket.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + tipPercent);
+      const total = getOrderTotals().total;
       const paid = parseFloat(paymentInput) || 0;
       const change = Math.max(0, paid - total);
 
@@ -656,7 +672,7 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
     }
 
     function confirmFinalPayment() {
-      const total = ticket.reduce((sum, item) => sum + (item.price * item.qty), 0) * (1 + tipPercent);
+      const total = getOrderTotals().total;
       const sale = { total: +total.toFixed(2), metodo: paymentMode, mesa: mesaActual, items: ticket.length, fecha: new Date().toISOString() };
       try {
         const key = 'restoos_ventas_v1';
@@ -665,15 +681,17 @@ Monto exacto — aprobar en el datáfono externo antes de finalizar. La tarjeta 
         localStorage.setItem(key, JSON.stringify(prev.slice(-200)));
       } catch (e) {}
       if (paymentMode === 'tarjeta') {
-        alert('Pago con tarjeta registrado por $' + total.toFixed(2) + '. Verifique la aprobación en el datáfono. Imprimiendo recibo...');
+        alert('Pago con tarjeta registrado por $' + total.toFixed(2) + '. Verifique la aprobación en el datáfono.');
       } else {
-        alert('¡Pago completado con éxito! Imprimiendo comanda y abriendo cajón...');
+        alert('Pago registrado correctamente.');
       }
       closeCheckoutModal();
       ticket = [];
       paymentMode = 'efectivo';
       renderTicket();
     }
+
+    renderTicket();
 
     // Quick Clear Search
     document.getElementById('clear-search-btn')?.addEventListener('click', () => {
