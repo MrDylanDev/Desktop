@@ -4,10 +4,11 @@
              Background="{StaticResource Surface}">
   <Grid Margin="20">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="360" />
+      <ColumnDefinition Width="*" MinWidth="340" />
+      <ColumnDefinition Width="8" />
+      <ColumnDefinition Width="360" MinWidth="300" MaxWidth="400" />
     </Grid.ColumnDefinitions>
-    <Grid Grid.Column="0" Margin="0,0,16,0">
+    <Grid Grid.Column="0" Margin="0,0,0,0">
       <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
       <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,16">
         <TextBlock Text="Mesas y Salón" FontSize="30" FontWeight="Bold" />
@@ -18,16 +19,16 @@
         <ListBox.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <Border Width="220" Height="150" Margin="0,0,12,12" CornerRadius="14" Background="{StaticResource SurfaceContainer}" BorderBrush="{Binding StatusBrush}" BorderThickness="2" Padding="16">
+            <Border Width="240" MinHeight="168" Margin="0,0,12,12" CornerRadius="14" Background="{StaticResource SurfaceContainer}" BorderBrush="{Binding StatusBrush}" BorderThickness="2" Padding="14">
               <StackPanel>
-                <Grid><TextBlock Text="{Binding Number}" FontSize="32" FontWeight="Bold" /><TextBlock Text="{Binding Status}" Foreground="{Binding StatusBrush}" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" /></Grid>
-                <TextBlock Text="{Binding Capacity}" Foreground="{StaticResource OnSurfaceVariant}" Margin="0,8,0,0" />
-                <TextBlock Text="{Binding Total}" Foreground="{StaticResource Secondary}" FontWeight="Bold" Margin="0,10,0,0" />
-                <StackPanel Orientation="Horizontal">
-                  <Button Content="Abrir en POS" Style="{StaticResource SecondaryButton}" Height="34" Margin="0,10,8,0" Click="OpenPos_Click" Tag="{Binding}" IsEnabled="{Binding CanOpen}" />
-                  <Button Content="Editar" Style="{StaticResource SecondaryButton}" Height="34" Margin="0,10,8,0" Click="EditTable_Click" Tag="{Binding}" />
-                  <Button Content="×" Style="{StaticResource SecondaryButton}" Height="34" Width="34" Margin="0,10,0,0" Foreground="{StaticResource Error}" Click="DeleteTable_Click" Tag="{Binding}" />
-                </StackPanel>
+                <Grid><TextBlock Text="{Binding Number}" FontSize="28" FontWeight="Bold" /><TextBlock Text="{Binding Status}" Foreground="{Binding StatusBrush}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,0,0" /></Grid>
+                <TextBlock Text="{Binding Capacity}" Foreground="{StaticResource OnSurfaceVariant}" FontSize="12" Margin="0,6,0,0" />
+                <TextBlock Text="{Binding Total}" Foreground="{StaticResource Secondary}" FontWeight="Bold" FontSize="13" Margin="0,6,0,0" />
+                <WrapPanel Orientation="Horizontal" Margin="0,10,0,0">
+                  <Button Content="Abrir en POS" Style="{StaticResource PrimaryButton}" Height="30" Padding="10,0" FontSize="11" Margin="0,0,6,6" Click="OpenPos_Click" Tag="{Binding}" IsEnabled="{Binding CanOpen}" />
+                  <Button Content="Editar" Style="{StaticResource SecondaryButton}" Height="30" Padding="10,0" FontSize="11" Margin="0,0,6,6" Click="EditTable_Click" Tag="{Binding}" />
+                  <Button Content="×" Style="{StaticResource DangerButton}" Height="30" Width="30" Margin="0,0,0,6" Click="DeleteTable_Click" Tag="{Binding}" />
+                </WrapPanel>
               </StackPanel>
             </Border>
           </DataTemplate>
@@ -35,14 +36,15 @@
       </ListBox>
     </Grid>
 
-    <Border Grid.Column="1" Background="{StaticResource SurfaceContainer}" CornerRadius="14" Padding="18">
+    <GridSplitter Grid.Column="1" Width="8" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent" Cursor="SizeWE" />
+    <Border Grid.Column="2" Background="{StaticResource SurfaceContainer}" CornerRadius="14" Padding="18">
       <StackPanel>
         <TextBlock Text="Detalle de mesa" FontSize="22" FontWeight="Bold" />
         <TextBlock x:Name="DetailName" Text="Selecciona una mesa" FontSize="24" FontWeight="Bold" Foreground="{StaticResource Primary}" Margin="0,24,0,6" />
         <TextBlock x:Name="DetailStatus" Text="" Foreground="{StaticResource Tertiary}" FontWeight="Bold" />
         <TextBlock x:Name="DetailInfo" Text="" Foreground="{StaticResource OnSurfaceVariant}" Margin="0,8,0,24" />
         <Border Background="{StaticResource SurfaceLowest}" CornerRadius="10" Padding="14" MinHeight="100">
-          <TextBlock x:Name="DetailItems" Text="Sin comanda activa." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" />
+          <TextBlock x:Name="DetailItems" Text="Sin pedido activo." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" />
         </Border>
         <Grid Margin="0,20,0,0"><TextBlock Text="Total consumido" Foreground="{StaticResource OnSurfaceVariant}" /><TextBlock x:Name="DetailTotal" HorizontalAlignment="Right" Foreground="{StaticResource Primary}" FontSize="20" FontWeight="Bold" /></Grid>
         <Button x:Name="OpenPosButton" Content="Abrir en POS" Style="{StaticResource PrimaryButton}" Height="52" Margin="0,24,0,0" IsEnabled="False" Click="OpenSelectedPos_Click" />

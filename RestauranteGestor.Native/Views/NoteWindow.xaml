@@ -1,0 +1,18 @@
+<Window x:Class="RestauranteGestor.Native.Views.NoteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nota del pedido" Width="440" Height="260" WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize" Background="{StaticResource Surface}" Foreground="{StaticResource OnSurface}">
+  <Grid Margin="20">
+    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <TextBlock x:Name="TitleText" Text="Nota para el plato" FontSize="18" FontWeight="Bold" />
+    <TextBlock x:Name="SubtitleText" Text="Ej: sin cebolla, término medio, extra queso" Foreground="{StaticResource OnSurfaceVariant}" FontSize="12" Margin="0,6,0,12" />
+    <TextBox x:Name="NoteBox" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+             Background="{StaticResource SurfaceHigh}" Foreground="{StaticResource OnSurface}" BorderThickness="0" Padding="10" FontSize="13" MaxLength="120" />
+    <TextBlock Grid.Row="1" Text="120 caracteres máx." Foreground="{StaticResource OnSurfaceVariant}" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,6,6" IsHitTestVisible="False" />
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+      <Button Content="Cancelar" Style="{StaticResource SecondaryButton}" Width="100" Click="Cancel_Click" />
+      <Button Content="Guardar" Style="{StaticResource PrimaryButton}" Width="110" Margin="10,0,0,0" Click="Save_Click" />
+    </StackPanel>
+  </Grid>
+</Window>

@@ -1,0 +1,101 @@
+<UserControl x:Class="RestauranteGestor.Native.Views.InventarioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Surface}">
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock Text="Inventario" FontSize="28" FontWeight="Bold"/>
+        <Border Background="#3A1F1A" CornerRadius="8" Padding="10,6" Margin="12,0,0,0" Visibility="Visible">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="●" Foreground="{StaticResource Error}" FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBlock x:Name="AlertCount" Text="3 alertas stock bajo" Foreground="{StaticResource Error}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+        <Border Background="{StaticResource SurfaceContainer}" CornerRadius="8" Padding="8,4" Margin="8,0,0,0">
+          <TextBlock Text="DEMO frontend" Foreground="{StaticResource Secondary}" FontSize="10" FontWeight="Bold"/>
+        </Border>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <Button Content="+ Nuevo insumo" Style="{StaticResource PrimaryButton}" Height="36" Padding="12,0" Click="Add_Click"/>
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="0,16,0,12">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="260"/>
+        <ColumnDefinition Width="180"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid Grid.Column="0" Margin="0,0,8,0">
+        <TextBox x:Name="SearchBox" Height="38" Padding="10,8" TextChanged="SearchBox_TextChanged"/>
+        <TextBlock Text="Buscar insumo..." Foreground="{StaticResource OnSurfaceVariant}" Opacity="0.45" Margin="12,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Setter Property="Visibility" Value="Collapsed"/>
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
+      </Grid>
+      <ComboBox x:Name="CategoryBox" Grid.Column="1" Height="38" Margin="0,0,8,0" SelectionChanged="CategoryBox_SelectionChanged"/>
+      <CheckBox x:Name="LowCheck" Grid.Column="2" Content="Solo stock bajo" VerticalAlignment="Center" Foreground="{StaticResource OnSurfaceVariant}" Margin="0,0,12,0" Checked="LowCheck_Changed" Unchecked="LowCheck_Changed"/>
+    </Grid>
+
+    <Border Grid.Row="2" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="12">
+      <ListView x:Name="InsumoList" Background="Transparent" BorderThickness="0">
+        <ListView.View>
+          <GridView>
+            <GridViewColumn Header="Insumo" Width="220" DisplayMemberBinding="{Binding Name}" />
+            <GridViewColumn Header="Categoría" Width="130" DisplayMemberBinding="{Binding Category}" />
+            <GridViewColumn Header="Stock" Width="90">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding StockText}" FontWeight="Bold" Foreground="{Binding StockBrush}"/>
+                    <TextBlock Text="{Binding Unit}" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" Margin="4,0,0,0" VerticalAlignment="Center"/>
+                  </StackPanel>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Mínimo" Width="80" DisplayMemberBinding="{Binding MinText}" />
+            <GridViewColumn Header="Estado" Width="110">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <Border Background="{Binding EstadoBg}" CornerRadius="6" Padding="6,3">
+                    <TextBlock Text="{Binding Estado}" Foreground="{Binding EstadoFg}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center"/>
+                  </Border>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Costo" Width="100" DisplayMemberBinding="{Binding CostText}" />
+            <GridViewColumn Header="Acciones" Width="160">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <StackPanel Orientation="Horizontal">
+                    <Button Content="Ajustar" Style="{StaticResource SecondaryButton}" Height="26" Padding="8,0" FontSize="11" Margin="0,0,6,0" Click="Ajustar_Click" Tag="{Binding}"/>
+                    <Button Content="×" Style="{StaticResource DangerButton}" Height="26" Width="26" FontSize="11" Click="Delete_Click" Tag="{Binding}"/>
+                  </StackPanel>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+          </GridView>
+        </ListView.View>
+      </ListView>
+    </Border>
+
+    <Border Grid.Row="3" Background="{StaticResource SurfaceContainer}" CornerRadius="10" Padding="12" Margin="0,12,0,0">
+      <TextBlock Text="* Descuento automático por venta y alertas de stock bajo son simulados en esta demo. La lógica real (descuento al cobrar en POS) queda para Fase 2 con SQLite." Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" TextWrapping="Wrap"/>
+    </Border>
+  </Grid>
+</UserControl>

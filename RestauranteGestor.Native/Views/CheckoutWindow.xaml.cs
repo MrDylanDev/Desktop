@@ -9,6 +9,7 @@ namespace RestauranteGestor.Native.Views
         private decimal _total;
         private decimal _paid;
         private bool _card;
+        private string _input = string.Empty;
 
         public bool PaymentConfirmed { get; private set; }
         public string PaymentMethod { get { return _card ? "Tarjeta" : "Efectivo"; } }
@@ -19,7 +20,9 @@ namespace RestauranteGestor.Native.Views
         {
             InitializeComponent();
             _total = total;
-            _paid = total;
+            _paid = 0;
+            _input = string.Empty;
+            _card = false;
             TotalText.Text = FormatMoney(total);
             MesaText.Text = string.IsNullOrWhiteSpace(table) ? "Venta para llevar" : table;
             UpdateDisplays();
@@ -33,17 +36,46 @@ namespace RestauranteGestor.Native.Views
             _card = CardRadio.IsChecked == true;
             Numpad.Opacity = _card ? 0.35 : 1.0;
             Numpad.IsEnabled = !_card;
-            _paid = _card ? _total : 0;
+            if (_card)
+            {
+                _paid = _total;
+                _input = _total.ToString("0", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                _paid = 0;
+                _input = string.Empty;
+            }
             UpdateDisplays();
         }
 
         private void Numpad_Click(object sender, RoutedEventArgs e)
         {
+            if (_card) return;
             var key = (sender as System.Windows.Controls.Button)?.Content?.ToString();
             if (string.IsNullOrEmpty(key)) return;
-            if (key == "C") { _paid = 0; }
-            else if (key == ".") { if (!PaidBox.Text.Contains(".")) _paid = _paid + 0.01m; }
-            else { _paid = _paid * 10 + decimal.Parse(key, CultureInfo.InvariantCulture); }
+            if (key == "C") { _input = string.Empty; _paid = 0; }
+            else if (key == ".")
+            {
+                if (_input.Contains(".")) return;
+                _input = _input.Length == 0 ? "0." : _input + ".";
+                decimal tmp;
+                if (decimal.TryParse(_input, NumberStyles.Any, CultureInfo.InvariantCulture, out tmp)) _paid = tmp;
+            }
+            else
+            {
+                if (_input.Length >= 9) return;
+                _input += key;
+                // Evita ceros a la izquierda innecesarios
+                _input = _input.TrimStart('0');
+                if (_input.Length == 0) _input = key == "0" ? "0" : key;
+                if (_input == "0") _paid = 0;
+                else
+                {
+                    decimal tmp;
+                    if (decimal.TryParse(_input, NumberStyles.Any, CultureInfo.InvariantCulture, out tmp)) _paid = tmp;
+                }
+            }
             UpdateDisplays();
         }
 

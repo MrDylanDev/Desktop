@@ -1,0 +1,212 @@
+<UserControl x:Class="RestauranteGestor.Native.Views.ReportesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Surface}">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid Margin="20">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+          <TextBlock Text="Reportes" FontSize="28" FontWeight="Bold"/>
+          <Border Background="{StaticResource SurfaceContainer}" CornerRadius="8" Padding="8,4" Margin="12,0,0,0">
+            <TextBlock Text="Solo Admin" Foreground="{StaticResource Primary}" FontSize="10" FontWeight="Bold"/>
+          </Border>
+          <Border Background="{StaticResource SurfaceContainer}" CornerRadius="8" Padding="8,4" Margin="8,0,0,0">
+            <TextBlock Text="DEMO frontend" Foreground="{StaticResource Secondary}" FontSize="10" FontWeight="Bold"/>
+          </Border>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+          <Border Background="{StaticResource SurfaceHigh}" CornerRadius="8" Padding="8,4" Margin="0,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Desde" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+              <DatePicker x:Name="DesdePicker" Width="130" Height="28" SelectedDateChanged="Filtro_Changed"/>
+            </StackPanel>
+          </Border>
+          <Border Background="{StaticResource SurfaceHigh}" CornerRadius="8" Padding="8,4" Margin="0,0,8,0">
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="Hasta" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+              <DatePicker x:Name="HastaPicker" Width="130" Height="28" SelectedDateChanged="Filtro_Changed"/>
+            </StackPanel>
+          </Border>
+          <ComboBox x:Name="OrigenBox" Width="130" Height="32" SelectionChanged="Filtro_Changed" Margin="0,0,8,0"/>
+          <Button Content="↻ Actualizar" Style="{StaticResource SecondaryButton}" Height="32" Padding="10,0" FontSize="11" Click="Filtro_Changed"/>
+        </StackPanel>
+      </Grid>
+
+      <WrapPanel Grid.Row="1" Margin="0,16,0,0" Orientation="Horizontal">
+        <Border Style="{StaticResource Card}" Width="260" Margin="0,0,12,12" Background="{StaticResource SurfaceContainer}">
+          <StackPanel>
+            <TextBlock Text="Total ventas" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" FontWeight="Bold"/>
+            <TextBlock x:Name="TotalVentas" Text="$0" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Primary}" Margin="0,6,0,0"/>
+            <TextBlock x:Name="TotalSub" Text="0 tickets" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" Margin="0,4,0,0"/>
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource Card}" Width="260" Margin="0,0,12,12">
+          <StackPanel>
+            <TextBlock Text="Ticket promedio" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" FontWeight="Bold"/>
+            <TextBlock x:Name="TicketProm" Text="$0" FontSize="22" FontWeight="Bold" Margin="0,6,0,0"/>
+            <TextBlock Text="por cuenta" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" Margin="0,4,0,0"/>
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource Card}" Width="260" Margin="0,0,12,12">
+          <StackPanel>
+            <TextBlock Text="Impuesto recaudado" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" FontWeight="Bold"/>
+            <TextBlock x:Name="ImpuestoText" Text="$0" FontSize="22" FontWeight="Bold" Foreground="{StaticResource Secondary}" Margin="0,6,0,0"/>
+            <TextBlock Text="INC 8% / IVA 19% unificado" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" Margin="0,4,0,0"/>
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource Card}" Width="260" Margin="0,0,12,12">
+          <StackPanel>
+            <TextBlock Text="Efectivo / Tarjeta" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" FontWeight="Bold"/>
+            <TextBlock x:Name="MetodoText" Text="$0 / $0" FontSize="16" FontWeight="Bold" Margin="0,6,0,0"/>
+            <TextBlock Text="salón + delivery (mock)" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" Margin="0,4,0,0"/>
+          </StackPanel>
+        </Border>
+      </WrapPanel>
+
+      <Grid Grid.Row="2" Margin="0,8,0,0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" MinWidth="340"/>
+          <ColumnDefinition Width="12"/>
+          <ColumnDefinition Width="380" MinWidth="320"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="16">
+          <StackPanel>
+            <TextBlock Text="Ventas últimos 7 días" FontWeight="Bold" FontSize="13" Margin="0,0,0,12"/>
+            <Grid x:Name="ChartGrid" Height="140">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+            </Grid>
+            <TextBlock Text="* Barras mock escala relativa al máximo del período" Foreground="{StaticResource OnSurfaceVariant}" FontSize="10" Margin="0,8,0,0"/>
+          </StackPanel>
+        </Border>
+        <Border Grid.Column="2" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="16">
+          <StackPanel>
+            <TextBlock Text="Top platos" FontWeight="Bold" FontSize="13" Margin="0,0,0,12"/>
+            <ListView x:Name="TopList" Background="Transparent" BorderThickness="0" Height="140">
+              <ListView.View>
+                <GridView>
+                  <GridViewColumn Header="#" Width="30" DisplayMemberBinding="{Binding Rank}"/>
+                  <GridViewColumn Header="Plato" Width="170" DisplayMemberBinding="{Binding Name}"/>
+                  <GridViewColumn Header="Cant." Width="60" DisplayMemberBinding="{Binding Qty}"/>
+                  <GridViewColumn Header="Total" Width="90" DisplayMemberBinding="{Binding TotalText}"/>
+                </GridView>
+              </ListView.View>
+            </ListView>
+          </StackPanel>
+        </Border>
+      </Grid>
+
+      <Border Grid.Row="3" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="16" Margin="0,12,0,0">
+        <StackPanel>
+          <TextBlock Text="Ventas por mesa" FontWeight="Bold" FontSize="13" Margin="0,0,0,12"/>
+          <ListView x:Name="MesaList" Background="Transparent" BorderThickness="0" Height="150">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Mesa" Width="120" DisplayMemberBinding="{Binding Mesa}"/>
+                <GridViewColumn Header="Tickets" Width="80" DisplayMemberBinding="{Binding Tickets}"/>
+                <GridViewColumn Header="Total" Width="120" DisplayMemberBinding="{Binding TotalText}"/>
+                <GridViewColumn Header="Mesero" Width="120" DisplayMemberBinding="{Binding Mesero}"/>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </StackPanel>
+      </Border>
+
+      <Border Grid.Row="4" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="16" Margin="0,12,0,0">
+        <Grid>
+          <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+          <Grid Grid.Row="0" Margin="0,0,0,12">
+            <TextBlock Text="Historial de cobros — qué se vendió (trazabilidad POS)" FontWeight="Bold" FontSize="13"/>
+            <TextBlock x:Name="TotalTrazabilidad" Text="Hoy: $0 · 0 ventas" Foreground="{StaticResource Primary}" FontWeight="Bold" FontSize="11" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+          </Grid>
+          <Grid Grid.Row="1" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="260"/>
+              <ColumnDefinition Width="140"/>
+              <ColumnDefinition Width="140"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="0,0,8,0">
+              <TextBox x:Name="SearchTrazabilidad" Height="36" Padding="10,8" TextChanged="SearchTrazabilidad_TextChanged"/>
+              <TextBlock Text="Buscar mesa, producto, cajero..." Foreground="{StaticResource OnSurfaceVariant}" Opacity="0.45" Margin="12,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+                <TextBlock.Style>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                      <DataTrigger Binding="{Binding Text, ElementName=SearchTrazabilidad}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+                    </Style.Triggers>
+                  </Style>
+                </TextBlock.Style>
+              </TextBlock>
+            </Grid>
+            <ComboBox x:Name="MetodoTrazabilidad" Grid.Column="1" Height="36" Margin="0,0,8,0" SelectionChanged="FiltroTrazabilidad_Changed"/>
+            <ComboBox x:Name="EstadoTrazabilidad" Grid.Column="2" Height="36" SelectionChanged="FiltroTrazabilidad_Changed"/>
+          </Grid>
+          <ListView x:Name="VentasList" Grid.Row="2" Background="Transparent" BorderThickness="0" Height="220">
+            <ListView.View>
+              <GridView>
+                <GridViewColumn Header="Fecha" Width="110" DisplayMemberBinding="{Binding FechaText}"/>
+                <GridViewColumn Header="Mesa" Width="90" DisplayMemberBinding="{Binding Mesa}"/>
+                <GridViewColumn Header="Qué se vendió" Width="300">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding Detalle}" TextWrapping="Wrap" FontSize="12" MaxWidth="280"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Total" Width="90">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <TextBlock Text="{Binding TotalText}" Foreground="{StaticResource Primary}" FontWeight="Bold"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Método" Width="90">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <Border Background="{Binding MetodoBg}" CornerRadius="6" Padding="6,3">
+                        <TextBlock Text="{Binding Metodo}" Foreground="{Binding MetodoFg}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center"/>
+                      </Border>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Cajero" Width="90" DisplayMemberBinding="{Binding Cajero}"/>
+                <GridViewColumn Header="Estado" Width="90">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <Border Background="{Binding EstadoBg}" CornerRadius="6" Padding="6,3">
+                        <TextBlock Text="{Binding Estado}" Foreground="{Binding EstadoFg}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center"/>
+                      </Border>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="" Width="70">
+                  <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                      <Button Content="Ver" Style="{StaticResource SecondaryButton}" Height="26" Padding="10,0" FontSize="11" Click="VerVenta_Click" Tag="{Binding}"/>
+                    </DataTemplate>
+                  </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+              </GridView>
+            </ListView.View>
+          </ListView>
+        </Grid>
+      </Border>
+
+      <Border Grid.Row="5" Background="{StaticResource SurfaceContainer}" CornerRadius="10" Padding="12" Margin="0,12,0,0">
+        <TextBlock Text="* Reportes unifica salón + delivery (md:44) simulado. Historial trazable (qué se vendió por mesa/método/cajero) integrado en mismo panel Solo Admin. Exportar CSV y arqueo por turno (md:85) quedan para Fase 2 con SQLite." Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" TextWrapping="Wrap"/>
+      </Border>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

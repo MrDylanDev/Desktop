@@ -23,20 +23,25 @@ namespace RestauranteGestor.Native.Views
             StatusBox.Items.Add("Por limpiar");
             if (table == null)
             {
+                Title = "Nueva mesa";
                 TitleText.Text = "Nueva mesa";
-                NameBox.Text = "Mesa ";
+                NameBox.Text = string.Empty;
                 CapacityBox.Text = "4 personas";
                 SectorBox.SelectedIndex = 0;
                 StatusBox.SelectedIndex = 0;
             }
             else
             {
+                Title = "Editar " + table.Name;
                 TitleText.Text = "Editar " + table.Name;
                 NameBox.Text = table.Name;
                 CapacityBox.Text = table.Capacity;
-                SectorBox.SelectedItem = table.Sector;
+                int sectorIdx = SectorBox.Items.IndexOf(table.Sector);
+                SectorBox.SelectedIndex = sectorIdx >= 0 ? sectorIdx : 0;
                 StatusBox.SelectedIndex = Math.Max(0, StatusBox.Items.IndexOf(table.Status));
             }
+            NameBox.Focus();
+            NameBox.SelectAll();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e) { DialogResult = false; }
@@ -49,10 +54,13 @@ namespace RestauranteGestor.Native.Views
                 MessageBox.Show("Escribe un nombre para la mesa.", "RestoOS", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            string sector = SectorBox.SelectedItem?.ToString() ?? "Principal";
+            string sector = SectorBox.SelectedItem?.ToString() ?? SectorBox.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(sector)) sector = "Principal";
             string capacity = (CapacityBox.Text ?? string.Empty).Trim();
+            if (capacity.Length == 0) capacity = "4 personas";
             string status = StatusBox.SelectedItem?.ToString() ?? "Libre";
-            Result = new MesasView.TableInfo(name, sector, capacity.Length == 0 ? "4 personas" : capacity, status, "$0", status != "Reservada");
+            string total = _original != null ? _original.Total : "$0";
+            Result = new MesasView.TableInfo(name, sector, capacity, status, total, status != "Reservada");
             DialogResult = true;
         }
     }

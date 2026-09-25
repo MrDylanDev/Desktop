@@ -1,0 +1,112 @@
+<UserControl x:Class="RestauranteGestor.Native.Views.TrazabilidadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Surface}">
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0">
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <TextBlock Text="Trazabilidad POS" FontSize="28" FontWeight="Bold"/>
+        <Border Background="{StaticResource SurfaceContainer}" CornerRadius="8" Padding="10,6" Margin="12,0,0,0">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="◉" Foreground="{StaticResource Tertiary}" FontSize="10" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <TextBlock Text="Qué se cobró" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+        <Border Background="{StaticResource SurfaceContainer}" CornerRadius="8" Padding="8,4" Margin="8,0,0,0">
+          <TextBlock Text="DEMO frontend" Foreground="{StaticResource Secondary}" FontSize="10" FontWeight="Bold"/>
+        </Border>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <TextBlock x:Name="TotalLabel" Text="Hoy: $0 · 0 ventas" Foreground="{StaticResource Primary}" FontWeight="Bold" FontSize="12" VerticalAlignment="Center" Margin="0,0,12,0"/>
+        <Button Content="⟲ Actualizar" Style="{StaticResource SecondaryButton}" Height="32" Padding="10,0" FontSize="11" Click="Refresh_Click"/>
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="0,16,0,12">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="220"/>
+        <ColumnDefinition Width="140"/>
+        <ColumnDefinition Width="140"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      <Grid Grid.Column="0" Margin="0,0,8,0">
+        <TextBox x:Name="SearchBox" Height="36" Padding="10,8" TextChanged="SearchBox_TextChanged"/>
+        <TextBlock Text="Buscar mesa, producto..." Foreground="{StaticResource OnSurfaceVariant}" Opacity="0.45" Margin="12,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Setter Property="Visibility" Value="Collapsed"/>
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
+      </Grid>
+      <ComboBox x:Name="MetodoBox" Grid.Column="1" Height="36" Margin="0,0,8,0" SelectionChanged="Filter_Changed"/>
+      <ComboBox x:Name="EstadoBox" Grid.Column="2" Height="36" SelectionChanged="Filter_Changed"/>
+      <DatePicker x:Name="FechaPicker" Grid.Column="3" Height="36" HorizontalAlignment="Left" Width="160" SelectedDateChanged="Filter_Changed"/>
+    </Grid>
+
+    <Border Grid.Row="2" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="12">
+      <ListView x:Name="VentasList" Background="Transparent" BorderThickness="0">
+        <ListView.View>
+          <GridView>
+            <GridViewColumn Header="Fecha" Width="120" DisplayMemberBinding="{Binding FechaText}"/>
+            <GridViewColumn Header="Mesa" Width="90" DisplayMemberBinding="{Binding Mesa}"/>
+            <GridViewColumn Header="Qué se vendió" Width="320">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding Detalle}" TextWrapping="Wrap" FontSize="12" MaxWidth="300"/>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Total" Width="100">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding TotalText}" Foreground="{StaticResource Primary}" FontWeight="Bold"/>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Método" Width="90">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <Border Background="{Binding MetodoBg}" CornerRadius="6" Padding="6,3">
+                    <TextBlock Text="{Binding Metodo}" Foreground="{Binding MetodoFg}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center"/>
+                  </Border>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="Cajero" Width="100" DisplayMemberBinding="{Binding Cajero}"/>
+            <GridViewColumn Header="Estado" Width="90">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <Border Background="{Binding EstadoBg}" CornerRadius="6" Padding="6,3">
+                    <TextBlock Text="{Binding Estado}" Foreground="{Binding EstadoFg}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center"/>
+                  </Border>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+            <GridViewColumn Header="" Width="80">
+              <GridViewColumn.CellTemplate>
+                <DataTemplate>
+                  <Button Content="Ver" Style="{StaticResource SecondaryButton}" Height="26" Padding="10,0" FontSize="11" Click="Ver_Click" Tag="{Binding}"/>
+                </DataTemplate>
+              </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+          </GridView>
+        </ListView.View>
+      </ListView>
+    </Border>
+
+    <Border Grid.Row="3" Background="{StaticResource SurfaceContainer}" CornerRadius="10" Padding="12" Margin="0,12,0,0">
+      <TextBlock Text="* Cada cobro de POS genera un registro trazable (fecha, mesa, detalle con notas, total, método, cajero). La persistencia real y anulación con PIN supervisor (md:87) quedan para Fase 2 con SQLite." Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" TextWrapping="Wrap"/>
+    </Border>
+  </Grid>
+</UserControl>

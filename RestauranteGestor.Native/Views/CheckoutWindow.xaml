@@ -25,18 +25,18 @@
     <Grid Grid.Row="3">
       <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="150" /></Grid.ColumnDefinitions>
       <UniformGrid x:Name="Numpad" Grid.Column="0" Columns="3" Margin="0,0,14,0">
-        <Button Content="7" Click="Numpad_Click" />
-        <Button Content="8" Click="Numpad_Click" />
-        <Button Content="9" Click="Numpad_Click" />
-        <Button Content="4" Click="Numpad_Click" />
-        <Button Content="5" Click="Numpad_Click" />
-        <Button Content="6" Click="Numpad_Click" />
-        <Button Content="1" Click="Numpad_Click" />
-        <Button Content="2" Click="Numpad_Click" />
-        <Button Content="3" Click="Numpad_Click" />
-        <Button Content="C" Click="Numpad_Click" />
-        <Button Content="0" Click="Numpad_Click" />
-        <Button Content="." Click="Numpad_Click" />
+        <Button Content="7" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="8" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="9" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="4" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="5" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="6" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="1" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="2" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="3" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="C" Style="{StaticResource DangerButton}" Margin="4" MinHeight="52" FontSize="16" FontWeight="Bold" Click="Numpad_Click" />
+        <Button Content="0" Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
+        <Button Content="." Style="{StaticResource NumpadButton}" Click="Numpad_Click" />
       </UniformGrid>
       <StackPanel Grid.Column="1">
         <TextBlock Text="Monto recibido" Foreground="{StaticResource OnSurfaceVariant}" />

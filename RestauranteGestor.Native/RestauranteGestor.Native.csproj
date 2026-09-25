@@ -42,6 +42,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\InventarioView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReportesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TrazabilidadView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DeliveryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ReservasView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\KdsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MenuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -51,6 +75,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CheckoutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AdminCodeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NoteWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -73,6 +109,24 @@
     <Compile Include="Views\MesasView.xaml.cs">
       <DependentUpon>MesasView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InventarioView.xaml.cs">
+      <DependentUpon>InventarioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportesView.xaml.cs">
+      <DependentUpon>ReportesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrazabilidadView.xaml.cs">
+      <DependentUpon>TrazabilidadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeliveryView.xaml.cs">
+      <DependentUpon>DeliveryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReservasView.xaml.cs">
+      <DependentUpon>ReservasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\KdsView.xaml.cs">
+      <DependentUpon>KdsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
@@ -81,6 +135,15 @@
     </Compile>
     <Compile Include="Views\CheckoutWindow.xaml.cs">
       <DependentUpon>CheckoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AdminCodeWindow.xaml.cs">
+      <DependentUpon>AdminCodeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NoteWindow.xaml.cs">
+      <DependentUpon>NoteWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReceiptWindow.xaml.cs">
       <DependentUpon>ReceiptWindow.xaml</DependentUpon>

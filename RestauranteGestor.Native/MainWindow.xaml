@@ -33,14 +33,22 @@
         </StackPanel>
 
         <StackPanel>
-          <Button x:Name="BtnModulos" Content="☷  Selector de Módulos" Style="{StaticResource NavButton}" Click="BtnModulos_Click" />
-          <Button x:Name="BtnPos" Content="▭  Punto de Venta POS   F1" Style="{StaticResource NavButton}" Click="BtnPos_Click" />
-          <Button x:Name="BtnMesas" Content="▦  Mesas y Salón   F2" Style="{StaticResource NavButton}" Click="BtnMesas_Click" />
-          <Button Content="♨  Cocina KDS   Próximamente" Style="{StaticResource NavButton}" IsEnabled="False" />
-          <Button Content="▤  Inventario   Próximamente" Style="{StaticResource NavButton}" IsEnabled="False" />
-          <Button Content="◰  Reservas   Próximamente" Style="{StaticResource NavButton}" IsEnabled="False" />
-          <Button x:Name="BtnMenu" Content="▭  Menú Digital" Style="{StaticResource NavButton}" Click="BtnMenu_Click" />
-          <Button Content="▣  Reportes   Próximamente" Style="{StaticResource NavButton}" IsEnabled="False" />
+          <StackPanel x:Name="OperacionPanel">
+            <TextBlock Text="OPERACIÓN" Foreground="{StaticResource Secondary}" FontSize="10" FontWeight="Bold" Margin="8,8,8,6" Opacity="0.9"/>
+            <Button x:Name="BtnPos" Content="▭  Punto de Venta POS   F1" Style="{StaticResource NavButton}" Click="BtnPos_Click" />
+            <Button x:Name="BtnMesas" Content="▦  Mesas y Salón   F2" Style="{StaticResource NavButton}" Click="BtnMesas_Click" />
+            <Button x:Name="BtnKds" Content="♨  Cocina KDS   F3" Style="{StaticResource NavButton}" Click="BtnKds_Click" />
+            <Button x:Name="BtnInventario" Content="▤  Inventario" Style="{StaticResource NavButton}" Click="BtnInventario_Click" />
+            <Button x:Name="BtnReservas" Content="◰  Reservas" Style="{StaticResource NavButton}" Click="BtnReservas_Click" />
+            <Button x:Name="BtnDelivery" Content="◎  Delivery" Style="{StaticResource NavButton}" Click="BtnDelivery_Click" />
+            <Button x:Name="BtnMenu" Content="▭  Menú Digital" Style="{StaticResource NavButton}" Click="BtnMenu_Click" />
+          </StackPanel>
+          <StackPanel x:Name="AdminPanel" Margin="0,14,0,0">
+            <Border Height="1" Background="{StaticResource Outline}" Opacity="0.4" Margin="8,0,8,10"/>
+            <TextBlock Text="ADMINISTRACIÓN" Foreground="{StaticResource Secondary}" FontSize="10" FontWeight="Bold" Margin="8,0,8,6" Opacity="0.9"/>
+            <Button x:Name="BtnModulos" Content="☷  Selector de Módulos" Style="{StaticResource NavButton}" Click="BtnModulos_Click" />
+            <Button x:Name="BtnReportes" Content="▣  Reportes + Trazabilidad" Style="{StaticResource NavButton}" Click="BtnReportes_Click" />
+          </StackPanel>
         </StackPanel>
       </DockPanel>
     </Border>
@@ -59,10 +67,14 @@
             <TextBlock x:Name="LblRoute" Text="  Módulos" Foreground="{StaticResource OnSurfaceVariant}" VerticalAlignment="Center" FontSize="14" />
           </StackPanel>
           <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Border Background="{StaticResource SurfaceHigh}" CornerRadius="6" Padding="8,4" Margin="0,0,10,0">
+              <TextBlock x:Name="LblRole" Text="Dueño" Foreground="{StaticResource Secondary}" FontWeight="Bold" FontSize="11" />
+            </Border>
             <TextBlock Text="RestoOS" Foreground="{StaticResource OnSurfaceVariant}" VerticalAlignment="Center" Margin="0,0,14,0" />
             <Border Background="{StaticResource Primary}" Width="32" Height="32" CornerRadius="16">
               <TextBlock Text="●" Foreground="#5D1800" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" />
             </Border>
+            <Button Content="↻ Cambiar perfil" Style="{StaticResource SecondaryButton}" Height="32" Padding="10,0" FontSize="11" Margin="10,0,0,0" Click="BtnCambiarPerfil_Click" />
           </StackPanel>
         </Grid>
       </Border>

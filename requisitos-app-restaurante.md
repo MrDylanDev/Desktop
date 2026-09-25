@@ -122,9 +122,16 @@ Items vistos en el prototipo POS (`stitch/.../code.html`) sin respaldo en los re
 - Vínculo mesa → POS (`?mesa=`): abrir mesa lleva a cobrar con la mesa asignada y guardada en la venta.
 - Tarjeta como registro con modal propio (monto exacto, sin vuelto ni cajón, nota de datáfono).
 - Impuesto configurable en POS (INC 8% / IVA 19% / Exento) en vez de tasa fija.
+- Notas por pedido en POS (ej. "sin cebolla", "término medio") y persistencia de mesas en `%LocalAppData%\RestoOS\mesas.dat` (antes solo memoria).
+- UI adaptativa en Selector de Módulos (WrapPanel), POS y Mesas (GridSplitter + Min/MaxWidth) y tema oscuro unificado para ComboBox/TextBox.
 
 ## 12. Fase 4 (futuro): app de meseros
 - Carcasa híbrida delgada (.NET MAUI con WebView o Capacitor) sobre la misma base web (`mesas.html`/`pos.html`); nativa pura descartada por costo.
 - 100% local: la app habla solo con el PC-servidor por el WiFi del restaurante (`192.168.1.100`); sin nube y sin internet para operar.
 - Distribución sin Play Store: APK descargable del propio servidor (`http://192.168.1.100/app.apk`), instalación por "orígenes desconocidos".
 - Actualizaciones: el contenido vive en el servidor y se actualiza solo; el APK solo cambia si se toca la carcasa.
+
+## 13. Backlog futuro — Meseros (pospuesto, no MVP)
+- **No implementar apartado `Meseros` independiente en Fase 1.** El core `POS + Mesas + Menú` con `SQLite` y `reportes` tiene prioridad para piloto.
+- **Mejora ligera futura (Fase 2, baja fricción):** campo opcional `Mesero` en `Mesa`/`Pedido` (`Sin asignar / Ana / Carlos`), selector en tarjeta/detalle/`TableDialogWindow`, guardado en `mesas.dat`/`SQLite`, filtro por mesero y `MesaLabel = "Mesa 5 · Ana"` arrastrado a `POS`. Habilita trazabilidad para `propina reparto` (§8) y `reporte por mesero` sin CRUD/login.
+- **Módulo completo pospuesto (Fase 2-3):** `Views/MeserosView.xaml` con CRUD de meseros, PIN/roles (`dueño/cajero/mesero/cocina` §3/§6), y base para app híbrida de toma de pedidos en mesa.
