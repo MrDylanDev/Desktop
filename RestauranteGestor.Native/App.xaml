@@ -269,5 +269,32 @@
         </Setter.Value>
       </Setter>
     </Style>
+
+    <!-- Los headers de GridView heredan el tema del SO (Aero) y salen en claro.
+         Se sobreescribe globalmente para cubrirlas todas de una vez. -->
+    <Style TargetType="GridViewColumnHeader">
+      <Setter Property="Foreground" Value="{StaticResource OnSurfaceVariant}" />
+      <Setter Property="Background" Value="{StaticResource SurfaceContainer}" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="MinHeight" Value="30" />
+      <Setter Property="Cursor" Value="Hand" />
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="GridViewColumnHeader">
+            <Border x:Name="Chip" Background="{TemplateBinding Background}" CornerRadius="6" Margin="0,0,6,0" Padding="10,7">
+              <ContentPresenter RecognizesAccessKey="True" VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Chip" Property="Background" Value="{StaticResource SurfaceHigh}" />
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
   </Application.Resources>
 </Application>

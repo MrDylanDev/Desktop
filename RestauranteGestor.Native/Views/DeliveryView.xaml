@@ -24,39 +24,32 @@
         </Border>
       </StackPanel>
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-        <ComboBox x:Name="PlataformaBox" Width="160" Height="36" SelectionChanged="Plataforma_Changed" Margin="0,0,8,0"/>
-        <ComboBox x:Name="EstadoBox" Width="150" Height="36" SelectionChanged="Estado_Changed"/>
+        <Button Content="+ Nuevo pedido" Style="{StaticResource PrimaryButton}" Height="36" Padding="12,0" Click="Nuevo_Click" Margin="0,0,8,0"/>
+        <Button x:Name="BtnSincronizar" Content="↻  Sincronizar menú" Style="{StaticResource SecondaryButton}" Height="36" Padding="12,0" FontSize="12" Margin="0,0,12,0" Click="Sincronizar_Click"/>
+        <ComboBox x:Name="PlataformaBox" Width="150" Height="36" SelectionChanged="Plataforma_Changed" Margin="0,0,8,0"/>
+        <ComboBox x:Name="EstadoBox" Width="140" Height="36" SelectionChanged="Estado_Changed"/>
       </StackPanel>
     </Grid>
 
     <Grid Grid.Row="1" Margin="0,16,0,12">
-      <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="360"/></Grid.ColumnDefinitions>
-      <Grid Grid.Column="0" Margin="0,0,12,0">
-        <TextBox x:Name="SearchBox" Height="36" Padding="10,8" TextChanged="Search_Changed"/>
-        <TextBlock Text="Buscar pedido, cliente..." Foreground="{StaticResource OnSurfaceVariant}" Opacity="0.45" Margin="12,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
-          <TextBlock.Style>
-            <Style TargetType="TextBlock">
-              <Setter Property="Visibility" Value="Collapsed"/>
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </TextBlock.Style>
-        </TextBlock>
-      </Grid>
-      <Border Grid.Column="1" Background="{StaticResource SurfaceLowest}" CornerRadius="10" Padding="12">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-          <TextBlock Text="Sincronizar menú → plataformas" Foreground="{StaticResource OnSurfaceVariant}" FontSize="11" VerticalAlignment="Center"/>
-          <Button Content="↻ Sincronizar" Style="{StaticResource SecondaryButton}" Height="28" Padding="10,0" FontSize="11" Margin="8,0,0,0" Click="Sincronizar_Click"/>
-        </StackPanel>
-      </Border>
+      <TextBox x:Name="SearchBox" Height="36" Padding="10,8" TextChanged="Search_Changed"/>
+      <TextBlock Text="Buscar pedido, cliente..." Foreground="{StaticResource OnSurfaceVariant}" Opacity="0.45" Margin="12,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
+        <TextBlock.Style>
+          <Style TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value=""><Setter Property="Visibility" Value="Visible"/></DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </TextBlock.Style>
+      </TextBlock>
     </Grid>
 
     <Border Grid.Row="2" Background="{StaticResource SurfaceLowest}" CornerRadius="14" Padding="12">
-      <ListView x:Name="PedidosList" Background="Transparent" BorderThickness="0">
+      <ListView x:Name="PedidosList" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Auto">
         <ListView.View>
           <GridView>
-            <GridViewColumn Header="Hora" Width="70" DisplayMemberBinding="{Binding HoraText}"/>
+            <GridViewColumn Header="Hora" Width="60" DisplayMemberBinding="{Binding HoraText}"/>
             <GridViewColumn Header="Plataforma" Width="110">
               <GridViewColumn.CellTemplate>
                 <DataTemplate>
@@ -67,11 +60,11 @@
               </GridViewColumn.CellTemplate>
             </GridViewColumn>
             <GridViewColumn Header="ID" Width="90" DisplayMemberBinding="{Binding Id}"/>
-            <GridViewColumn Header="Cliente" Width="130" DisplayMemberBinding="{Binding Cliente}"/>
-            <GridViewColumn Header="Detalle" Width="260">
+            <GridViewColumn Header="Cliente" Width="120" DisplayMemberBinding="{Binding Cliente}"/>
+            <GridViewColumn Header="Detalle" Width="230">
               <GridViewColumn.CellTemplate>
                 <DataTemplate>
-                  <TextBlock Text="{Binding Detalle}" TextWrapping="Wrap" FontSize="12" MaxWidth="240"/>
+                  <TextBlock Text="{Binding Detalle}" TextWrapping="Wrap" FontSize="12" MaxWidth="212"/>
                 </DataTemplate>
               </GridViewColumn.CellTemplate>
             </GridViewColumn>
@@ -91,12 +84,34 @@
                 </DataTemplate>
               </GridViewColumn.CellTemplate>
             </GridViewColumn>
-            <GridViewColumn Header="" Width="140">
+            <GridViewColumn Header="Acciones" Width="248">
               <GridViewColumn.CellTemplate>
                 <DataTemplate>
                   <StackPanel Orientation="Horizontal">
-                    <Button Content="Ver" Style="{StaticResource SecondaryButton}" Height="26" Padding="8,0" FontSize="11" Margin="0,0,6,0" Click="Ver_Click" Tag="{Binding}"/>
-                    <Button Content="✓" Style="{StaticResource PrimaryButton}" Height="26" Width="26" FontSize="11" Click="Avanzar_Click" Tag="{Binding}"/>
+                    <Button Content="Editar" Style="{StaticResource SecondaryButton}" Height="26" Padding="8,0" FontSize="11" Margin="0,0,6,0" Click="Editar_Click" Tag="{Binding}"/>
+                    <Button Content="×" Style="{StaticResource DangerButton}" Height="26" Width="26" FontSize="12" Margin="0,0,6,0" Click="Eliminar_Click" Tag="{Binding}"/>
+                    <Button Height="26" Padding="8,0" FontSize="11" Click="Avanzar_Click" Tag="{Binding}">
+                      <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+                          <Setter Property="Content" Value="✓  Avanzar"/>
+                          <Style.Triggers>
+                            <DataTrigger Binding="{Binding Estado}" Value="Nuevo">
+                              <Setter Property="Content" Value="▶  En preparación"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Estado}" Value="En preparación">
+                              <Setter Property="Content" Value="✓  Listo para rider"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Estado}" Value="Listo para rider">
+                              <Setter Property="Content" Value="✓  Entregado"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Estado}" Value="Entregado">
+                              <Setter Property="Content" Value="✓  Entregado"/>
+                              <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                          </Style.Triggers>
+                        </Style>
+                      </Button.Style>
+                    </Button>
                   </StackPanel>
                 </DataTemplate>
               </GridViewColumn.CellTemplate>

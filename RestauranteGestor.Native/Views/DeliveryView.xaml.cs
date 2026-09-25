@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,11 +58,36 @@ namespace RestauranteGestor.Native.Views
             PedidosList.ItemsSource = filtered;
         }
 
-        private void Ver_Click(object sender, RoutedEventArgs e)
+        private void Nuevo_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new PedidoDialog(null) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true && dlg.Result != null)
+            {
+                _all.Add(dlg.Result);
+                ApplyFilter();
+            }
+        }
+
+        private void Editar_Click(object sender, RoutedEventArgs e)
         {
             var p = (sender as Button)?.Tag as PedidoDelivery;
             if (p == null) return;
-            MessageBox.Show(p.Plataforma + " " + p.Id + "\n" + p.Cliente + "\n" + p.Detalle + "\nTotal: " + p.TotalText + "\nEstado: " + p.Estado, "RestoOS Delivery", MessageBoxButton.OK, MessageBoxImage.Information);
+            var dlg = new PedidoDialog(p) { Owner = Window.GetWindow(this) };
+            if (dlg.ShowDialog() == true && dlg.Result != null)
+            {
+                int idx = _all.IndexOf(p);
+                if (idx >= 0) _all[idx] = dlg.Result;
+                ApplyFilter();
+            }
+        }
+
+        private void Eliminar_Click(object sender, RoutedEventArgs e)
+        {
+            var p = (sender as Button)?.Tag as PedidoDelivery;
+            if (p == null) return;
+            if (MessageBox.Show("¿Eliminar el pedido " + p.Id + " de " + p.Cliente + "?", "RestoOS", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes) return;
+            _all.Remove(p);
+            ApplyFilter();
         }
 
         private void Avanzar_Click(object sender, RoutedEventArgs e)
@@ -96,6 +122,116 @@ namespace RestauranteGestor.Native.Views
             public Brush EstadoFg => Estado == "Entregado" ? (Brush)Application.Current.FindResource("OnSurfaceVariant") : new SolidColorBrush(Color.FromRgb(0x3A,0x0F,0x00));
             public PedidoDelivery(DateTime fecha, string plat, string id, string cliente, string detalle, decimal total, string estado) { Fecha = fecha; Plataforma = plat; Id = id; Cliente = cliente; Detalle = detalle; Total = total; Estado = estado; }
             public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        }
+    }
+
+    public class PedidoDialog : Window
+    {
+        public DeliveryView.PedidoDelivery Result { get; private set; }
+        private TextBox IdBox, ClienteBox, DetalleBox, TotalBox, HoraBox;
+        private ComboBox PlataformaBox, EstadoBox;
+        private DatePicker FechaPicker;
+
+        public PedidoDialog(DeliveryView.PedidoDelivery p)
+        {
+            Title = p == null ? "Nuevo pedido" : "Editar pedido";
+            Width = 500; Height = 660; WindowStartupLocation = WindowStartupLocation.CenterOwner; ResizeMode = ResizeMode.NoResize;
+            Background = (Brush)FindResource("Surface"); Foreground = (Brush)FindResource("OnSurface");
+
+            var scroll = new ScrollViewer { VerticalScrollBarVisibility = ScrollBarVisibility.Auto };
+            var grid = new Grid { Margin = new Thickness(22) };
+            for (int i = 0; i < 9; i++) grid.RowDefinitions.Add(new RowDefinition { Height = i == 8 ? new GridLength(1, GridUnitType.Star) : GridLength.Auto });
+            var title = new TextBlock { Text = Title, FontSize = 20, FontWeight = FontWeights.Bold, Margin = new Thickness(0, 0, 0, 12) };
+            Grid.SetRow(title, 0); grid.Children.Add(title);
+
+            PlataformaBox = new ComboBox { Height = 36 };
+            foreach (var s in new[] { "Rappi", "Uber Eats", "DiDi Food" }) PlataformaBox.Items.Add(s);
+            PlataformaBox.SelectedItem = p?.Plataforma ?? "Rappi";
+            if (PlataformaBox.SelectedItem == null) PlataformaBox.SelectedIndex = 0;
+
+            IdBox = NewTextBox(p?.Id ?? SugerirId());
+            FechaPicker = new DatePicker { Height = 36, SelectedDate = p?.Fecha.Date ?? DateTime.Today };
+            HoraBox = NewTextBox(p?.Fecha.ToString("HH:mm") ?? "12:00");
+            ClienteBox = NewTextBox(p?.Cliente ?? "");
+            DetalleBox = NewTextBox(p?.Detalle ?? "");
+            DetalleBox.Height = 76; DetalleBox.AcceptsReturn = true; DetalleBox.TextWrapping = TextWrapping.Wrap; DetalleBox.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            TotalBox = NewTextBox(p != null ? p.Total.ToString("0", CultureInfo.InvariantCulture) : "");
+
+            EstadoBox = new ComboBox { Height = 36 };
+            foreach (var s in new[] { "Nuevo", "En preparación", "Listo para rider", "Entregado" }) EstadoBox.Items.Add(s);
+            EstadoBox.SelectedItem = p?.Estado ?? "Nuevo";
+            if (EstadoBox.SelectedItem == null) EstadoBox.SelectedIndex = 0;
+
+            AddRow(grid, 1, "Plataforma", PlataformaBox);
+            AddRow(grid, 2, "ID del pedido", IdBox);
+            AddRow(grid, 3, "Fecha", FechaPicker);
+            AddRow(grid, 4, "Hora (HH:mm)", HoraBox);
+            AddRow(grid, 5, "Cliente *", ClienteBox);
+            AddRow(grid, 6, "Detalle del pedido *", DetalleBox);
+            AddRow(grid, 7, "Total (COP)", TotalBox);
+            var estadoPanel = new StackPanel { Margin = new Thickness(0, 12, 0, 0) };
+            Grid.SetRow(estadoPanel, 8);
+            estadoPanel.Children.Add(NewLabel("Estado"));
+            estadoPanel.Children.Add(EstadoBox);
+            grid.Children.Add(estadoPanel);
+
+            var btns = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
+            var cancel = new Button { Content = "Cancelar", Width = 100, Height = 36, Style = (Style)FindResource("SecondaryButton") };
+            cancel.Click += (s, e) => DialogResult = false;
+            var save = new Button { Content = "Guardar", Width = 100, Height = 36, Margin = new Thickness(8, 0, 0, 0), Style = (Style)FindResource("PrimaryButton") };
+            save.Click += Save_Click;
+            btns.Children.Add(cancel); btns.Children.Add(save);
+            var btnRow = new Grid { Margin = new Thickness(0, 18, 0, 0) };
+            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            Grid.SetRow(btnRow, 9); btnRow.Children.Add(btns); grid.Children.Add(btnRow);
+
+            scroll.Content = grid; Content = scroll;
+        }
+
+        private static string SugerirId() => "#N-" + DateTime.Now.ToString("HHmmss");
+
+        private TextBox NewTextBox(string text) => new TextBox { Height = 36, Padding = new Thickness(10, 8, 10, 8), Text = text ?? "" };
+
+        private TextBlock NewLabel(string text) => new TextBlock { Text = text, Foreground = (Brush)FindResource("OnSurfaceVariant"), Margin = new Thickness(0, 0, 0, 4) };
+
+        private void AddRow(Grid g, int row, string label, Control ctrl)
+        {
+            var sp = new StackPanel { Margin = new Thickness(0, 12, 0, 0) };
+            Grid.SetRow(sp, row);
+            sp.Children.Add(NewLabel(label)); sp.Children.Add(ctrl);
+            g.Children.Add(sp);
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            string cliente = (ClienteBox.Text ?? "").Trim();
+            if (cliente.Length == 0) { MessageBox.Show("Cliente requerido.", "RestoOS", MessageBoxButton.OK, MessageBoxImage.Information); return; }
+            string detalle = (DetalleBox.Text ?? "").Trim();
+            if (detalle.Length == 0) { MessageBox.Show("Detalle del pedido requerido.", "RestoOS", MessageBoxButton.OK, MessageBoxImage.Information); return; }
+
+            string id = (IdBox.Text ?? "").Trim();
+            if (id.Length == 0) id = SugerirId();
+
+            string raw = (TotalBox.Text ?? "").Trim().Replace("$", "").Replace(" ", "").Replace(".", "").Replace(",", ".");
+            decimal total;
+            if (!decimal.TryParse(raw, NumberStyles.Any, CultureInfo.InvariantCulture, out total) || total <= 0)
+            {
+                MessageBox.Show("Total inválido. Ejemplo: 19500", "RestoOS", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            DateTime fecha = FechaPicker.SelectedDate ?? DateTime.Today;
+            TimeSpan hora = TimeSpan.FromHours(12);
+            TimeSpan parsed;
+            string rawHora = (HoraBox.Text ?? "").Trim();
+            if (TimeSpan.TryParse(rawHora, out parsed) && parsed >= TimeSpan.Zero && parsed < TimeSpan.FromDays(1)) hora = parsed;
+
+            Result = new DeliveryView.PedidoDelivery(
+                fecha.Date + hora,
+                PlataformaBox.SelectedItem?.ToString() ?? "Rappi",
+                id, cliente, detalle, total,
+                EstadoBox.SelectedItem?.ToString() ?? "Nuevo");
+            DialogResult = true;
         }
     }
 }
