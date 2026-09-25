@@ -1,0 +1,486 @@
+<?xml version="1.0"?>
+<MenuData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Categories>
+    <Category>
+      <Id>3dfda086-fd4f-4037-bc4f-f4e7549668b2</Id>
+      <Name>Entradas</Name>
+      <Position>0</Position>
+      <ItemIds />
+    </Category>
+    <Category>
+      <Id>a29e82b4-7b62-403b-abf2-1c9993639ffc</Id>
+      <Name>Platos Principales</Name>
+      <Position>1</Position>
+      <ItemIds />
+    </Category>
+    <Category>
+      <Id>a5ff2994-26a2-410b-b76f-64b68fa820bf</Id>
+      <Name>Bebidas</Name>
+      <Position>2</Position>
+      <ItemIds />
+    </Category>
+  </Categories>
+  <Items>
+    <MenuItem>
+      <Id>2386cc4c-3407-4fcf-b090-792b1280500b</Id>
+      <Name>Hamburguesa sencilla</Name>
+      <Description>Hamburguesa Clásica 
+Jugosa carne de res, queso, lechuga, tomate, cebolla y salsa especial, acompañada de papas fritas.</Description>
+      <PriceSalon>20.000</PriceSalon>
+      <PriceDelivery>25</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013318.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>c7d27c5a-d363-4a0b-9d01-b23f18fdec82</Id>
+      <Name>Hamburguesa BBQ</Name>
+      <Description>Carne de res a la parrilla, queso, tocineta crujiente, cebolla caramelizada y salsa BBQ.</Description>
+      <PriceSalon>30.000</PriceSalon>
+      <PriceDelivery>35.000</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013415.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>08c8a04b-a79b-4d2a-800f-49a5f4b6a1ef</Id>
+      <Name>Hamburguesa Especial</Name>
+      <Description>doble Carne artesanal, doble queso, tocineta, vegetales frescos y salsa de la casa, servida con papas doradas.</Description>
+      <PriceSalon>40</PriceSalon>
+      <PriceDelivery>45</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013402.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>aabb1236-8bd9-464c-9af9-252b4de15cdf</Id>
+      <Name>Pizza Clásica</Name>
+      <Description>Masa artesanal, salsa de tomate, queso mozzarella y una combinación de ingredientes frescos. con peperoni</Description>
+      <PriceSalon>20</PriceSalon>
+      <PriceDelivery>25</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013609.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>5c80b368-f834-47c6-a9b8-6ee25ec510d1</Id>
+      <Name>Pizza Carnes</Name>
+      <Description>Mozzarella, jamón, pepperoni, carne y tocineta sobre una base de salsa de tomate. tomates cherrys</Description>
+      <PriceSalon>25</PriceSalon>
+      <PriceDelivery>30</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013553.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>34cd2f09-e42e-45bf-bfcf-3f49ef814501</Id>
+      <Name>Pizza Especial de la Casa</Name>
+      <Description>Mozzarella, pollo, champiñones, tocineta y vegetales frescos con el toque especial de la casa.</Description>
+      <PriceSalon>35</PriceSalon>
+      <PriceDelivery>40</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>5</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013619.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>40b193bd-9c1e-4adf-8e41-55dffc9ddaa1</Id>
+      <Name>Trucha a la Plancha</Name>
+      <Description>Filete de trucha fresca, preparado a la plancha con especias y acompañado de arroz, ensalada y papas.acompañada de una jugosa lasaña</Description>
+      <PriceSalon>20</PriceSalon>
+      <PriceDelivery>25</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>6</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013908.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>7808c357-6918-40d6-b797-b7747cb6e4e9</Id>
+      <Name>Salmón Especial</Name>
+      <Description>Filete de salmón a la plancha, jugoso y sazonado con hierbas, acompañado de arroz, ensalada y papas.</Description>
+      <PriceSalon>40</PriceSalon>
+      <PriceDelivery>45</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>7</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013804.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>e81c20cd-4058-4d5b-970b-6e42e0a9bbfc</Id>
+      <Name>Tilapia Dorada</Name>
+      <Description>Filete de tilapia dorado a la plancha, servido con arroz, ensalada fresca y papas.</Description>
+      <PriceSalon>30</PriceSalon>
+      <PriceDelivery>35</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>8</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013840.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>65f9c047-339e-46c7-8891-67220e50c62f</Id>
+      <Name>Asado de Res</Name>
+      <Description>Jugoso corte de res a la parrilla, acompañado de papas, ensalada y arepa.</Description>
+      <PriceSalon>40</PriceSalon>
+      <PriceDelivery>45</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>9</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013445.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>5bdcd717-d46a-45ff-b2da-c5f813406a6a</Id>
+      <Name>Parrillada Mixta</Name>
+      <Description>Selección de carnes a la parrilla, con pollo, res y chorizo, acompañada de papas, ensalada y arepa.</Description>
+      <PriceSalon>31</PriceSalon>
+      <PriceDelivery>45</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>10</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013456.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>a8ea48f0-95e6-4809-90e7-54fa3279c016</Id>
+      <Name>Asado Especial de la Casa</Name>
+      <Description>Una combinación de carnes seleccionadas a la parrilla, acompañada de papas, ensalada, arepa y salsa de la casa.</Description>
+      <PriceSalon>60</PriceSalon>
+      <PriceDelivery>65</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a29e82b4-7b62-403b-abf2-1c9993639ffc</CategoryId>
+      <Position>11</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Captura de pantalla 2026-09-25 013507.png</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>bf2aa13d-23ea-483d-a874-b6da54df8ce2</Id>
+      <Name>🥤 Coca-Cola</Name>
+      <Description>bebida fria</Description>
+      <PriceSalon>7</PriceSalon>
+      <PriceDelivery>10</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>12</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_o56dsuo56dsuo56d.jpg</ImageUrl>
+      <Stock>40</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>c1fd2f4b-8e72-4192-80a0-16103dad2003</Id>
+      <Name>🍋 Limonada</Name>
+      <Description>bebida fria</Description>
+      <PriceSalon>5</PriceSalon>
+      <PriceDelivery>8</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>1</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_6n2abj6n2abj6n2a.jpg</ImageUrl>
+      <Stock>50</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>aeb82593-718e-4156-bbf3-efd260561e31</Id>
+      <Name>🍓 Limonada de fresa</Name>
+      <Description>bebida fria</Description>
+      <PriceSalon>10</PriceSalon>
+      <PriceDelivery>13</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>2</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_czo4nmczo4nmczo4.jpg</ImageUrl>
+      <Stock>49</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>bcb65011-306c-4e0c-b4aa-d6650241e3f7</Id>
+      <Name>🍍 Jugo de piña</Name>
+      <Description>bebida fria</Description>
+      <PriceSalon>7</PriceSalon>
+      <PriceDelivery>10</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>3</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_1p8req1p8req1p8r.jpg</ImageUrl>
+      <Stock>33</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>2c82dd1b-3bea-4459-b3ec-788573ee3404</Id>
+      <Name>☕ Café</Name>
+      <Description>bebida caliente</Description>
+      <PriceSalon>3</PriceSalon>
+      <PriceDelivery>6</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>4</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_gyjny0gyjny0gyjn.jpg</ImageUrl>
+      <Stock>20</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>2855580c-6ea0-47c9-b67a-b24fb761c1be</Id>
+      <Name>chocolate</Name>
+      <Description>bebida caliente</Description>
+      <PriceSalon>3</PriceSalon>
+      <PriceDelivery>6</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>5</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_npyvs9npyvs9npyv.jpg</ImageUrl>
+      <Stock>21</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>31d3e046-0ab7-4fa1-a8e8-3138bc38cfbf</Id>
+      <Name>💧 Agua</Name>
+      <Description>bebida</Description>
+      <PriceSalon>3</PriceSalon>
+      <PriceDelivery>6</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>6</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_4uc7el4uc7el4uc7.jpg</ImageUrl>
+      <Stock>30</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>e3a38e94-af48-451a-a7c6-573c6823d766</Id>
+      <Name>palitos de queso</Name>
+      <Description>deliciosos palitos rellenos de queso mosarella</Description>
+      <PriceSalon>10</PriceSalon>
+      <PriceDelivery>15</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>3dfda086-fd4f-4037-bc4f-f4e7549668b2</CategoryId>
+      <Position>0</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_gu5c5ngu5c5ngu5c.jpg</ImageUrl>
+      <Stock>30</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>d7b96e08-e810-4fec-aac7-8669f6061a57</Id>
+      <Name>aros de cebolla</Name>
+      <Description>deliciosos aros de cebolla apanaos</Description>
+      <PriceSalon>13</PriceSalon>
+      <PriceDelivery>16</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>3dfda086-fd4f-4037-bc4f-f4e7549668b2</CategoryId>
+      <Position>1</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\img.jpg</ImageUrl>
+      <Stock>30</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>084911fb-3b0e-40d4-a612-adb1f4716612</Id>
+      <Name>cervesa</Name>
+      <Description>bebida fria alcoholica</Description>
+      <PriceSalon>10</PriceSalon>
+      <PriceDelivery>13</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>a5ff2994-26a2-410b-b76f-64b68fa820bf</CategoryId>
+      <Position>2</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_txkdqatxkdqatxkd (1).jpg</ImageUrl>
+      <Stock>0</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+    <MenuItem>
+      <Id>684e6df0-7a86-4c5a-bb94-c2f0b1982b49</Id>
+      <Name>empanadas</Name>
+      <Description>deliciosas empanadas crujientes</Description>
+      <PriceSalon>10</PriceSalon>
+      <PriceDelivery>13</PriceDelivery>
+      <CommissionPercentage>15</CommissionPercentage>
+      <NoCommission>false</NoCommission>
+      <IsAvailable>true</IsAvailable>
+      <IsSuggestion>false</IsSuggestion>
+      <CategoryId>3dfda086-fd4f-4037-bc4f-f4e7549668b2</CategoryId>
+      <Position>2</Position>
+      <ImageUrl>C:\Users\David-PC\Pictures\Screenshots\Gemini_Generated_Image_w4s8kmw4s8kmw4s8.jpg</ImageUrl>
+      <Stock>3</Stock>
+      <IsFavorite>false</IsFavorite>
+      <Variants />
+      <Tags />
+      <DietaryFilters />
+      <InventoryDiscount>0</InventoryDiscount>
+    </MenuItem>
+  </Items>
+</MenuData>
