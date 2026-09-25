@@ -1,5 +1,4 @@
 ﻿<Solution>
-  <Project Path="RestauranteGestor/RestauranteGestor.csproj" />
-  <Project Path="RestoOSTests/RestoOSTests.csproj" />
+  <Project Path="RestauranteGestor.Native/RestauranteGestor.Native.csproj" />
 </Solution>
 

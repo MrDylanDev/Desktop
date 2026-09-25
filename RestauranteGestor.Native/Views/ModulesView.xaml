@@ -1,0 +1,51 @@
+<UserControl x:Class="RestauranteGestor.Native.Views.ModulesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="{StaticResource Surface}">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="28">
+      <TextBlock Text="Módulos" Foreground="{StaticResource Secondary}" FontWeight="Bold" FontSize="12" />
+      <TextBlock Text="Escalabilidad" FontSize="36" FontWeight="Bold" Margin="0,6,0,8" />
+      <TextBlock Text="Activa solo lo que tu restaurante necesita hoy. Los módulos no disponibles se muestran como próximos pasos." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" MaxWidth="760" HorizontalAlignment="Left" />
+
+      <UniformGrid Columns="3" Margin="0,28,0,0">
+        <Border Style="{StaticResource Card}" Margin="0,0,12,12">
+          <StackPanel>
+            <TextBlock Text="▣" Foreground="{StaticResource Primary}" FontSize="30" />
+            <TextBlock Text="Punto de Venta Esencial (POS)" FontSize="20" FontWeight="Bold" Margin="0,14,0,8" />
+            <TextBlock Text="Cobro, comanda, efectivo y tarjeta como método de registro." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" />
+            <TextBlock Text="Núcleo del sistema · Activo" Foreground="{StaticResource Tertiary}" FontWeight="Bold" Margin="0,16,0,0" />
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource Card}" Margin="0,0,12,12">
+          <StackPanel>
+            <TextBlock Text="▦" Foreground="{StaticResource Secondary}" FontSize="30" />
+            <TextBlock Text="Gestión de Salón y Mesas" FontSize="20" FontWeight="Bold" Margin="0,14,0,8" />
+            <TextBlock Text="Plano visual, estados de mesa y apertura de comandas." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" />
+            <CheckBox x:Name="SalonToggle" Content="Módulo activado" IsChecked="True" Foreground="{StaticResource Tertiary}" FontWeight="Bold" Margin="0,16,0,0" Checked="ModuleToggle_Changed" Unchecked="ModuleToggle_Changed" />
+            <TextBlock x:Name="SalonStatus" Text="Módulo activo" Foreground="{StaticResource Tertiary}" FontWeight="Bold" Margin="0,8,0,0" />
+          </StackPanel>
+        </Border>
+        <Border Style="{StaticResource Card}" Margin="0,0,0,12">
+          <StackPanel>
+            <TextBlock Text="▤" Foreground="{StaticResource Primary}" FontSize="30" />
+            <TextBlock Text="Menú y productos" FontSize="20" FontWeight="Bold" Margin="0,14,0,8" />
+            <TextBlock Text="Catálogo de categorías, platos, precios y disponibilidad." Foreground="{StaticResource OnSurfaceVariant}" TextWrapping="Wrap" />
+            <CheckBox x:Name="MenuToggle" Content="Módulo activado" IsChecked="True" Foreground="{StaticResource Tertiary}" FontWeight="Bold" Margin="0,16,0,0" Checked="ModuleToggle_Changed" Unchecked="ModuleToggle_Changed" />
+            <TextBlock x:Name="MenuStatus" Text="Módulo activo" Foreground="{StaticResource Tertiary}" FontWeight="Bold" Margin="0,8,0,0" />
+          </StackPanel>
+        </Border>
+      </UniformGrid>
+
+      <TextBlock Text="Módulos futuros" Foreground="{StaticResource Secondary}" FontWeight="Bold" Margin="0,18,0,12" />
+      <UniformGrid Columns="3">
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,12,12"><TextBlock Text="KDS · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,12,12"><TextBlock Text="Inventario · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,0,12"><TextBlock Text="Reservas · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,12,12"><TextBlock Text="Reportes · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,12,12"><TextBlock Text="DIAN · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+        <Border Style="{StaticResource Card}" Opacity="0.55" Margin="0,0,0,12"><TextBlock Text="Delivery · Próximamente" FontSize="17" FontWeight="SemiBold" /></Border>
+      </UniformGrid>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
