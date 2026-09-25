@@ -4,29 +4,35 @@ namespace app_escritorio.Utils
 {
     public static class Theme
     {
-        // Base colors (dark mode inspired by modern restaurant UIs)
-        public static readonly Color BackgroundDark = Color.FromArgb(30, 30, 30);      // #1e1e1e
-        public static readonly Color BackgroundMedium = Color.FromArgb(50, 50, 50);    // #323232
-        public static readonly Color BackgroundLight = Color.FromArgb(70, 70, 70);     // #464646
+        // Base (paridad con tema WPF: Surface)
+        public static readonly Color BackgroundDark = Color.FromArgb(17, 20, 21);       // #111415
+        public static readonly Color BackgroundMedium = Color.FromArgb(29, 32, 34);     // #1D2022
+        public static readonly Color BackgroundLight = Color.FromArgb(40, 42, 44);      // #282A2C
 
-        // Accent colors
-        public static readonly Color AccentPrimary = Color.FromArgb(255, 107, 53);     // Orange/Gold
-        public static readonly Color AccentSecondary = Color.FromArgb(76, 175, 80);    // Green
-        public static readonly Color AccentWarning = Color.FromArgb(255, 152, 0);      // Amber
+        // Acentos (paridad WPF)
+        public static readonly Color AccentPrimary = Color.FromArgb(240, 101, 54);      // #F06536
+        public static readonly Color AccentSecondary = Color.FromArgb(78, 222, 163);    // #4EDEA3
+        public static readonly Color AccentWarning = Color.FromArgb(255, 185, 95);      // #FFB95F
 
-        // Text colors
-        public static readonly Color TextPrimary = Color.White;
-        public static readonly Color TextSecondary = Color.FromArgb(200, 200, 200);    // Light gray
-        public static readonly Color TextMuted = Color.FromArgb(140, 140, 140);        // Muted gray
+        // Texto (paridad WPF)
+        public static readonly Color TextPrimary = Color.FromArgb(225, 226, 228);       // #E1E2E4
+        public static readonly Color TextSecondary = Color.FromArgb(225, 191, 181);     // #E1BFB5
+        public static readonly Color TextMuted = Color.FromArgb(225, 191, 181);         // #E1BFB5
+        public static readonly Color TertiaryText = Color.FromArgb(0, 56, 36);          // #003824 (texto sobre verde)
+        public static readonly Color DangerBackground = Color.FromArgb(46, 26, 26);     // #2E1A1A (fondo peligro)
 
-        // Status colors
-        public static readonly Color StatusAvailable = Color.FromArgb(76, 175, 80);    // Green
-        public static readonly Color StatusUnavailable = Color.FromArgb(244, 67, 54);  // Red
-        public static readonly Color StatusWarning = Color.FromArgb(255, 152, 0);      // Orange
+        // Estado (paridad WPF)
+        public static readonly Color StatusAvailable = Color.FromArgb(78, 222, 163);    // #4EDEA3
+        public static readonly Color StatusUnavailable = Color.FromArgb(255, 180, 171); // #FFB4AB
+        public static readonly Color StatusWarning = Color.FromArgb(255, 185, 95);      // #FFB95F
 
-        // Border colors
-        public static readonly Color BorderLight = Color.FromArgb(80, 80, 80);
-        public static readonly Color BorderDark = Color.FromArgb(40, 40, 40);
+        // Botones estilo app (paridad con PrimaryButton del tema WPF: melocotón + texto oscuro)
+        public static readonly Color ButtonPrimary = Color.FromArgb(255, 181, 157);
+        public static readonly Color ButtonPrimaryText = Color.FromArgb(93, 24, 0);
+
+        // Bordes (paridad WPF)
+        public static readonly Color BorderLight = Color.FromArgb(89, 65, 58);          // #59413A
+        public static readonly Color BorderDark = Color.FromArgb(12, 15, 16);           // #0C0F10
 
         // Fonts
         public static Font FontPrimary => new Font("Segoe UI", 10F, FontStyle.Regular);

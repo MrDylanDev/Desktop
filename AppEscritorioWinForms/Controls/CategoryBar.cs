@@ -20,10 +20,10 @@ namespace app_escritorio.Controls
         public CategoryBar()
         {
             this.Dock = DockStyle.Top;
-            this.Height = 60;
+            this.Height = 48;
             this.BackColor = Theme.BackgroundDark;
             this.ForeColor = Theme.TextPrimary;
-            this.Padding = new Padding(10);
+            this.Padding = new Padding(10, 2, 10, 2);
 
             categoryFlow = new FlowLayoutPanel
             {
@@ -55,18 +55,19 @@ namespace app_escritorio.Controls
         {
             var btn = new Button
             {
-                Text = $"⬤ {name}",
-                Size = new Size(120, 40),
-                Font = Theme.FontPrimary,
+                Text = name,
+                Size = new Size(140, 36),
+                Font = Theme.FontSmall,
                 FlatStyle = FlatStyle.Flat,
-                BackColor = isActive ? Theme.AccentPrimary : Theme.BackgroundMedium,
-                ForeColor = isActive ? Color.White : Theme.TextSecondary,
+                BackColor = isActive ? Theme.ButtonPrimary : Theme.BackgroundMedium,
+                ForeColor = isActive ? Theme.ButtonPrimaryText : Theme.TextSecondary,
                 Margin = new Padding(4),
                 Tag = catId
             };
 
-            btn.FlatAppearance.BorderColor = Theme.BorderLight;
-            btn.FlatAppearance.BorderSize = 1;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.MouseOverBackColor = isActive ? Theme.ButtonPrimary : Theme.BackgroundLight;
+            btn.Region = new Region(RoundedRect(new Rectangle(0, 0, 140, 36), 14));
 
             btn.Click += (s, e) =>
             {
@@ -75,16 +76,27 @@ namespace app_escritorio.Controls
 
             btn.MouseEnter += (s, e) =>
             {
-                if (!isActive)
+                if (catId != selectedCategoryId)
                     btn.BackColor = Theme.BackgroundLight;
             };
 
             btn.MouseLeave += (s, e) =>
             {
-                btn.BackColor = (catId == selectedCategoryId) ? Theme.AccentPrimary : Theme.BackgroundMedium;
+                btn.BackColor = (catId == selectedCategoryId) ? Theme.ButtonPrimary : Theme.BackgroundMedium;
             };
 
             return btn;
+        }
+
+        private static System.Drawing.Drawing2D.GraphicsPath RoundedRect(Rectangle rect, int diameter)
+        {
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         private void SelectCategory(Guid? catId)
@@ -95,8 +107,8 @@ namespace app_escritorio.Controls
             foreach (Button btn in categoryFlow.Controls.OfType<Button>())
             {
                 var btnCatId = btn.Tag as Guid?;
-                btn.BackColor = (btnCatId == catId) ? Theme.AccentPrimary : Theme.BackgroundMedium;
-                btn.ForeColor = (btnCatId == catId) ? Color.White : Theme.TextSecondary;
+                btn.BackColor = (btnCatId == catId) ? Theme.ButtonPrimary : Theme.BackgroundMedium;
+                btn.ForeColor = (btnCatId == catId) ? Theme.ButtonPrimaryText : Theme.TextSecondary;
             }
 
             // Disparar evento

@@ -18,6 +18,7 @@ namespace RestauranteGestor.Native
         private readonly ReservasView _reservas = new ReservasView();
         private readonly DeliveryView _delivery = new DeliveryView();
         private readonly ReportesView _reportes = new ReportesView();
+        private readonly ConfiguracionView _configuracion = new ConfiguracionView();
         private readonly string _role;
 
         public MainWindow() : this("Admin") { }
@@ -75,6 +76,7 @@ namespace RestauranteGestor.Native
         private void BtnReservas_Click(object sender, RoutedEventArgs e) => Navigate("reservas");
         private void BtnDelivery_Click(object sender, RoutedEventArgs e) => Navigate("delivery");
         private void BtnReportes_Click(object sender, RoutedEventArgs e) => Navigate("reportes");
+        private void BtnConfiguracion_Click(object sender, RoutedEventArgs e) => Navigate("configuracion");
         private void BtnMenu_Click(object sender, RoutedEventArgs e) => Navigate("menu");
 
         private void ModuleStateChanged(string module, bool enabled)
@@ -129,6 +131,7 @@ namespace RestauranteGestor.Native
             switch (route)
             {
                 case "pos":
+                    _pos.ReloadTax();
                     view = _pos;
                     LblRoute.Text = "  POS";
                     BtnPos.Background = (System.Windows.Media.Brush)FindResource("SurfaceHigh");
@@ -168,6 +171,17 @@ namespace RestauranteGestor.Native
                     LblRoute.Text = "  Reportes · Solo Admin";
                     BtnReportes.Background = (System.Windows.Media.Brush)FindResource("SurfaceHigh");
                     break;
+                case "configuracion":
+                    if (_role != "Admin" && _role != "Administrador")
+                    {
+                        MessageBox.Show("Solo el Administrador puede ver Configuración.", "RestoOS", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    _configuracion.RefreshData();
+                    view = _configuracion;
+                    LblRoute.Text = "  Configuración · Solo Admin";
+                    BtnConfiguracion.Background = (System.Windows.Media.Brush)FindResource("SurfaceHigh");
+                    break;
                 case "menu":
                     view = _menu;
                     LblRoute.Text = "  Menú y productos";
@@ -192,6 +206,7 @@ namespace RestauranteGestor.Native
             BtnReservas.Background = System.Windows.Media.Brushes.Transparent;
             BtnDelivery.Background = System.Windows.Media.Brushes.Transparent;
             BtnReportes.Background = System.Windows.Media.Brushes.Transparent;
+            BtnConfiguracion.Background = System.Windows.Media.Brushes.Transparent;
             BtnMenu.Background = System.Windows.Media.Brushes.Transparent;
         }
     }

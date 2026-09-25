@@ -46,6 +46,7 @@ namespace RestauranteGestor.Native.Views
             TaxSelector.Items.Add("INC — 8%");
             TaxSelector.Items.Add("IVA — 19%");
             TaxSelector.SelectedIndex = 1;
+            ApplySavedTax();
             Loaded += PosView_Loaded;
             RefreshTicket();
         }
@@ -95,6 +96,26 @@ namespace RestauranteGestor.Native.Views
             _ticket = GetTicketFor(_table);
             RefreshTicket();
             UpdateDomicilioVisibility();
+        }
+
+        /// <summary>
+        /// Aplica el impuesto por defecto guardado en Configuración.
+        /// </summary>
+        public void ReloadTax()
+        {
+            ApplySavedTax();
+            RefreshTicket();
+        }
+
+        private void ApplySavedTax()
+        {
+            int p = ConfiguracionView.LoadTaxPercent();
+            if (TaxSelector == null) { _taxRate = p == 0 ? 0m : (p == 19 ? 0.19m : 0.08m); return; }
+            TaxSelector.SelectionChanged -= TaxSelector_SelectionChanged;
+            if (p == 0) { _taxRate = 0m; TaxSelector.SelectedIndex = 0; }
+            else if (p == 19) { _taxRate = 0.19m; TaxSelector.SelectedIndex = 2; }
+            else { _taxRate = 0.08m; TaxSelector.SelectedIndex = 1; }
+            TaxSelector.SelectionChanged += TaxSelector_SelectionChanged;
         }
 
         private void LoadProducts()

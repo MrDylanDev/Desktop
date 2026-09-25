@@ -17,11 +17,11 @@ namespace app_escritorio
         private FlowLayoutPanel flowPanel;
         private Panel rightPanel;
         private TextBox txtSearch;
-        private Button btnSaveAll;
         private app_escritorio.Controls.StatusBar statusBar;
         private string dataFile = "data/menu.xml";
         private app_escritorio.Data.MenuData menuData;
         private Guid? currentSelectedCategoryId = null;
+        private app_escritorio.Models.MenuItem _editingItem;
 
         public Form1()
         {
@@ -41,9 +41,9 @@ namespace app_escritorio
             var toolBar = new Panel 
             { 
                 Dock = DockStyle.Top, 
-                Height = 60, 
+                Height = 52, 
                 BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
-                Padding = new Padding(8),
+                Padding = new Padding(4),
                 BorderStyle = BorderStyle.FixedSingle
             };
 
@@ -51,46 +51,22 @@ namespace app_escritorio
             {
                 Dock = DockStyle.Fill,
                 WrapContents = false,
-                AutoScroll = false
+                AutoScroll = true
             };
 
-            // Toolbar buttons
-            var btnAutoSync = CreateToolbarButton("🔄 Auto-Sync Carta QR", 180);
-            btnAutoSync.Click += (s, e) => BtnAutoSync_Click();
-
-            var btnPrintQR = CreateToolbarButton("🖨️ Imprimir QR Mesas", 180);
-            btnPrintQR.Click += (s, e) => BtnPrintQR_Click();
-
-            var btnModoMovil = CreateToolbarButton("📱 Modo Móvil QR", 160);
-            btnModoMovil.Click += (s, e) => BtnModoMovil_Click();
-
-            var btnNewItem = CreateToolbarButton("➕ Nuevo Plato/Bebida", 180, app_escritorio.Utils.Theme.AccentSecondary);
+            // Toolbar buttons (misma estructura que las páginas WPF: 36px, un primario, resto secundarios)
+            var btnNewItem = CreateToolbarButton("+ Nuevo plato", 150, true);
             btnNewItem.Click += (s, e) => BtnNewItem_Click();
 
-            var btnCategories = CreateToolbarButton("☰ Categorías", 125, app_escritorio.Utils.Theme.BackgroundLight);
+            var btnCategories = CreateToolbarButton("Categorías", 125);
             btnCategories.Click += (s, e) => ManageCategories();
 
-            var btnBackup = CreateToolbarButton("💾 Respaldo", 120, app_escritorio.Utils.Theme.BackgroundLight);
-            btnBackup.Click += (s, e) => CreateBackup();
-
-            var btnSettings = CreateToolbarButton("⚙ Configuración", 130, app_escritorio.Utils.Theme.BackgroundLight);
-            btnSettings.Click += (s, e) => OpenSettings();
-
-            var btnHistory = CreateToolbarButton("📋 Historial", 130, app_escritorio.Utils.Theme.BackgroundLight);
+            var btnHistory = CreateToolbarButton("Historial", 130);
             btnHistory.Click += (s, e) => OpenOrderHistory();
 
-            var btnNewOrder = CreateToolbarButton("🧾 Crear Pedido", 160, app_escritorio.Utils.Theme.AccentPrimary);
-            btnNewOrder.Click += (s, e) => BtnNewOrder_Click();
-
-            toolFlow.Controls.Add(btnAutoSync);
-            toolFlow.Controls.Add(btnPrintQR);
-            toolFlow.Controls.Add(btnModoMovil);
             toolFlow.Controls.Add(btnNewItem);
             toolFlow.Controls.Add(btnCategories);
-            toolFlow.Controls.Add(btnBackup);
-            toolFlow.Controls.Add(btnSettings);
             toolFlow.Controls.Add(btnHistory);
-            toolFlow.Controls.Add(btnNewOrder);
 
             var spacer = new Label { Width = 30, Height = 40 };
             toolFlow.Controls.Add(spacer);
@@ -101,24 +77,10 @@ namespace app_escritorio
             var topBar = new Panel 
             { 
                 Dock = DockStyle.Top, 
-                Height = 50, 
+                Height = 44, 
                 BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
-                Padding = new Padding(8)
+                Padding = new Padding(8, 4, 8, 4)
             };
-
-            btnSaveAll = new Button 
-            { 
-                Text = "💾 Guardar Carta", 
-                Dock = DockStyle.Right, 
-                Width = 150,
-                Font = app_escritorio.Utils.Theme.FontSmall,
-                BackColor = app_escritorio.Utils.Theme.AccentPrimary,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(5)
-            };
-            btnSaveAll.FlatAppearance.BorderSize = 0;
-            btnSaveAll.Click += (s, e) => SaveMenu();
 
             txtSearch = new TextBox 
             { 
@@ -130,8 +92,7 @@ namespace app_escritorio
             };
             txtSearch.TextChanged += (s, e) => ApplySearch();
 
-            statusBar = new app_escritorio.Controls.StatusBar { Dock = DockStyle.Fill, Width = 430, Height = 42, Padding = new Padding(3, 0, 3, 0) };
-            topBar.Controls.Add(btnSaveAll);
+            statusBar = new app_escritorio.Controls.StatusBar { Dock = DockStyle.Fill, Width = 430, Height = 34, Padding = new Padding(3, 0, 3, 0) };
             topBar.Controls.Add(statusBar);
             topBar.Controls.Add(txtSearch);
 
@@ -151,12 +112,13 @@ namespace app_escritorio
             flowPanel.AllowDrop = true;
             flowPanel.DragEnter += FlowPanel_DragEnter;
             flowPanel.DragDrop += FlowPanel_DragDrop;
+            flowPanel.SizeChanged += (s, e) => FitCardsToWidth();
 
             // ========== RIGHT EDITOR PANEL ==========
             rightPanel = new Panel 
             { 
                 Dock = DockStyle.Right, 
-                Width = 380, 
+                Width = 250, 
                 BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
                 Padding = new Padding(10),
                 AutoScroll = true
@@ -175,30 +137,47 @@ namespace app_escritorio
                 Padding = new Padding(0)
             };
             mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 400F));
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
             mainLayout.Controls.Add(leftContainer, 0, 0);
             mainLayout.Controls.Add(rightPanel, 1, 0);
             rightPanel.Dock = DockStyle.Fill;
-            rightPanel.Width = 400;
+            rightPanel.Width = 250;
 
             this.Controls.Add(mainLayout);
             this.Controls.Add(topBar);
             this.Controls.Add(toolBar);
         }
 
-        private Button CreateToolbarButton(string text, int width, Color? backColor = null)
+        private Button CreateToolbarButton(string text, int width, bool primary = false)
         {
-            return new Button
+            var back = primary ? app_escritorio.Utils.Theme.ButtonPrimary : app_escritorio.Utils.Theme.BackgroundMedium;
+            var fore = primary ? app_escritorio.Utils.Theme.ButtonPrimaryText : System.Drawing.Color.White;
+            var button = new Button
             {
                 Text = text,
                 Width = width,
-                Height = 40,
+                Height = 36,
                 Font = app_escritorio.Utils.Theme.FontSmall,
-                BackColor = backColor ?? app_escritorio.Utils.Theme.AccentPrimary,
-                ForeColor = Color.White,
+                BackColor = back,
+                ForeColor = fore,
                 FlatStyle = FlatStyle.Flat,
                 Margin = new Padding(4)
             };
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.MouseOverBackColor = primary ? app_escritorio.Utils.Theme.ButtonPrimary : app_escritorio.Utils.Theme.BackgroundLight;
+            button.Region = new Region(RoundedRect(new Rectangle(0, 0, width, 36), 16));
+            return button;
+        }
+
+        private static System.Drawing.Drawing2D.GraphicsPath RoundedRect(Rectangle rect, int diameter)
+        {
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
+            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
+            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
+            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
+            path.CloseFigure();
+            return path;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -234,6 +213,9 @@ namespace app_escritorio
 
             // Populate cards
             PopulateCards(null);  // null = show all
+
+            // Panel derecho con estado inicial útil (no vacío)
+            ShowEmptyEditor();
         }
 
         private void CategoryBar_CategorySelected(object sender, app_escritorio.Controls.CategorySelectedEventArgs e)
@@ -263,13 +245,35 @@ namespace app_escritorio
                 flowPanel.Controls.Add(card);
             }
             if (statusBar != null) statusBar.SetItems(itemsToShow);
+            FitCardsToWidth();
+        }
+
+        /// <summary>
+        /// Grilla responsiva: calcula cuántas columnas caben y reparte el ancho
+        /// para que ninguna tarjeta (ni sus botones) quede cortada por mitad.
+        /// </summary>
+        private int _lastFitWidth = -1;
+
+        private void FitCardsToWidth()
+        {
+            if (flowPanel == null || flowPanel.IsDisposed) return;
+            int avail = flowPanel.ClientSize.Width - flowPanel.Padding.Horizontal - 20;
+            if (avail < 180) avail = 180;
+            if (System.Math.Abs(avail - _lastFitWidth) < 4) return;
+            _lastFitWidth = avail;
+            int cols = System.Math.Max(1, (int)System.Math.Round(avail / 262.0));
+            while (cols > 1 && (avail - (cols - 1) * 12) / cols < 180) cols--;
+            int w = (avail - (cols - 1) * 12) / cols;
+            flowPanel.SuspendLayout();
+            foreach (var card in flowPanel.Controls.OfType<app_escritorio.Controls.MenuCard>()) card.SetCardWidth(w);
+            flowPanel.ResumeLayout(true);
         }
 
         private void Card_EditRequested(object sender, EventArgs e)
         {
             var card = sender as app_escritorio.Controls.MenuCard;
             if (card == null) return;
-            ShowEditorFor(card.Item);
+            ShowEditorFor(card.Item, false);
         }
 
         private void Card_DeleteRequested(object sender, EventArgs e)
@@ -281,14 +285,82 @@ namespace app_escritorio
             foreach (var category in menuData.Categories) category.ItemIds.Remove(card.Item.Id);
             SaveMenu();
             PopulateCards(currentSelectedCategoryId);
+            if (ReferenceEquals(_editingItem, card.Item)) ShowEmptyEditor();
         }
 
-        private void ShowEditorFor(app_escritorio.Models.MenuItem item)
+        /// <summary>
+        /// Estado inicial del panel derecho: guía + resumen + accesos directos,
+        /// en vez del hueco vacío hasta el primer Editar.
+        /// </summary>
+        private void ShowEmptyEditor()
         {
             rightPanel.Controls.Clear();
+            _editingItem = null;
+
+            int dishes = menuData != null && menuData.Items != null ? menuData.Items.Count : 0;
+            int cats = menuData != null && menuData.Categories != null ? menuData.Categories.Count : 0;
+            int avail = 0;
+            if (menuData != null && menuData.Items != null)
+            {
+                foreach (var it in menuData.Items) if (it != null && it.IsAvailable) avail++;
+            }
+
+            var btnNew = CreateEditorButton("+ Nuevo plato", 210, app_escritorio.Utils.Theme.AccentSecondary, app_escritorio.Utils.Theme.TertiaryText);
+            btnNew.Dock = DockStyle.Top;
+            btnNew.Click += (s, e) => BtnNewItem_Click();
+            var btnCats = CreateEditorButton("Categorías", 210, app_escritorio.Utils.Theme.BackgroundLight);
+            btnCats.Dock = DockStyle.Top;
+            btnCats.Click += (s, e) => ManageCategories();
+            var stats = new Label
+            {
+                Text = string.Format("{0} platos · {1} categorías · {2} disponibles", dishes, cats, avail),
+                Dock = DockStyle.Top,
+                Height = 30,
+                ForeColor = app_escritorio.Utils.Theme.TextSecondary,
+                Font = app_escritorio.Utils.Theme.FontSmall,
+                Margin = new Padding(5, 2, 5, 8)
+            };
+            var hint = new Label
+            {
+                Text = "Selecciona un plato de la carta para verlo y editarlo aquí.\n\nTambién puedes crear uno nuevo o administrar las categorías.",
+                Dock = DockStyle.Top,
+                Height = 110,
+                ForeColor = app_escritorio.Utils.Theme.TextSecondary,
+                Font = app_escritorio.Utils.Theme.FontSmall,
+                Margin = new Padding(5, 2, 5, 8)
+            };
+            var title = new Label { Text = "Editor", Dock = DockStyle.Top, Height = 42, Font = app_escritorio.Utils.Theme.FontTitle, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Padding = new Padding(4, 10, 4, 4) };
+
+            rightPanel.Controls.Add(btnNew);
+            rightPanel.Controls.Add(btnCats);
+            rightPanel.Controls.Add(stats);
+            rightPanel.Controls.Add(hint);
+            rightPanel.Controls.Add(title);
+        }
+
+        private void ShowEditorFor(app_escritorio.Models.MenuItem item, bool isNew)
+        {
+            rightPanel.Controls.Clear();
+            _editingItem = isNew ? null : item;
             if (item == null) return;
 
-            var title = new Label { Text = "✏️ Editar plato", Dock = DockStyle.Top, Height = 42, Font = app_escritorio.Utils.Theme.FontTitle, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Padding = new Padding(4, 10, 4, 4) };
+            var title = new Label { Text = isNew ? "Nuevo plato" : "Editar plato", Dock = DockStyle.Fill, Font = app_escritorio.Utils.Theme.FontTitle, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Padding = new Padding(4, 10, 4, 4), TextAlign = ContentAlignment.MiddleLeft };
+            var btnClose = new Button
+            {
+                Text = "×",
+                Dock = DockStyle.Right,
+                Width = 44,
+                FlatStyle = FlatStyle.Flat,
+                Font = new Font("Segoe UI", 14F, FontStyle.Bold),
+                ForeColor = app_escritorio.Utils.Theme.TextSecondary,
+                BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
+                Margin = new Padding(0)
+            };
+            btnClose.FlatAppearance.BorderSize = 0;
+            btnClose.Click += (s, e) => ShowEmptyEditor();
+            var header = new Panel { Dock = DockStyle.Top, Height = 42, BackColor = app_escritorio.Utils.Theme.BackgroundMedium };
+            header.Controls.Add(title);
+            header.Controls.Add(btnClose);
             var image = new PictureBox { Dock = DockStyle.Top, Height = 145, SizeMode = PictureBoxSizeMode.Zoom, BackColor = app_escritorio.Utils.Theme.BackgroundDark, Margin = new Padding(5) };
             var btnImage = CreateEditorButton("📷 Elegir foto", 130, app_escritorio.Utils.Theme.BackgroundLight);
             btnImage.Click += (s, e) =>
@@ -325,35 +397,41 @@ namespace app_escritorio
             var txtTags = CreateEditorTextBox(item.Tags == null ? "" : string.Join(", ", item.Tags), 28);
 
             var lblPrice = CreateEditorLabel("Precio salón ($)");
-            var nudPrice = CreateEditorNumber(item.PriceSalon, 2);
+            var txtPrice = CreateEditorTextBox(item.PriceSalon.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture), 28);
             var lblDelivery = CreateEditorLabel("Precio delivery ($)");
-            var nudDelivery = CreateEditorNumber(item.PriceDelivery, 2);
+            var txtDelivery = CreateEditorTextBox(item.PriceDelivery.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture), 28);
             var lblStock = CreateEditorLabel("Stock (-1 = ilimitado)");
-            var nudStock = CreateEditorNumber(item.Stock, 0);
-            nudStock.Minimum = -1;
+            var txtStock = CreateEditorTextBox(item.Stock.ToString(System.Globalization.CultureInfo.InvariantCulture), 28);
             var available = new CheckBox { Text = "Disponible en el menú", Checked = item.IsAvailable, Dock = DockStyle.Top, Height = 30, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Font = app_escritorio.Utils.Theme.FontSmall, Margin = new Padding(5) };
 
-            var btnSave = CreateEditorButton("Guardar cambios del plato", 350, app_escritorio.Utils.Theme.AccentSecondary);
+            var btnSave = CreateEditorButton(isNew ? "Agregar a la carta" : "Guardar cambios del plato", 210, app_escritorio.Utils.Theme.AccentSecondary, app_escritorio.Utils.Theme.TertiaryText);
             btnSave.Click += (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtName.Text)) { MessageBox.Show("Escribe un nombre para el plato.", "Falta información"); txtName.Focus(); return; }
+                decimal priceSalon, priceDelivery;
+                int stock;
+                if (!TryParseMoney(txtPrice.Text, out priceSalon)) { MessageBox.Show("Precio de salón inválido. Ejemplo: 20000", "Falta información"); txtPrice.Focus(); return; }
+                if (!TryParseMoney(txtDelivery.Text, out priceDelivery)) { MessageBox.Show("Precio de delivery inválido. Ejemplo: 23000", "Falta información"); txtDelivery.Focus(); return; }
+                if (!int.TryParse((txtStock.Text ?? "").Trim(), out stock) || stock < -1) { MessageBox.Show("Stock inválido. Usa -1 para ilimitado.", "Falta información"); txtStock.Focus(); return; }
                 var selectedCategory = categoryBox.SelectedItem as app_escritorio.Models.Category;
                 item.Name = txtName.Text.Trim();
                 item.Description = txtDesc.Text.Trim();
                 item.CategoryId = selectedCategory == null ? item.CategoryId : selectedCategory.Id;
-                item.PriceSalon = nudPrice.Value;
-                item.PriceDelivery = nudDelivery.Value;
-                item.Stock = (int)nudStock.Value;
+                item.PriceSalon = priceSalon;
+                item.PriceDelivery = priceDelivery;
+                item.Stock = stock;
                 item.IsAvailable = available.Checked;
                 item.Tags = (txtTags.Text ?? "").Split(',').Select(t => t.Trim()).Where(t => t.Length > 0).ToList();
                 if (item.Variants == null) item.Variants = new List<app_escritorio.Models.MenuVariant>();
                 if (item.Tags == null) item.Tags = new List<string>();
                 if (item.DietaryFilters == null) item.DietaryFilters = new List<string>();
+                if (isNew) menuData.Items.Add(item);
                 SaveMenu();
                 categoryBar.SetCategories(menuData.Categories);
                 PopulateCards(currentSelectedCategoryId);
             };
-            var btnDelete = CreateEditorButton("Eliminar plato", 350, app_escritorio.Utils.Theme.StatusUnavailable);
+            var btnDelete = CreateEditorButton("Eliminar plato", 210, app_escritorio.Utils.Theme.DangerBackground, app_escritorio.Utils.Theme.StatusUnavailable);
+            btnDelete.Visible = !isNew;
             btnDelete.Click += (s, e) =>
             {
                 if (MessageBox.Show("¿Eliminar este plato de la carta?", "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
@@ -361,13 +439,13 @@ namespace app_escritorio
                 foreach (var category in menuData.Categories) category.ItemIds.Remove(item.Id);
                 SaveMenu();
                 PopulateCards(currentSelectedCategoryId);
-                rightPanel.Controls.Clear();
+                ShowEmptyEditor();
             };
             var actions = new FlowLayoutPanel
             {
                 Dock = DockStyle.Bottom,
                 Height = 84,
-                Width = 360,
+                Width = 210,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
                 AutoScroll = false,
@@ -378,11 +456,11 @@ namespace app_escritorio
 
             rightPanel.Controls.Add(actions);
             rightPanel.Controls.Add(available);
-            rightPanel.Controls.Add(nudStock);
+            rightPanel.Controls.Add(txtStock);
             rightPanel.Controls.Add(lblStock);
-            rightPanel.Controls.Add(nudDelivery);
+            rightPanel.Controls.Add(txtDelivery);
             rightPanel.Controls.Add(lblDelivery);
-            rightPanel.Controls.Add(nudPrice);
+            rightPanel.Controls.Add(txtPrice);
             rightPanel.Controls.Add(lblPrice);
             rightPanel.Controls.Add(txtTags);
             rightPanel.Controls.Add(lblTags);
@@ -393,7 +471,7 @@ namespace app_escritorio
             rightPanel.Controls.Add(categoryBox);
             rightPanel.Controls.Add(lblCategory);
             rightPanel.Controls.Add(imagePanel);
-            rightPanel.Controls.Add(title);
+            rightPanel.Controls.Add(header);
             LoadEditorImage(image, item.ImageUrl);
         }
 
@@ -407,14 +485,16 @@ namespace app_escritorio
             return new TextBox { Text = text ?? "", Dock = DockStyle.Top, Height = height, Font = app_escritorio.Utils.Theme.FontSmall, BackColor = app_escritorio.Utils.Theme.BackgroundDark, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Margin = new Padding(5, 2, 5, 5) };
         }
 
-        private static NumericUpDown CreateEditorNumber(decimal value, int decimals)
+        private static bool TryParseMoney(string raw, out decimal value)
         {
-            return new NumericUpDown { Value = Math.Max(0, value), DecimalPlaces = decimals, Dock = DockStyle.Top, Height = 28, Maximum = 100000, Font = app_escritorio.Utils.Theme.FontSmall, BackColor = app_escritorio.Utils.Theme.BackgroundDark, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Margin = new Padding(5, 2, 5, 5) };
+            value = 0;
+            string t = (raw ?? "").Trim().Replace("$", "").Replace(" ", "").Replace(",", ".");
+            return decimal.TryParse(t, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value) && value >= 0;
         }
 
-        private static Button CreateEditorButton(string text, int width, Color color)
+        private static Button CreateEditorButton(string text, int width, Color color, Color? foreColor = null)
         {
-            var button = new Button { Text = text, Width = width, Height = 34, BackColor = color, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = app_escritorio.Utils.Theme.FontSmall, Margin = new Padding(3) };
+            var button = new Button { Text = text, Width = width, Height = 34, BackColor = color, ForeColor = foreColor ?? Color.White, FlatStyle = FlatStyle.Flat, Font = app_escritorio.Utils.Theme.FontSmall, Margin = new Padding(3) };
             button.FlatAppearance.BorderSize = 0;
             return button;
         }
@@ -434,11 +514,10 @@ namespace app_escritorio
             try
             {
                 app_escritorio.Data.MenuStore.Save(dataFile, menuData);
-                MessageBox.Show("✓ Carta guardada correctamente.", "Guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("❌ Error al guardar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al guardar: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -513,21 +592,6 @@ namespace app_escritorio
             }
         }
 
-        private void OpenSettings()
-        {
-            using (var settingsForm = new app_escritorio.Forms.SettingsForm("data/settings.xml")) settingsForm.ShowDialog(this);
-        }
-
-        private void CreateBackup()
-        {
-            if (!File.Exists(dataFile)) { SaveMenu(); }
-            var folder = Path.Combine("data", "backups");
-            Directory.CreateDirectory(folder);
-            var destination = Path.Combine(folder, "menu_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".xml");
-            File.Copy(dataFile, destination, true);
-            MessageBox.Show("Respaldo creado en: " + destination, "Respaldo de carta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void OpenOrderHistory()
         {
             using (var historyForm = new app_escritorio.Forms.OrderHistoryForm("data/orders.xml"))
@@ -538,62 +602,14 @@ namespace app_escritorio
             }
         }
 
-        private void BtnNewOrder_Click()
-        {
-            if (menuData == null)
-            {
-                MessageBox.Show("Primero carga la carta.", "Crear pedido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            using (var orderForm = new app_escritorio.Forms.OrderForm(menuData))
-            {
-                orderForm.TopMost = true;
-                orderForm.Shown += (s, e) =>
-                {
-                    orderForm.Activate();
-                    orderForm.BringToFront();
-                };
-                orderForm.ShowDialog(this);
-                orderForm.TopMost = false;
-            }
-        }
-
         // ========== TOOLBAR BUTTON HANDLERS ==========
-        private void BtnAutoSync_Click()
-        {
-            MessageBox.Show(
-                "✅ Auto-Sync activado\n\nLa carta se sincronizará automáticamente cada 5 segundos.",
-                "Auto-Sync Carta QR",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
-
-        private void BtnPrintQR_Click()
-        {
-            MessageBox.Show(
-                "🖨️ Función de impresión de QR\n\nGeneando códigos QR para cada mesa...\n\n(Funcionalidad en desarrollo)",
-                "Imprimir QR Mesas",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
-
-        private void BtnModoMovil_Click()
-        {
-            MessageBox.Show(
-                "📱 Modo Móvil QR activado\n\nClientes pueden escanear el QR desde sus teléfonos para ver la carta en versión móvil.",
-                "Modo Móvil QR",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-        }
-
         private void BtnNewItem_Click()
         {
             if (menuData == null) return;
             if (menuData.Categories.Count == 0) { MessageBox.Show("Primero crea una categoría.", "Nuevo plato", MessageBoxButtons.OK, MessageBoxIcon.Information); return; }
             var item = new app_escritorio.Models.MenuItem
             {
-                Name = "Nuevo plato",
+                Name = "",
                 CategoryId = currentSelectedCategoryId ?? menuData.Categories.OrderBy(c => c.Position).First().Id,
                 PriceSalon = 0,
                 PriceDelivery = 0,
@@ -603,9 +619,8 @@ namespace app_escritorio
                 Tags = new List<string>(),
                 Variants = new List<app_escritorio.Models.MenuVariant>()
             };
-            menuData.Items.Add(item);
-            PopulateCards(currentSelectedCategoryId);
-            ShowEditorFor(item);
+            // No se agrega ni se guarda hasta pulsar "Agregar a la carta"
+            ShowEditorFor(item, true);
         }
 
         private void ManageCategories()
@@ -615,8 +630,8 @@ namespace app_escritorio
             {
                 var list = new ListBox { Left = 15, Top = 15, Width = 285, Height = 280, BackColor = app_escritorio.Utils.Theme.BackgroundDark, ForeColor = app_escritorio.Utils.Theme.TextPrimary, Font = app_escritorio.Utils.Theme.FontSmall };
                 var input = new TextBox { Left = 15, Top = 305, Width = 285, Height = 28, BackColor = app_escritorio.Utils.Theme.BackgroundDark, ForeColor = app_escritorio.Utils.Theme.TextPrimary };
-                var add = new Button { Text = "Agregar", Left = 310, Top = 15, Width = 95, Height = 30, BackColor = app_escritorio.Utils.Theme.AccentSecondary, ForeColor = Color.White, FlatStyle = FlatStyle.Flat };
-                var remove = new Button { Text = "Eliminar", Left = 310, Top = 55, Width = 95, Height = 30, BackColor = app_escritorio.Utils.Theme.StatusUnavailable, ForeColor = Color.White, FlatStyle = FlatStyle.Flat };
+                var add = new Button { Text = "Agregar", Left = 310, Top = 15, Width = 95, Height = 30, BackColor = app_escritorio.Utils.Theme.AccentSecondary, ForeColor = app_escritorio.Utils.Theme.TertiaryText, FlatStyle = FlatStyle.Flat };
+                var remove = new Button { Text = "Eliminar", Left = 310, Top = 55, Width = 95, Height = 30, BackColor = app_escritorio.Utils.Theme.DangerBackground, ForeColor = app_escritorio.Utils.Theme.StatusUnavailable, FlatStyle = FlatStyle.Flat };
                 var close = new Button { Text = "Listo", Left = 310, Top = 305, Width = 95, Height = 30, BackColor = app_escritorio.Utils.Theme.AccentPrimary, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, DialogResult = DialogResult.OK };
                 add.Click += (s, e) => { var name = input.Text.Trim(); if (name.Length == 0) return; var category = new app_escritorio.Models.Category { Name = name, Position = menuData.Categories.Count }; menuData.Categories.Add(category); list.Items.Add(category); input.Clear(); input.Focus(); };
                 remove.Click += (s, e) => { var category = list.SelectedItem as app_escritorio.Models.Category; if (category == null || MessageBox.Show("¿Eliminar la categoría? Los platos no se eliminarán.", "Categorías", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return; menuData.Categories.Remove(category); list.Items.Remove(category); currentSelectedCategoryId = null; };

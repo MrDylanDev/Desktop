@@ -18,7 +18,7 @@ namespace app_escritorio.Controls
         public StatusBar()
         {
             this.Dock = DockStyle.Top;
-            this.Height = 40;
+            this.Height = 34;
             this.BackColor = Theme.BackgroundDark;
             this.ForeColor = Theme.TextPrimary;
             this.Padding = new Padding(10);

@@ -1,28 +1,7 @@
 <UserControl x:Class="RestauranteGestor.Native.Views.MenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:wf="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
              Background="{StaticResource Surface}">
-  <Grid Margin="28">
-    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
-    <Grid Grid.Row="0" Margin="0,0,0,18">
-      <TextBlock Text="Menú y productos" FontSize="32" FontWeight="Bold" />
-      <TextBlock Text="Categorías, disponibilidad y precios visibles para el POS." Foreground="{StaticResource OnSurfaceVariant}" Margin="0,8,0,0" />
-    </Grid>
-    <ListView x:Name="ProductsList" Grid.Row="1" Background="Transparent" BorderThickness="0">
-      <ListView.View>
-        <GridView>
-          <GridViewColumn Header="Producto" Width="300" DisplayMemberBinding="{Binding Name}" />
-          <GridViewColumn Header="Categoría" Width="190" DisplayMemberBinding="{Binding Category}" />
-          <GridViewColumn Header="Precio" Width="130" DisplayMemberBinding="{Binding PriceText}" />
-          <GridViewColumn Header="Disponibilidad" Width="140">
-            <GridViewColumn.CellTemplate>
-              <DataTemplate>
-                <CheckBox IsChecked="{Binding Available}" Content="Disponible" Foreground="{StaticResource Tertiary}" />
-              </DataTemplate>
-            </GridViewColumn.CellTemplate>
-          </GridViewColumn>
-        </GridView>
-      </ListView.View>
-    </ListView>
-  </Grid>
+  <wf:WindowsFormsHost x:Name="MenuHost" />
 </UserControl>

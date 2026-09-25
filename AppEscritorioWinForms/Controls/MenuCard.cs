@@ -30,8 +30,8 @@ namespace app_escritorio.Controls
 
         public MenuCard()
         {
-            Width = 330;
-            Height = 310;
+            Width = 250;
+            Height = 250;
             Margin = new Padding(6);
             Padding = new Padding(10);
             BackColor = Theme.BackgroundMedium;
@@ -41,7 +41,7 @@ namespace app_escritorio.Controls
             imageBox = new PictureBox
             {
                 Dock = DockStyle.Top,
-                Height = 105,
+                Height = 64,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Theme.BackgroundLight
             };
@@ -58,7 +58,7 @@ namespace app_escritorio.Controls
             descriptionLabel = new Label
             {
                 Dock = DockStyle.Top,
-                Height = 44,
+                Height = 32,
                 AutoEllipsis = true,
                 Font = Theme.FontSmall,
                 ForeColor = Theme.TextSecondary
@@ -91,20 +91,20 @@ namespace app_escritorio.Controls
 
             editButton = new Button
             {
-                Width = 145,
-                Height = 36,
+                Width = 105,
+                Height = 32,
                 Text = "Editar",
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Theme.AccentSecondary,
-                ForeColor = Color.White,
+                ForeColor = Theme.TertiaryText,
                 Margin = new Padding(3)
             };
             editButton.FlatAppearance.BorderSize = 0;
             editButton.Click += (sender, e) => RaiseEditRequested();
-            deleteButton = new Button { Width = 145, Height = 36, Text = "Eliminar", FlatStyle = FlatStyle.Flat, BackColor = Theme.StatusUnavailable, ForeColor = Color.White, Margin = new Padding(3) };
+            deleteButton = new Button { Width = 105, Height = 32, Text = "Eliminar", FlatStyle = FlatStyle.Flat, BackColor = Theme.DangerBackground, ForeColor = Theme.StatusUnavailable, Margin = new Padding(3) };
             deleteButton.FlatAppearance.BorderSize = 0;
             deleteButton.Click += (sender, e) => DeleteRequested?.Invoke(this, EventArgs.Empty);
-            var cardActions = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 42, WrapContents = false, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(5, 3, 5, 3), BackColor = Theme.BackgroundLight };
+            var cardActions = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 38, WrapContents = false, FlowDirection = FlowDirection.LeftToRight, Padding = new Padding(5, 3, 5, 3), BackColor = Theme.BackgroundLight };
             cardActions.Controls.Add(editButton);
             cardActions.Controls.Add(deleteButton);
 
@@ -124,6 +124,22 @@ namespace app_escritorio.Controls
             MouseDown += MenuCard_MouseDown;
             MouseMove += MenuCard_MouseMove;
             MouseUp += MenuCard_MouseUp;
+        }
+
+        /// <summary>
+        /// Ancho fluido: la tarjeta se estira al ancho de columna calculado y
+        /// reparte el espacio entre Editar/Eliminar para que nunca se corten.
+        /// </summary>
+        public void SetCardWidth(int width)
+        {
+            if (width < 180) width = 180;
+            if (width > 340) width = 340;
+            Width = width;
+            int buttons = width - 20 - 10 - 6;
+            int bw = buttons / 2;
+            if (bw < 70) bw = 70;
+            editButton.Width = bw;
+            deleteButton.Width = bw;
         }
 
         public void SetData(Models.MenuItem item)

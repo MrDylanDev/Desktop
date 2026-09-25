@@ -51,7 +51,11 @@ Desktop/                                    ← raíz del repo (remote: MrDylanD
         └── TrazabilidadView                ← vista sin uso (no instanciada, ver nota)
 ```
 
-~4.100 líneas en 38 archivos (XAML + C# + spec). Sin tests.
+~4.100 líneas en 38 archivos (XAML + C# + spec) + proyecto WinForms de David. Sin tests.
+
+> Menú digital: el apartado `Menú y productos` hospeda el `Form1` de
+> `AppEscritorioWinForms` vía `WindowsFormsHost`, con referencia de proyecto
+> y semilla de `menu.xml` en `MenuView`. Sin código propio de carta.
 
 ---
 
@@ -227,7 +231,7 @@ ni backups, ni log transaccional.
 | Módulos | Sí, toggles | Sí, flags reales | Sí, `modules.dat` |
 | POS | Sí, ticket, impuesto, cobro | Sí, cálculo + vuelto | No, tickets en memoria |
 | Mesas | Sí, plano + detalle | Sí, CRUD + filtro salón | Sí, `mesas.dat` |
-| Menú | Sí, tabla | Parcial, solo lectura + checkbox | No |
+| Menú | Sí, editor de David embebido | Sí, CRUD + fotos + pedidos (WinForms) | Sí, `data\menu.xml` |
 | KDS | Sí, kanban 3 estados | Parcial, transiciones mock | No |
 | Inventario | Sí, tabla + alertas | Parcial, CRUD sin descuento por venta | No |
 | Reservas | Sí, calendario + agenda | Parcial, CRUD con mesas desincronizadas | No |
