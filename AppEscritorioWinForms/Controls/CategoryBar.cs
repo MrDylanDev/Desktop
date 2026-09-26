@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -121,3 +121,6 @@ namespace app_escritorio.Controls
         public Guid? SelectedCategoryId { get; set; }
     }
 }
+
+
+

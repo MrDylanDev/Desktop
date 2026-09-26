@@ -5,9 +5,15 @@
 **Proyecto:** `app escritorio`  
 **Lenguaje:** C#  
 **Tecnología de interfaz:** Windows Forms (WinForms)  
-**Framework:** .NET Framework 4.7.2  
+**Framework:** .NET 8 (`net8.0-windows`) — migrado desde .NET Framework 4.7.2  
 **Tipo de aplicación:** Aplicación local de escritorio para Windows  
 **Propósito:** Administrar platos, bebidas, categorías, precios, disponibilidad, stock y pedidos de un restaurante.
+
+> **Nota (septiembre 2026):** este documento describe el **editor de carta** original ("app escritorio").
+> Hoy ese proyecto es la base de **RestoOS en WinForms .NET 8**: el editor vive en el módulo *Menú y productos*
+> (`Form1`) dentro de la ventana principal `Shell/ShellForm`, junto con POS, Mesas, KDS, Inventario, Reservas,
+> Delivery, Reportes y Configuración. Arranque, arquitectura general, kit visual y estado de cada módulo:
+> ver el [README principal](../README.md) y [`UI/LEEME_UI.md`](UI/LEEME_UI.md).
 
 ---
 
@@ -83,9 +89,9 @@ Windows Forms permite crear aplicaciones de escritorio para Windows utilizando c
 
 La mayoría de la interfaz se construye mediante código, especialmente en `Form1.cs`. Esto significa que las propiedades de los controles se escriben directamente en C#.
 
-### 3.3 .NET Framework 4.7.2
+### 3.3 .NET 8 (antes .NET Framework 4.7.2)
 
-El proyecto está configurado para ejecutarse sobre .NET Framework 4.7.2, una versión usada para aplicaciones de escritorio compatibles con Windows. Esta elección permite trabajar con herramientas clásicas como Visual Studio y el compilador MSBuild.
+El proyecto empezó sobre .NET Framework 4.7.2 y se migró a **.NET 8** (`net8.0-windows`, proyecto estilo SDK). En .NET 8 los atributos de ensamblado se generan desde el `.csproj`, por eso ya no existe `Properties/AssemblyInfo.cs`. Requiere Windows 10 (1607) o superior y Visual Studio 2022 o superior.
 
 El tipo de salida del proyecto es `WinExe`, por lo que se genera un ejecutable de Windows en lugar de una aplicación de consola.
 
@@ -596,25 +602,19 @@ Una siguiente versión podría incorporar:
 Desde Visual Studio se puede abrir el archivo de solución:
 
 ```text
-C:\Users\David-PC\Desktop\app escritorio\app escritorio.slnx
+RestauranteGestor.sln   (raíz del repositorio)
 ```
 
 También se puede compilar desde una terminal de MSBuild:
 
 ```powershell
-msbuild "app escritorio.csproj" /t:Build /p:Configuration=Debug /p:Platform=AnyCPU
-```
-
-Con `dotnet` también se puede intentar:
-
-```powershell
 dotnet build "app escritorio.csproj" --configuration Debug
 ```
 
-El ejecutable de depuración se genera normalmente en:
+El ejecutable de depuración se genera en:
 
 ```text
-bin\Debug\app escritorio.exe
+bin\Debug\net8.0-windows\app escritorio.exe
 ```
 
 Antes de compilar, se debe cerrar la aplicación si está abierta, porque Windows puede bloquear el archivo `.exe` mientras se intenta reemplazarlo.

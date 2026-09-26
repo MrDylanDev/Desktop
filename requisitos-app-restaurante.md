@@ -72,6 +72,8 @@ Restaurantes pequeños e independientes, con prioridad en ciudades intermedias y
 - **Integraciones externas:** vía llamadas HTTP/API REST al proveedor tecnológico DIAN y al agregador de delivery — son los únicos componentes que requieren red.
 - **Multi-terminal / varias cajas:** para negocios medianos o grandes con más de una caja o estación (mostrador + segunda caja + pantalla de cocina), una sola máquina opera como "servidor" con la base de datos central, y las demás se conectan como clientes por la red local (WiFi/cable del propio restaurante) — sin depender de internet. No se debe compartir el archivo de la base de datos directamente por red (riesgo de corrupción con escrituras simultáneas); la máquina servidor debe exponer un pequeño servicio/API local al que los clientes se conectan. Alternativa: usar un motor de base de datos con soporte nativo para ambos modos (embebido y cliente-servidor), como Firebird, en vez de construir la capa de sincronización desde cero. Si una caja pierde conexión con el servidor, debe mostrar un aviso claro y bloquear el cobro hasta reconectar (para la v1; cola de reintento automático queda para una fase posterior).
 
+**Estado de implementación (septiembre 2026):** el prototipo actual está en **WinForms sobre .NET 8** (`AppEscritorioWinForms/`), con una ventana principal única y un kit visual que replica el tema de la versión WPF. Solo frontend: aún sin SQLite, sin plugins/MEF y sin licenciamiento. Ojo: .NET 8 exige Windows 10 (1607) o superior, lo que choca con el requisito de Windows 8/8.1 de §4; la versión WPF sobre .NET Framework 4.8 (`RestauranteGestor.Native/`) queda como referencia. Ver `README.md`.
+
 ## 6. Entidades principales de datos
 Productos/platos, categorías de menú, mesas, pedidos, ítems de pedido, clientes, reservas, inventario/insumos, usuarios/roles, ventas/facturas, configuración de módulos activos.
 
@@ -124,6 +126,9 @@ Items vistos en el prototipo POS (`stitch/.../code.html`) sin respaldo en los re
 - Impuesto configurable en POS (INC 8% / IVA 19% / Exento) en vez de tasa fija.
 - Notas por pedido en POS (ej. "sin cebolla", "término medio") y persistencia de mesas en `%LocalAppData%\RestoOS\mesas.dat` (antes solo memoria).
 - UI adaptativa en Selector de Módulos (WrapPanel), POS y Mesas (GridSplitter + Min/MaxWidth) y tema oscuro unificado para ComboBox/TextBox.
+- Migración a WinForms .NET 8 con ventana principal única (`ShellForm`), sidebar y barra superior iguales para todos los perfiles y pantallas editables en el diseñador de Visual Studio.
+- Kit visual propio (`RButton`, `RPanel`, `RLabel`, `RTextBox`, `RComboBox`, `RBadge`...) con la paleta de la versión WPF centralizada en `Theme.cs`.
+- Administrador con acceso completo (Operación + Administración); atajos F1/F2/F3 activos; teclado físico en el cobro; impresión del recibo por la impresora de Windows.
 
 ## 12. Fase 4 (futuro): app de meseros
 - Carcasa híbrida delgada (.NET MAUI con WebView o Capacitor) sobre la misma base web (`mesas.html`/`pos.html`); nativa pura descartada por costo.
