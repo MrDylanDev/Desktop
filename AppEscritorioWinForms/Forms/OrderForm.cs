@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -11,161 +11,45 @@ using app_escritorio.Utils;
 
 namespace app_escritorio.Forms
 {
-    public class OrderForm : Form
+    public partial class OrderForm : Form
     {
         private readonly MenuData menuData;
-        private readonly FlowLayoutPanel productsPanel;
-        private readonly ListView orderLines;
-        private readonly NumericUpDown quantityInput;
-        private readonly Label totalLabel;
-        private readonly TextBox customerInput;
-        private readonly TextBox tableInput;
-        private readonly ComboBox statusInput;
         private readonly List<OrderLine> lines = new List<OrderLine>();
         private MenuItem selectedItem;
 
         public OrderForm(MenuData data)
         {
             menuData = data ?? new MenuData();
-            Text = "Crear pedido";
-            StartPosition = FormStartPosition.CenterParent;
-            Size = new Size(1400, 850);
-            MinimumSize = new Size(1100, 700);
-            BackColor = Theme.BackgroundDark;
-            ForeColor = Theme.TextPrimary;
-            ShowInTaskbar = false;
-
-            var header = new Panel { Dock = DockStyle.Top, Height = 80, BackColor = Theme.BackgroundMedium, Padding = new Padding(12) };
-            var title = new Label
-            {
-                Text = "Crear pedido",
-                Dock = DockStyle.Left,
-                Width = 220,
-                Height = 44,
-                Font = Theme.FontTitle,
-                ForeColor = Theme.TextPrimary
-            };
-            var search = new TextBox
-            {
-                Dock = DockStyle.Fill,
-                Margin = new Padding(8),
-                Font = Theme.FontSmall,
-                BackColor = Theme.BackgroundDark,
-                ForeColor = Theme.TextPrimary
-            };
-            customerInput = new TextBox { Width = 150, Height = 30, BackColor = Theme.BackgroundDark, ForeColor = Theme.TextPrimary, Font = Theme.FontSmall, Margin = new Padding(8, 8, 4, 4) };
-            tableInput = new TextBox { Width = 100, Height = 30, BackColor = Theme.BackgroundDark, ForeColor = Theme.TextPrimary, Font = Theme.FontSmall, Margin = new Padding(4, 8, 4, 4) };
-            statusInput = new ComboBox { Width = 125, Height = 30, DropDownStyle = ComboBoxStyle.DropDownList, Text = "Pendiente", BackColor = Theme.BackgroundDark, ForeColor = Theme.TextPrimary, Font = Theme.FontSmall, Margin = new Padding(4, 8, 8, 4) };
-            statusInput.Items.AddRange(new object[] { "Pendiente", "En curso", "Listo", "Entregado" });
-            statusInput.SelectedIndex = 0;
-            search.TextChanged += (sender, e) => RefreshProducts(search.Text);
-            header.Controls.Add(search);
-            header.Controls.Add(statusInput);
-            header.Controls.Add(tableInput);
-            header.Controls.Add(customerInput);
-            header.Controls.Add(title);
-
-            var leftPanel = new Panel { Dock = DockStyle.Fill, Padding = new Padding(10), BackColor = Theme.BackgroundDark };
-            productsPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                AutoScroll = true,
-                WrapContents = true,
-                BackColor = Theme.BackgroundDark
-            };
-            leftPanel.Controls.Add(productsPanel);
-
-            var rightPanel = new Panel { Dock = DockStyle.Right, Width = 470, Padding = new Padding(10), BackColor = Theme.BackgroundMedium };
-            orderLines = new ListView
-            {
-                Dock = DockStyle.Fill,
-                Height = 440,
-                View = View.Details,
-                FullRowSelect = true,
-                GridLines = true,
-                BackColor = Theme.BackgroundDark,
-                ForeColor = Theme.TextPrimary
-            };
-            orderLines.Columns.Add("Producto", 190);
-            orderLines.Columns.Add("Cant.", 55);
-            orderLines.Columns.Add("Precio", 85);
-            orderLines.Columns.Add("Total", 90);
-            orderLines.DoubleClick += OrderLines_DoubleClick;
-
-            quantityInput = new NumericUpDown
-            {
-                Minimum = 1,
-                Maximum = 999,
-                Value = 1,
-                Width = 70,
-                Font = Theme.FontSmall,
-                BackColor = Theme.BackgroundDark,
-                ForeColor = Theme.TextPrimary
-            };
-            var quantityLabel = new Label { Text = "Cantidad", Width = 75, TextAlign = ContentAlignment.MiddleLeft, ForeColor = Theme.TextSecondary };
-            var addButton = CreateButton("Agregar", Theme.AccentSecondary, 105);
-            addButton.Click += (sender, e) => AddSelectedItem();
-            var removeButton = CreateButton("Quitar", Theme.BorderLight, 105);
-            removeButton.Click += (sender, e) => RemoveSelectedLine();
-            var confirmButton = CreateButton("Confirmar pedido", Theme.AccentPrimary, 220);
-            confirmButton.Click += (sender, e) => ConfirmOrder();
-            var cancelButton = CreateButton("Cancelar", Theme.BorderLight, 120);
-            cancelButton.Click += (sender, e) => { DialogResult = DialogResult.Cancel; Close(); };
-
-            var actions = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 54, WrapContents = false, Padding = new Padding(4, 7, 4, 4), BackColor = Theme.BackgroundLight };
-            actions.Controls.Add(quantityLabel);
-            actions.Controls.Add(quantityInput);
-            actions.Controls.Add(addButton);
-            actions.Controls.Add(removeButton);
-
-            var totalPanel = new Panel { Dock = DockStyle.Bottom, Height = 62, BackColor = Theme.BackgroundLight, Padding = new Padding(10) };
-            totalLabel = new Label
-            {
-                Dock = DockStyle.Fill,
-                Text = "Total: $0.00",
-                TextAlign = ContentAlignment.MiddleRight,
-                Font = Theme.FontLarge,
-                ForeColor = Theme.TextPrimary
-            };
-            totalPanel.Controls.Add(totalLabel);
-
-            var bottomActions = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 62, FlowDirection = FlowDirection.RightToLeft, WrapContents = false, Padding = new Padding(8, 10, 8, 8), BackColor = Theme.BackgroundMedium };
-            bottomActions.Controls.Add(confirmButton);
-            bottomActions.Controls.Add(cancelButton);
-
-            var orderLayout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 4, BackColor = Theme.BackgroundMedium, Padding = new Padding(0, 0, 0, 0) };
-            orderLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            orderLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            orderLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            orderLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 54F));
-            orderLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-            orderLayout.Controls.Add(orderLines, 0, 0);
-            orderLayout.Controls.Add(totalPanel, 0, 1);
-            orderLayout.Controls.Add(actions, 0, 2);
-            orderLayout.Controls.Add(bottomActions, 0, 3);
-
-            rightPanel.Controls.Add(orderLayout);
-
-            Controls.Add(leftPanel);
-            Controls.Add(rightPanel);
-            Controls.Add(header);
-
+            InitializeComponent();
             RefreshProducts(string.Empty);
             UpdateOrderDisplay();
         }
 
-        private static Button CreateButton(string text, Color color, int width)
+        private void search_TextChanged(object sender, EventArgs e)
         {
-            return new Button
-            {
-                Text = text,
-                Width = width,
-                Height = 42,
-                FlatStyle = FlatStyle.Flat,
-                BackColor = color,
-                ForeColor = Color.White,
-                Margin = new Padding(4)
-            };
+            var textBox = sender as TextBox;
+            RefreshProducts(textBox?.Text);
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            AddSelectedItem();
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            RemoveSelectedLine();
+        }
+
+        private void confirmButton_Click(object sender, EventArgs e)
+        {
+            ConfirmOrder();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void RefreshProducts(string query)
