@@ -51,10 +51,6 @@ namespace app_escritorio.Data
             catch { return null; }
         }
 
-        public static bool IsModuleEnabled(string key)
-        {
-            var store = Forms.ModulesForm.Store;
-            return store.ContainsKey(key) && store[key];
-        }
+        public static bool IsModuleEnabled(string key) => ModuleStore.IsEnabled(key);
     }
 }

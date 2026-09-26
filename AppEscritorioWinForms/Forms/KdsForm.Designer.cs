@@ -2,340 +2,556 @@
 {
     partial class KdsForm
     {
-        /// <summary> 
-        /// Required designer variable.
-        /// </summary>
+        /// <summary>Variable del diseñador requerida.</summary>
         private System.ComponentModel.IContainer components = null;
-        private app_escritorio.Controls.SidebarControl sidebarControl1;
 
-        /// <summary> 
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            if (disposing) _timer?.Dispose();
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        #region Código generado por el Diseñador
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.header = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.lblPendingCount = new System.Windows.Forms.Label();
-            this.stationBox = new System.Windows.Forms.ComboBox();
-            this.lblClock = new System.Windows.Forms.Label();
-            this.tablePanel = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlNuevo = new System.Windows.Forms.Panel();
-            this.headerNuevo = new System.Windows.Forms.Panel();
-            this.lblTitleNuevo = new System.Windows.Forms.Label();
-            this.lblNuevoCount = new System.Windows.Forms.Label();
-            this.listNuevo = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlPrep = new System.Windows.Forms.Panel();
-            this.headerPrep = new System.Windows.Forms.Panel();
-            this.lblTitlePrep = new System.Windows.Forms.Label();
-            this.lblPrepCount = new System.Windows.Forms.Label();
-            this.listPrep = new System.Windows.Forms.FlowLayoutPanel();
-            this.pnlListo = new System.Windows.Forms.Panel();
-            this.headerListo = new System.Windows.Forms.Panel();
-            this.lblTitleListo = new System.Windows.Forms.Label();
-            this.lblListoCount = new System.Windows.Forms.Label();
-            this.listListo = new System.Windows.Forms.FlowLayoutPanel();
-            
+            this.components = new System.ComponentModel.Container();
+            this.root = new app_escritorio.UI.RPanel();
+            this.layout = new System.Windows.Forms.TableLayoutPanel();
+            this.header = new app_escritorio.UI.RPanel();
+            this.pnlClock = new app_escritorio.UI.RPanel();
+            this.lblClock = new app_escritorio.UI.RLabel();
+            this.lblDemo = new app_escritorio.UI.RLabel();
+            this.cmbStation = new app_escritorio.UI.RComboBox();
+            this.pnlPending = new app_escritorio.UI.RPanel();
+            this.lblPending = new app_escritorio.UI.RLabel();
+            this.lblPendingDot = new app_escritorio.UI.RLabel();
+            this.lblTitle = new app_escritorio.UI.RLabel();
+            this.columns = new System.Windows.Forms.TableLayoutPanel();
+            this.colNuevo = new app_escritorio.UI.RPanel();
+            this.listNuevo = new app_escritorio.UI.RFlowPanel();
+            this.sampleNuevo = new app_escritorio.Views.Kds.KdsOrderCard();
+            this.headNuevo = new app_escritorio.UI.RPanel();
+            this.badgeNuevo = new app_escritorio.UI.RBadge();
+            this.lblNuevo = new app_escritorio.UI.RLabel();
+            this.dotNuevo = new app_escritorio.UI.RLabel();
+            this.colPrep = new app_escritorio.UI.RPanel();
+            this.listPrep = new app_escritorio.UI.RFlowPanel();
+            this.samplePrep = new app_escritorio.Views.Kds.KdsOrderCard();
+            this.headPrep = new app_escritorio.UI.RPanel();
+            this.badgePrep = new app_escritorio.UI.RBadge();
+            this.lblPrep = new app_escritorio.UI.RLabel();
+            this.dotPrep = new app_escritorio.UI.RLabel();
+            this.colListo = new app_escritorio.UI.RPanel();
+            this.listListo = new app_escritorio.UI.RFlowPanel();
+            this.sampleListo = new app_escritorio.Views.Kds.KdsOrderCard();
+            this.headListo = new app_escritorio.UI.RPanel();
+            this.badgeListo = new app_escritorio.UI.RBadge();
+            this.lblListo = new app_escritorio.UI.RLabel();
+            this.dotListo = new app_escritorio.UI.RLabel();
+            this.topBar = new app_escritorio.Shell.ShellTopBar();
+            this.sidebar = new app_escritorio.Shell.ShellSidebar();
+            this.clockTimer = new System.Windows.Forms.Timer(this.components);
+            this.root.SuspendLayout();
+            this.layout.SuspendLayout();
             this.header.SuspendLayout();
-            this.tablePanel.SuspendLayout();
-            
-            this.pnlNuevo.SuspendLayout();
-            this.headerNuevo.SuspendLayout();
-            
-            this.pnlPrep.SuspendLayout();
-            this.headerPrep.SuspendLayout();
-            
-            this.pnlListo.SuspendLayout();
-            this.headerListo.SuspendLayout();
-            
+            this.pnlClock.SuspendLayout();
+            this.pnlPending.SuspendLayout();
+            this.columns.SuspendLayout();
+            this.colNuevo.SuspendLayout();
+            this.listNuevo.SuspendLayout();
+            this.headNuevo.SuspendLayout();
+            this.colPrep.SuspendLayout();
+            this.listPrep.SuspendLayout();
+            this.headPrep.SuspendLayout();
+            this.colListo.SuspendLayout();
+            this.listListo.SuspendLayout();
+            this.headListo.SuspendLayout();
             this.SuspendLayout();
-            this.sidebarControl1 = new app_escritorio.Controls.SidebarControl();
-            
-            
+            // 
+            // root
+            // 
+            this.root.Controls.Add(this.layout);
+            this.root.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.root.Location = new System.Drawing.Point(272, 64);
+            this.root.Name = "root";
+            this.root.Padding = new System.Windows.Forms.Padding(16);
+            this.root.Size = new System.Drawing.Size(1100, 780);
+            this.root.Surface = app_escritorio.UI.SurfaceLevel.Surface;
+            this.root.TabIndex = 0;
+            // 
+            // layout
+            // 
+            this.layout.ColumnCount = 1;
+            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0F));
+            this.layout.Controls.Add(this.header, 0, 0);
+            this.layout.Controls.Add(this.columns, 0, 1);
+            this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layout.Location = new System.Drawing.Point(16, 16);
+            this.layout.Name = "layout";
+            this.layout.RowCount = 2;
+            this.layout.Size = new System.Drawing.Size(1068, 748);
+            this.layout.TabIndex = 0;
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0F));
+            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0F));
             // 
             // header
             // 
+            this.header.Controls.Add(this.pnlClock);
+            this.header.Controls.Add(this.lblDemo);
+            this.header.Controls.Add(this.cmbStation);
+            this.header.Controls.Add(this.pnlPending);
             this.header.Controls.Add(this.lblTitle);
-            this.header.Controls.Add(this.lblPendingCount);
-            this.header.Controls.Add(this.stationBox);
-            this.header.Controls.Add(this.lblClock);
-            this.header.Dock = System.Windows.Forms.DockStyle.Top;
-            this.header.Height = 60;
+            this.header.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.header.Location = new System.Drawing.Point(0, 0);
+            this.header.Margin = new System.Windows.Forms.Padding(0, 0, 0, 4);
             this.header.Name = "header";
-            this.header.Resize += new System.EventHandler(this.Header_Resize);
+            this.header.Size = new System.Drawing.Size(1068, 56);
+            this.header.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
+            this.header.TabIndex = 0;
             // 
-            // lblTitle
+            // pnlClock
             // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(260, 10);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Text = "Cocina KDS";
-            // 
-            // lblPendingCount
-            // 
-            this.lblPendingCount.AutoSize = true;
-            this.lblPendingCount.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lblPendingCount.ForeColor = System.Drawing.Color.LightGray;
-            this.lblPendingCount.Location = new System.Drawing.Point(470, 20);
-            this.lblPendingCount.Name = "lblPendingCount";
-            this.lblPendingCount.Text = "0 pendientes";
-            // 
-            // stationBox
-            // 
-            this.stationBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.stationBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.stationBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.stationBox.ForeColor = System.Drawing.Color.White;
-            this.stationBox.Location = new System.Drawing.Point(360, 20);
-            this.stationBox.Name = "stationBox";
-            this.stationBox.Width = 180;
+            this.pnlClock.Controls.Add(this.lblClock);
+            this.pnlClock.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.pnlClock.CornerRadius = 8;
+            this.pnlClock.Location = new System.Drawing.Point(852, 12);
+            this.pnlClock.Name = "pnlClock";
+            this.pnlClock.Size = new System.Drawing.Size(96, 32);
+            this.pnlClock.Surface = app_escritorio.UI.SurfaceLevel.Container;
+            this.pnlClock.TabIndex = 4;
             // 
             // lblClock
             // 
-            this.lblClock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblClock.AutoSize = true;
-            this.lblClock.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Bold);
+            this.lblClock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblClock.Location = new System.Drawing.Point(0, 0);
             this.lblClock.Name = "lblClock";
+            this.lblClock.Size = new System.Drawing.Size(96, 32);
+            this.lblClock.TabIndex = 0;
             this.lblClock.Text = "00:00:00";
+            this.lblClock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblClock.TextStyle = app_escritorio.UI.TextStyle.Mono;
             // 
-            // tablePanel
+            // lblDemo
             // 
-            this.tablePanel.ColumnCount = 3;
-            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tablePanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tablePanel.Controls.Add(this.pnlNuevo, 0, 0);
-            this.tablePanel.Controls.Add(this.pnlPrep, 1, 0);
-            this.tablePanel.Controls.Add(this.pnlListo, 2, 0);
-            this.tablePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablePanel.Name = "tablePanel";
-            this.tablePanel.RowCount = 1;
+            this.lblDemo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDemo.Location = new System.Drawing.Point(960, 12);
+            this.lblDemo.Name = "lblDemo";
+            this.lblDemo.Size = new System.Drawing.Size(108, 32);
+            this.lblDemo.TabIndex = 3;
+            this.lblDemo.Text = "DEMO frontend";
+            this.lblDemo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblDemo.TextStyle = app_escritorio.UI.TextStyle.Overline;
             // 
-            // pnlNuevo
+            // cmbStation
             // 
-            this.pnlNuevo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(32)))), ((int)(((byte)(34)))));
-            this.pnlNuevo.Controls.Add(this.listNuevo);
-            this.pnlNuevo.Controls.Add(this.headerNuevo);
-            this.pnlNuevo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlNuevo.Margin = new System.Windows.Forms.Padding(10);
-            this.pnlNuevo.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlNuevo.Name = "pnlNuevo";
+            this.cmbStation.Items.AddRange(new object[] {
+            "Todas las estaciones",
+            "Parrilla",
+            "Fría",
+            "Barra"});
+            this.cmbStation.Location = new System.Drawing.Point(372, 12);
+            this.cmbStation.Name = "cmbStation";
+            this.cmbStation.Size = new System.Drawing.Size(180, 32);
+            this.cmbStation.TabIndex = 2;
+            this.cmbStation.SelectedIndexChanged += new System.EventHandler(this.CmbStation_SelectedIndexChanged);
             // 
-            // headerNuevo
+            // pnlPending
             // 
-            this.headerNuevo.Controls.Add(this.lblTitleNuevo);
-            this.headerNuevo.Controls.Add(this.lblNuevoCount);
-            this.headerNuevo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerNuevo.Height = 40;
-            this.headerNuevo.Name = "headerNuevo";
-            this.headerNuevo.Resize += new System.EventHandler(this.HeaderNuevo_Resize);
+            this.pnlPending.Controls.Add(this.lblPending);
+            this.pnlPending.Controls.Add(this.lblPendingDot);
+            this.pnlPending.CornerRadius = 8;
+            this.pnlPending.Location = new System.Drawing.Point(204, 12);
+            this.pnlPending.Name = "pnlPending";
+            this.pnlPending.Size = new System.Drawing.Size(150, 32);
+            this.pnlPending.Surface = app_escritorio.UI.SurfaceLevel.Container;
+            this.pnlPending.TabIndex = 1;
             // 
-            // lblTitleNuevo
+            // lblPending
             // 
-            this.lblTitleNuevo.AutoSize = true;
-            this.lblTitleNuevo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitleNuevo.ForeColor = System.Drawing.Color.Goldenrod;
-            this.lblTitleNuevo.Location = new System.Drawing.Point(260, 5);
-            this.lblTitleNuevo.Name = "lblTitleNuevo";
-            this.lblTitleNuevo.Text = "Nuevo";
+            this.lblPending.Location = new System.Drawing.Point(26, 0);
+            this.lblPending.Name = "lblPending";
+            this.lblPending.Size = new System.Drawing.Size(108, 32);
+            this.lblPending.TabIndex = 1;
+            this.lblPending.Text = "0 pendientes";
+            this.lblPending.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPending.TextStyle = app_escritorio.UI.TextStyle.Caption;
             // 
-            // lblNuevoCount
+            // lblPendingDot
             // 
-            this.lblNuevoCount.AutoSize = true;
-            this.lblNuevoCount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblNuevoCount.Location = new System.Drawing.Point(250, 5);
-            this.lblNuevoCount.Name = "lblNuevoCount";
-            this.lblNuevoCount.Text = "0";
+            this.lblPendingDot.Location = new System.Drawing.Point(8, 0);
+            this.lblPendingDot.Name = "lblPendingDot";
+            this.lblPendingDot.Size = new System.Drawing.Size(18, 32);
+            this.lblPendingDot.TabIndex = 0;
+            this.lblPendingDot.Text = "●";
+            this.lblPendingDot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPendingDot.TextStyle = app_escritorio.UI.TextStyle.Positive;
+            // 
+            // lblTitle
+            // 
+            this.lblTitle.Location = new System.Drawing.Point(0, 4);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(190, 48);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Cocina KDS";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblTitle.TextStyle = app_escritorio.UI.TextStyle.Hero;
+            // 
+            // columns
+            // 
+            this.columns.ColumnCount = 3;
+            this.columns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.columns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.columns.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.columns.Controls.Add(this.colNuevo, 0, 0);
+            this.columns.Controls.Add(this.colPrep, 1, 0);
+            this.columns.Controls.Add(this.colListo, 2, 0);
+            this.columns.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.columns.Location = new System.Drawing.Point(0, 60);
+            this.columns.Margin = new System.Windows.Forms.Padding(0);
+            this.columns.Name = "columns";
+            this.columns.RowCount = 1;
+            this.columns.Size = new System.Drawing.Size(1068, 688);
+            this.columns.TabIndex = 1;
+            this.columns.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0F));
+            // 
+            // colNuevo
+            // 
+            this.colNuevo.Controls.Add(this.listNuevo);
+            this.colNuevo.Controls.Add(this.headNuevo);
+            this.colNuevo.CornerRadius = 14;
+            this.colNuevo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colNuevo.Location = new System.Drawing.Point(0, 0);
+            this.colNuevo.Margin = new System.Windows.Forms.Padding(0, 0, 6, 0);
+            this.colNuevo.Name = "colNuevo";
+            this.colNuevo.Padding = new System.Windows.Forms.Padding(12);
+            this.colNuevo.Size = new System.Drawing.Size(344, 700);
+            this.colNuevo.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.colNuevo.TabIndex = 0;
             // 
             // listNuevo
             // 
+            this.listNuevo.Controls.Add(this.sampleNuevo);
             this.listNuevo.AutoScroll = true;
             this.listNuevo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listNuevo.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.listNuevo.Location = new System.Drawing.Point(12, 48);
             this.listNuevo.Name = "listNuevo";
+            this.listNuevo.Size = new System.Drawing.Size(320, 640);
+            this.listNuevo.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.listNuevo.TabIndex = 1;
             this.listNuevo.WrapContents = false;
             this.listNuevo.Resize += new System.EventHandler(this.List_Resize);
             // 
-            // pnlPrep
+            // sampleNuevo
             // 
-            this.pnlPrep.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(32)))), ((int)(((byte)(34)))));
-            this.pnlPrep.Controls.Add(this.listPrep);
-            this.pnlPrep.Controls.Add(this.headerPrep);
-            this.pnlPrep.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPrep.Margin = new System.Windows.Forms.Padding(10);
-            this.pnlPrep.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlPrep.Name = "pnlPrep";
+            this.sampleNuevo.Location = new System.Drawing.Point(0, 0);
+            this.sampleNuevo.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.sampleNuevo.Mesa = "Mesa 2";
+            this.sampleNuevo.Name = "sampleNuevo";
+            this.sampleNuevo.Size = new System.Drawing.Size(300, 178);
+            this.sampleNuevo.Stage = app_escritorio.Models.KdsStatus.Nuevo;
+            this.sampleNuevo.TabIndex = 0;
             // 
-            // headerPrep
+            // headNuevo
             // 
-            this.headerPrep.Controls.Add(this.lblTitlePrep);
-            this.headerPrep.Controls.Add(this.lblPrepCount);
-            this.headerPrep.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPrep.Height = 40;
-            this.headerPrep.Name = "headerPrep";
-            this.headerPrep.Resize += new System.EventHandler(this.HeaderPrep_Resize);
+            this.headNuevo.Controls.Add(this.badgeNuevo);
+            this.headNuevo.Controls.Add(this.lblNuevo);
+            this.headNuevo.Controls.Add(this.dotNuevo);
+            this.headNuevo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.headNuevo.Location = new System.Drawing.Point(12, 12);
+            this.headNuevo.Name = "headNuevo";
+            this.headNuevo.Size = new System.Drawing.Size(320, 36);
+            this.headNuevo.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
+            this.headNuevo.TabIndex = 0;
             // 
-            // lblTitlePrep
+            // badgeNuevo
             // 
-            this.lblTitlePrep.AutoSize = true;
-            this.lblTitlePrep.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitlePrep.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(107)))), ((int)(((byte)(53)))));
-            this.lblTitlePrep.Location = new System.Drawing.Point(260, 5);
-            this.lblTitlePrep.Name = "lblTitlePrep";
-            this.lblTitlePrep.Text = "En preparación";
+            this.badgeNuevo.CornerRadius = 10;
+            this.badgeNuevo.Kind = app_escritorio.UI.BadgeKind.Neutral;
+            this.badgeNuevo.Location = new System.Drawing.Point(70, 6);
+            this.badgeNuevo.Name = "badgeNuevo";
+            this.badgeNuevo.Size = new System.Drawing.Size(28, 22);
+            this.badgeNuevo.TabIndex = 2;
+            this.badgeNuevo.Text = "0";
             // 
-            // lblPrepCount
+            // lblNuevo
             // 
-            this.lblPrepCount.AutoSize = true;
-            this.lblPrepCount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblPrepCount.Location = new System.Drawing.Point(250, 5);
-            this.lblPrepCount.Name = "lblPrepCount";
-            this.lblPrepCount.Text = "0";
+            this.lblNuevo.Location = new System.Drawing.Point(20, 0);
+            this.lblNuevo.Name = "lblNuevo";
+            this.lblNuevo.Size = new System.Drawing.Size(46, 34);
+            this.lblNuevo.TabIndex = 1;
+            this.lblNuevo.Text = "Nuevo";
+            this.lblNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNuevo.TextStyle = app_escritorio.UI.TextStyle.BodyBold;
+            // 
+            // dotNuevo
+            // 
+            this.dotNuevo.ColorOverride = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(185)))), ((int)(((byte)(95)))));
+            this.dotNuevo.Location = new System.Drawing.Point(0, 0);
+            this.dotNuevo.Name = "dotNuevo";
+            this.dotNuevo.Size = new System.Drawing.Size(18, 34);
+            this.dotNuevo.TabIndex = 0;
+            this.dotNuevo.Text = "●";
+            this.dotNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.dotNuevo.TextStyle = app_escritorio.UI.TextStyle.Body;
+            // 
+            // colPrep
+            // 
+            this.colPrep.Controls.Add(this.listPrep);
+            this.colPrep.Controls.Add(this.headPrep);
+            this.colPrep.CornerRadius = 14;
+            this.colPrep.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colPrep.Location = new System.Drawing.Point(0, 0);
+            this.colPrep.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.colPrep.Name = "colPrep";
+            this.colPrep.Padding = new System.Windows.Forms.Padding(12);
+            this.colPrep.Size = new System.Drawing.Size(344, 700);
+            this.colPrep.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.colPrep.TabIndex = 1;
             // 
             // listPrep
             // 
+            this.listPrep.Controls.Add(this.samplePrep);
             this.listPrep.AutoScroll = true;
             this.listPrep.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listPrep.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.listPrep.Location = new System.Drawing.Point(12, 48);
             this.listPrep.Name = "listPrep";
+            this.listPrep.Size = new System.Drawing.Size(320, 640);
+            this.listPrep.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.listPrep.TabIndex = 1;
             this.listPrep.WrapContents = false;
             this.listPrep.Resize += new System.EventHandler(this.List_Resize);
             // 
-            // pnlListo
+            // samplePrep
             // 
-            this.pnlListo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(32)))), ((int)(((byte)(34)))));
-            this.pnlListo.Controls.Add(this.listListo);
-            this.pnlListo.Controls.Add(this.headerListo);
-            this.pnlListo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlListo.Margin = new System.Windows.Forms.Padding(10);
-            this.pnlListo.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlListo.Name = "pnlListo";
+            this.samplePrep.Location = new System.Drawing.Point(0, 0);
+            this.samplePrep.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.samplePrep.Mesa = "Mesa 3";
+            this.samplePrep.Name = "samplePrep";
+            this.samplePrep.Size = new System.Drawing.Size(300, 178);
+            this.samplePrep.Stage = app_escritorio.Models.KdsStatus.Preparacion;
+            this.samplePrep.TabIndex = 0;
             // 
-            // headerListo
+            // headPrep
             // 
-            this.headerListo.Controls.Add(this.lblTitleListo);
-            this.headerListo.Controls.Add(this.lblListoCount);
-            this.headerListo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerListo.Height = 40;
-            this.headerListo.Name = "headerListo";
-            this.headerListo.Resize += new System.EventHandler(this.HeaderListo_Resize);
+            this.headPrep.Controls.Add(this.badgePrep);
+            this.headPrep.Controls.Add(this.lblPrep);
+            this.headPrep.Controls.Add(this.dotPrep);
+            this.headPrep.Dock = System.Windows.Forms.DockStyle.Top;
+            this.headPrep.Location = new System.Drawing.Point(12, 12);
+            this.headPrep.Name = "headPrep";
+            this.headPrep.Size = new System.Drawing.Size(320, 36);
+            this.headPrep.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
+            this.headPrep.TabIndex = 0;
             // 
-            // lblTitleListo
+            // badgePrep
             // 
-            this.lblTitleListo.AutoSize = true;
-            this.lblTitleListo.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.lblTitleListo.ForeColor = System.Drawing.Color.MediumSeaGreen;
-            this.lblTitleListo.Location = new System.Drawing.Point(260, 5);
-            this.lblTitleListo.Name = "lblTitleListo";
-            this.lblTitleListo.Text = "Listo";
+            this.badgePrep.CornerRadius = 10;
+            this.badgePrep.Kind = app_escritorio.UI.BadgeKind.Neutral;
+            this.badgePrep.Location = new System.Drawing.Point(128, 6);
+            this.badgePrep.Name = "badgePrep";
+            this.badgePrep.Size = new System.Drawing.Size(28, 22);
+            this.badgePrep.TabIndex = 2;
+            this.badgePrep.Text = "0";
             // 
-            // lblListoCount
+            // lblPrep
             // 
-            this.lblListoCount.AutoSize = true;
-            this.lblListoCount.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblListoCount.Location = new System.Drawing.Point(250, 5);
-            this.lblListoCount.Name = "lblListoCount";
-            this.lblListoCount.Text = "0";
+            this.lblPrep.Location = new System.Drawing.Point(20, 0);
+            this.lblPrep.Name = "lblPrep";
+            this.lblPrep.Size = new System.Drawing.Size(104, 34);
+            this.lblPrep.TabIndex = 1;
+            this.lblPrep.Text = "En preparación";
+            this.lblPrep.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPrep.TextStyle = app_escritorio.UI.TextStyle.BodyBold;
+            // 
+            // dotPrep
+            // 
+            this.dotPrep.ColorOverride = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(181)))), ((int)(((byte)(157)))));
+            this.dotPrep.Location = new System.Drawing.Point(0, 0);
+            this.dotPrep.Name = "dotPrep";
+            this.dotPrep.Size = new System.Drawing.Size(18, 34);
+            this.dotPrep.TabIndex = 0;
+            this.dotPrep.Text = "●";
+            this.dotPrep.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.dotPrep.TextStyle = app_escritorio.UI.TextStyle.Body;
+            // 
+            // colListo
+            // 
+            this.colListo.Controls.Add(this.listListo);
+            this.colListo.Controls.Add(this.headListo);
+            this.colListo.CornerRadius = 14;
+            this.colListo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.colListo.Location = new System.Drawing.Point(0, 0);
+            this.colListo.Margin = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.colListo.Name = "colListo";
+            this.colListo.Padding = new System.Windows.Forms.Padding(12);
+            this.colListo.Size = new System.Drawing.Size(344, 700);
+            this.colListo.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.colListo.TabIndex = 2;
             // 
             // listListo
             // 
+            this.listListo.Controls.Add(this.sampleListo);
             this.listListo.AutoScroll = true;
             this.listListo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listListo.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.listListo.Location = new System.Drawing.Point(12, 48);
             this.listListo.Name = "listListo";
+            this.listListo.Size = new System.Drawing.Size(320, 640);
+            this.listListo.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.listListo.TabIndex = 1;
             this.listListo.WrapContents = false;
             this.listListo.Resize += new System.EventHandler(this.List_Resize);
             // 
-            // KdsView
+            // sampleListo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            
+            this.sampleListo.Location = new System.Drawing.Point(0, 0);
+            this.sampleListo.Margin = new System.Windows.Forms.Padding(0, 0, 0, 10);
+            this.sampleListo.Mesa = "Mesa 5";
+            this.sampleListo.Name = "sampleListo";
+            this.sampleListo.Size = new System.Drawing.Size(300, 178);
+            this.sampleListo.Stage = app_escritorio.Models.KdsStatus.Listo;
+            this.sampleListo.TabIndex = 0;
+            // 
+            // headListo
+            // 
+            this.headListo.Controls.Add(this.badgeListo);
+            this.headListo.Controls.Add(this.lblListo);
+            this.headListo.Controls.Add(this.dotListo);
+            this.headListo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.headListo.Location = new System.Drawing.Point(12, 12);
+            this.headListo.Name = "headListo";
+            this.headListo.Size = new System.Drawing.Size(320, 36);
+            this.headListo.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
+            this.headListo.TabIndex = 0;
+            // 
+            // badgeListo
+            // 
+            this.badgeListo.CornerRadius = 10;
+            this.badgeListo.Kind = app_escritorio.UI.BadgeKind.Neutral;
+            this.badgeListo.Location = new System.Drawing.Point(62, 6);
+            this.badgeListo.Name = "badgeListo";
+            this.badgeListo.Size = new System.Drawing.Size(28, 22);
+            this.badgeListo.TabIndex = 2;
+            this.badgeListo.Text = "0";
+            // 
+            // lblListo
+            // 
+            this.lblListo.Location = new System.Drawing.Point(20, 0);
+            this.lblListo.Name = "lblListo";
+            this.lblListo.Size = new System.Drawing.Size(38, 34);
+            this.lblListo.TabIndex = 1;
+            this.lblListo.Text = "Listo";
+            this.lblListo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblListo.TextStyle = app_escritorio.UI.TextStyle.BodyBold;
+            // 
+            // dotListo
+            // 
+            this.dotListo.ColorOverride = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(222)))), ((int)(((byte)(163)))));
+            this.dotListo.Location = new System.Drawing.Point(0, 0);
+            this.dotListo.Name = "dotListo";
+            this.dotListo.Size = new System.Drawing.Size(18, 34);
+            this.dotListo.TabIndex = 0;
+            this.dotListo.Text = "●";
+            this.dotListo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.dotListo.TextStyle = app_escritorio.UI.TextStyle.Body;
+            // 
+            // topBar
+            // 
+            this.topBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topBar.Location = new System.Drawing.Point(272, 0);
+            this.topBar.Name = "topBar";
+            this.topBar.RoleText = "Administrador";
+            this.topBar.RouteText = "Cocina KDS · DEMO";
+            this.topBar.Size = new System.Drawing.Size(1100, 64);
+            this.topBar.TabIndex = 1;
+            // 
+            // sidebar
+            // 
+            this.sidebar.ActiveRoute = "kds";
+            this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sidebar.Location = new System.Drawing.Point(0, 0);
+            this.sidebar.Name = "sidebar";
+            this.sidebar.Size = new System.Drawing.Size(272, 844);
+            this.sidebar.TabIndex = 2;
+            // 
+            // clockTimer
+            // 
+            this.clockTimer.Interval = 1000;
+            this.clockTimer.Tick += new System.EventHandler(this.ClockTimer_Tick);
+            // 
+            // KdsForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(21)))));
-            this.Controls.Add(this.tablePanel);
-            this.Controls.Add(this.header);
-            this.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ForeColor = System.Drawing.Color.White;
-            this.Name = "KdsView";
-            this.ClientSize = new System.Drawing.Size(1550, 900);
-            
+            this.ClientSize = new System.Drawing.Size(1372, 844);
+            this.MinimumSize = new System.Drawing.Size(1100, 700);
+            this.Name = "KdsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RestoOS - Modular Core";
+            this.Controls.Add(this.root);
+            this.Controls.Add(this.topBar);
+            this.Controls.Add(this.sidebar);
+            this.headListo.ResumeLayout(false);
+            this.listListo.ResumeLayout(false);
+            this.colListo.ResumeLayout(false);
+            this.headPrep.ResumeLayout(false);
+            this.listPrep.ResumeLayout(false);
+            this.colPrep.ResumeLayout(false);
+            this.headNuevo.ResumeLayout(false);
+            this.listNuevo.ResumeLayout(false);
+            this.colNuevo.ResumeLayout(false);
+            this.columns.ResumeLayout(false);
+            this.columns.PerformLayout();
+            this.pnlPending.ResumeLayout(false);
+            this.pnlClock.ResumeLayout(false);
             this.header.ResumeLayout(false);
-            this.header.PerformLayout();
-            this.tablePanel.ResumeLayout(false);
-            
-            this.pnlNuevo.ResumeLayout(false);
-            this.headerNuevo.ResumeLayout(false);
-            this.headerNuevo.PerformLayout();
-            
-            this.pnlPrep.ResumeLayout(false);
-            this.headerPrep.ResumeLayout(false);
-            this.headerPrep.PerformLayout();
-            
-            this.pnlListo.ResumeLayout(false);
-            this.headerListo.ResumeLayout(false);
-            this.headerListo.PerformLayout();
-            
-            
-            
-                        
-            this.Controls.Add(this.sidebarControl1);
-            // 
-            // sidebarControl1
-            // 
-            this.sidebarControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.sidebarControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebarControl1.Location = new System.Drawing.Point(0, 0);
-            this.sidebarControl1.Name = "sidebarControl1";
-            this.sidebarControl1.Size = new System.Drawing.Size(250, 900);
-            this.sidebarControl1.TabIndex = 100;
+            this.layout.ResumeLayout(false);
+            this.layout.PerformLayout();
+            this.root.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel header;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.TableLayoutPanel tablePanel;
-
-        private System.Windows.Forms.Panel pnlNuevo;
-        private System.Windows.Forms.Panel headerNuevo;
-        private System.Windows.Forms.Label lblTitleNuevo;
-
-        private System.Windows.Forms.Panel pnlPrep;
-        private System.Windows.Forms.Panel headerPrep;
-        private System.Windows.Forms.Label lblTitlePrep;
-
-        private System.Windows.Forms.Panel pnlListo;
-        private System.Windows.Forms.Panel headerListo;
-        private System.Windows.Forms.Label lblTitleListo;
-        
-        private System.Windows.Forms.Label lblClock;
-        private System.Windows.Forms.Label lblPendingCount;
-        private System.Windows.Forms.ComboBox stationBox;
-        private System.Windows.Forms.FlowLayoutPanel listNuevo;
-        private System.Windows.Forms.FlowLayoutPanel listPrep;
-        private System.Windows.Forms.FlowLayoutPanel listListo;
-        private System.Windows.Forms.Label lblNuevoCount;
-        private System.Windows.Forms.Label lblPrepCount;
-        private System.Windows.Forms.Label lblListoCount;
+        private app_escritorio.UI.RPanel root;
+        private System.Windows.Forms.TableLayoutPanel layout;
+        private app_escritorio.UI.RPanel header;
+        private app_escritorio.UI.RPanel pnlClock;
+        private app_escritorio.UI.RLabel lblClock;
+        private app_escritorio.UI.RLabel lblDemo;
+        private app_escritorio.UI.RComboBox cmbStation;
+        private app_escritorio.UI.RPanel pnlPending;
+        private app_escritorio.UI.RLabel lblPending;
+        private app_escritorio.UI.RLabel lblPendingDot;
+        private app_escritorio.UI.RLabel lblTitle;
+        private System.Windows.Forms.TableLayoutPanel columns;
+        private app_escritorio.UI.RPanel colNuevo;
+        private app_escritorio.UI.RFlowPanel listNuevo;
+        private app_escritorio.Views.Kds.KdsOrderCard sampleNuevo;
+        private app_escritorio.UI.RPanel headNuevo;
+        private app_escritorio.UI.RBadge badgeNuevo;
+        private app_escritorio.UI.RLabel lblNuevo;
+        private app_escritorio.UI.RLabel dotNuevo;
+        private app_escritorio.UI.RPanel colPrep;
+        private app_escritorio.UI.RFlowPanel listPrep;
+        private app_escritorio.Views.Kds.KdsOrderCard samplePrep;
+        private app_escritorio.UI.RPanel headPrep;
+        private app_escritorio.UI.RBadge badgePrep;
+        private app_escritorio.UI.RLabel lblPrep;
+        private app_escritorio.UI.RLabel dotPrep;
+        private app_escritorio.UI.RPanel colListo;
+        private app_escritorio.UI.RFlowPanel listListo;
+        private app_escritorio.Views.Kds.KdsOrderCard sampleListo;
+        private app_escritorio.UI.RPanel headListo;
+        private app_escritorio.UI.RBadge badgeListo;
+        private app_escritorio.UI.RLabel lblListo;
+        private app_escritorio.UI.RLabel dotListo;
+        private app_escritorio.Shell.ShellTopBar topBar;
+        private app_escritorio.Shell.ShellSidebar sidebar;
+        private System.Windows.Forms.Timer clockTimer;
     }
 }
-
-
-

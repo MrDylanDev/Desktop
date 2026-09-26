@@ -27,26 +27,4 @@ namespace app_escritorio.Data
             using (var stream = File.Create(filePath)) serializer.Serialize(stream, records ?? new List<OrderRecord>());
         }
     }
-
-    public static class SettingsStore
-    {
-        public static RestaurantSettings Load(string filePath)
-        {
-            if (!File.Exists(filePath)) return new RestaurantSettings();
-            try
-            {
-                var serializer = new XmlSerializer(typeof(RestaurantSettings));
-                using (var stream = File.OpenRead(filePath)) return serializer.Deserialize(stream) as RestaurantSettings ?? new RestaurantSettings();
-            }
-            catch { return new RestaurantSettings(); }
-        }
-
-        public static void Save(string filePath, RestaurantSettings settings)
-        {
-            var folder = Path.GetDirectoryName(filePath);
-            if (!string.IsNullOrEmpty(folder) && !Directory.Exists(folder)) Directory.CreateDirectory(folder);
-            var serializer = new XmlSerializer(typeof(RestaurantSettings));
-            using (var stream = File.Create(filePath)) serializer.Serialize(stream, settings ?? new RestaurantSettings());
-        }
-    }
 }

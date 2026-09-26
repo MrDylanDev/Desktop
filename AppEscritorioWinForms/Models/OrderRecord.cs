@@ -21,14 +21,4 @@ namespace app_escritorio.Models
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
     }
-
-    [XmlRoot("restaurantSettings")]
-    public class RestaurantSettings
-    {
-        public string RestaurantName { get; set; } = "Mi restaurante";
-        public string Address { get; set; } = "";
-        public string Phone { get; set; } = "";
-        public string CurrencySymbol { get; set; } = "$";
-        public string LogoPath { get; set; } = "";
-    }
 }

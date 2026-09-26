@@ -7,7 +7,7 @@ using app_escritorio.Forms;
 namespace app_escritorio.Data
 {
     /// <summary>
-    /// Tickets abiertos por mesa (en memoria). Lo comparten el POS nuevo, el PosForm viejo y Mesas.
+    /// Tickets abiertos por mesa (en memoria). Lo comparten el POS y Mesas.
     /// </summary>
     public static class TicketStore
     {

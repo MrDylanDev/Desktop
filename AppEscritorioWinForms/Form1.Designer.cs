@@ -3,7 +3,8 @@
     partial class Form1
     {
         private System.ComponentModel.IContainer components = null;
-        private app_escritorio.Controls.SidebarControl sidebarControl1;
+        private app_escritorio.Shell.ShellSidebar sidebar;
+        private app_escritorio.Shell.ShellTopBar shellTopBar;
 
         protected override void Dispose(bool disposing)
         {
@@ -32,19 +33,14 @@
             flowPanel = new FlowLayoutPanel();
             categoryBar = new app_escritorio.Controls.CategoryBar();
             rightPanel = new Panel();
+            sidebar = new app_escritorio.Shell.ShellSidebar();
+            shellTopBar = new app_escritorio.Shell.ShellTopBar();
             toolBar.SuspendLayout();
-            this.sidebarControl1 = new app_escritorio.Controls.SidebarControl();
-            
             toolFlow.SuspendLayout();
-            
             topBar.SuspendLayout();
-            
             mainLayout.SuspendLayout();
-            
             leftContainer.SuspendLayout();
-            
-SuspendLayout();
-            
+            SuspendLayout();
             // 
             // toolBar
             // 
@@ -52,11 +48,11 @@ SuspendLayout();
             toolBar.BorderStyle = BorderStyle.FixedSingle;
             toolBar.Controls.Add(toolFlow);
             toolBar.Dock = DockStyle.Top;
-            toolBar.Location = new Point(0, 0);
+            toolBar.Location = new Point(272, 64);
             toolBar.Margin = new Padding(3, 2, 3, 2);
             toolBar.Name = "toolBar";
             toolBar.Padding = new Padding(4, 3, 4, 3);
-            toolBar.Size = new Size(1199, 40);
+            toolBar.Size = new Size(949, 40);
             toolBar.TabIndex = 0;
             // 
             // toolFlow
@@ -70,7 +66,7 @@ SuspendLayout();
             toolFlow.Location = new Point(4, 3);
             toolFlow.Margin = new Padding(3, 2, 3, 2);
             toolFlow.Name = "toolFlow";
-            toolFlow.Size = new Size(1189, 32);
+            toolFlow.Size = new Size(939, 32);
             toolFlow.TabIndex = 0;
             toolFlow.WrapContents = false;
             // 
@@ -135,11 +131,11 @@ SuspendLayout();
             topBar.Controls.Add(statusBar);
             topBar.Controls.Add(txtSearch);
             topBar.Dock = DockStyle.Top;
-            topBar.Location = new Point(0, 40);
+            topBar.Location = new Point(272, 104);
             topBar.Margin = new Padding(3, 2, 3, 2);
             topBar.Name = "topBar";
             topBar.Padding = new Padding(7, 3, 7, 3);
-            topBar.Size = new Size(1199, 33);
+            topBar.Size = new Size(949, 33);
             topBar.TabIndex = 1;
             // 
             // statusBar
@@ -163,7 +159,7 @@ SuspendLayout();
             txtSearch.Location = new Point(7, 3);
             txtSearch.Margin = new Padding(4);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(1185, 25);
+            txtSearch.Size = new Size(935, 25);
             txtSearch.TabIndex = 1;
             txtSearch.TextChanged += TxtSearch_TextChanged;
             // 
@@ -176,12 +172,12 @@ SuspendLayout();
             mainLayout.Controls.Add(leftContainer, 0, 0);
             mainLayout.Controls.Add(rightPanel, 1, 0);
             mainLayout.Dock = DockStyle.Fill;
-            mainLayout.Location = new Point(0, 73);
+            mainLayout.Location = new Point(272, 137);
             mainLayout.Margin = new Padding(0);
             mainLayout.Name = "mainLayout";
             mainLayout.RowCount = 1;
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            mainLayout.Size = new Size(1199, 489);
+            mainLayout.Size = new Size(949, 489);
             mainLayout.TabIndex = 2;
             // 
             // leftContainer
@@ -193,7 +189,7 @@ SuspendLayout();
             leftContainer.Location = new Point(3, 2);
             leftContainer.Margin = new Padding(3, 2, 3, 2);
             leftContainer.Name = "leftContainer";
-            leftContainer.Size = new Size(974, 485);
+            leftContainer.Size = new Size(724, 485);
             leftContainer.TabIndex = 0;
             // 
             // flowPanel
@@ -206,7 +202,7 @@ SuspendLayout();
             flowPanel.Margin = new Padding(3, 2, 3, 2);
             flowPanel.Name = "flowPanel";
             flowPanel.Padding = new Padding(9, 8, 9, 8);
-            flowPanel.Size = new Size(974, 440);
+            flowPanel.Size = new Size(724, 440);
             flowPanel.TabIndex = 1;
             flowPanel.SizeChanged += FlowPanel_SizeChanged;
             flowPanel.DragDrop += FlowPanel_DragDrop;
@@ -221,7 +217,7 @@ SuspendLayout();
             categoryBar.Margin = new Padding(3, 2, 3, 2);
             categoryBar.Name = "categoryBar";
             categoryBar.Padding = new Padding(9, 2, 9, 2);
-            categoryBar.Size = new Size(974, 45);
+            categoryBar.Size = new Size(724, 45);
             categoryBar.TabIndex = 0;
             // 
             // rightPanel
@@ -229,22 +225,43 @@ SuspendLayout();
             rightPanel.AutoScroll = true;
             rightPanel.BackColor = Color.FromArgb(45, 45, 48);
             rightPanel.Dock = DockStyle.Fill;
-            rightPanel.Location = new Point(983, 2);
+            rightPanel.Location = new Point(733, 2);
             rightPanel.Margin = new Padding(3, 2, 3, 2);
             rightPanel.Name = "rightPanel";
             rightPanel.Padding = new Padding(9, 8, 9, 8);
             rightPanel.Size = new Size(213, 485);
             rightPanel.TabIndex = 1;
             // 
+            // sidebar
+            // 
+            sidebar.ActiveRoute = "menu";
+            sidebar.Dock = DockStyle.Left;
+            sidebar.Location = new Point(0, 0);
+            sidebar.Name = "sidebar";
+            sidebar.Size = new Size(272, 626);
+            sidebar.TabIndex = 100;
+            // 
+            // shellTopBar
+            // 
+            shellTopBar.Dock = DockStyle.Top;
+            shellTopBar.Location = new Point(272, 0);
+            shellTopBar.Name = "shellTopBar";
+            shellTopBar.RoleText = "Administrador";
+            shellTopBar.RouteText = "Menú y productos";
+            shellTopBar.Size = new Size(949, 64);
+            shellTopBar.TabIndex = 101;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1199, 562);
+            ClientSize = new Size(1221, 626);
             Controls.Add(mainLayout);
             Controls.Add(topBar);
             Controls.Add(toolBar);
+            Controls.Add(shellTopBar);
+            Controls.Add(sidebar);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
@@ -256,16 +273,6 @@ SuspendLayout();
             topBar.PerformLayout();
             mainLayout.ResumeLayout(false);
             leftContainer.ResumeLayout(false);
-            this.Controls.Add(this.sidebarControl1);
-            // 
-            // sidebarControl1
-            // 
-            this.sidebarControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.sidebarControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebarControl1.Location = new System.Drawing.Point(0, 0);
-            this.sidebarControl1.Name = "sidebarControl1";
-            this.sidebarControl1.Size = new System.Drawing.Size(250, 900);
-            this.sidebarControl1.TabIndex = 100;
             ResumeLayout(false);
 
         }

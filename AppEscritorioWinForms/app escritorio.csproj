@@ -7,12 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>app_escritorio</RootNamespace>
-    <!-- Ignorar errores de variables que no son nulas temporalmente mientras migramos -->
+    <!-- Avisos de nulabilidad desactivados: el código no usa anotaciones de tipos que aceptan null -->
     <NoWarn>CS8618;CS8602;CS8604;CS8600;CS8625</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="App.config" />
-  </ItemGroup>
 
 </Project>

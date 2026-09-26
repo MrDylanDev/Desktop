@@ -17,6 +17,10 @@ Réplica en WinForms del tema de la versión WPF (`App.xaml`). Todo se edita des
 | `RTextBox` | `TextBox` con placeholder | `PlaceholderText`, `Multiline`, `LargeText` |
 | `RComboBox` | `ComboBox` oscuro | `Items` |
 | `RBadge` | chip (rol, "Operando local") | `Kind` |
+| `RSwitch` | `CheckBox` "Módulo activado" | `Checked`, evento `CheckedChanged` |
+| `RDataGridView` | `ListView`/`GridView` oscuro | columnas con `Tag = "chip"` (insignia) o botón con `Tag = "danger"`/`"primary"` |
+| `RCalendar` | `Calendar` oscuro | `SelectedDate`, evento `DateChanged` |
+| `RBarChart` | barras de "Ventas últimos 7 días" | `SetData(valores, etiquetas)` desde código |
 | `RCardControl` | base para tarjetas propias | `Surface`, `HoverSurface` |
 | `RDialogForm` | ventana de diálogo oscura | *Agregar → Formulario heredado* |
 
@@ -24,17 +28,32 @@ Los colores y las fuentes salen de `Utils/Theme.cs`: si cambias un color ahí, c
 
 ## Estructura
 
-- `Shell/ShellForm`: la ventana principal, con el sidebar y la barra superior. Cada módulo es un **UserControl** que se carga en `contentHost`.
-- `Shell/ShellSidebar` y `Shell/ShellTopBar`: se diseñan por separado. Cada botón del sidebar tiene en `Tag` la ruta a la que navega.
-- `Views/Pos/*` y `Views/Mesas/*`: POS y Mesas ya migrados; sirven de ejemplo para los demás módulos.
-- Los módulos que aún no se migraron (KDS, Inventario, Reservas, Delivery, Menú, Módulos, Reportes y Configuración) se muestran dentro de la ventana principal con `HostLegacyForm`, que les oculta su sidebar viejo.
+**Cada sección de la app es un Form en `Forms/`.** Ábrelo con doble clic y verás la ventana completa (menú lateral, barra superior y la sección), igual que al ejecutar. Todo lo de la sección se selecciona y se mueve desde el diseñador.
 
-## Migrar otro módulo (ej. KDS)
+| Form | Sección | Piezas propias (en `Views/`, se arrastran desde el Cuadro de herramientas) |
+|---|---|---|
+| `PosForm` | POS | `ProductTile`, `TicketLineItem`, `CheckoutDialog`, `NoteDialog`, `ReceiptDialog` |
+| `MesasForm` | Mesas y Salón | `TableCard`, `TableDialog` |
+| `KdsForm` | Cocina KDS | `KdsOrderCard` (propiedad `Stage`: Nuevo / Preparación / Listo) |
+| `InventarioForm` | Inventario | `InsumoDialogForm` |
+| `ReservasForm` | Reservas | `ReservaDialogForm` |
+| `DeliveryForm` | Delivery | `DeliveryDialogForm` |
+| `ReportesForm` | Reportes + Trazabilidad | — |
+| `SettingsForm` | Configuración | — |
+| `ModulesForm` | Módulos | `ModuleCard` (propiedades `Title`, `Description`, `Glyph`, `IsCore`...) |
+| `Form1` | Menú y productos | `CategoryBar`, `MenuCard`, `StatusBar` |
 
-1. *Agregar → Control de usuario* en `Views/Kds/KdsView.cs`.
-2. Diseña la pantalla con los controles `R*` (mira `PosView` como guía).
-3. Pasa la lógica de `Forms/KdsForm.cs` a `KdsView.cs`.
-4. En `ShellForm.GetOrCreateView`, cambia `HostLegacyForm(new KdsForm ...)` por `new KdsView()`.
+- En cada Form, `sidebar` y `topBar` son los controles reales de `Shell/ShellSidebar` y `Shell/ShellTopBar`. Para cambiar el menú o la barra, edítalos ahí: el cambio aparece en todas las secciones. En cada Form solo se ajusta `sidebar.ActiveRoute` (botón resaltado) y `topBar.RouteText` (título).
+- Al ejecutar hay una sola ventana: `Shell/ShellForm` crea el Form de la sección, le quita su sidebar y su barra (son copias para el diseñador) y lo muestra en `contentHost`.
+- `Data/ModuleStore.cs` guarda qué módulos están activos (`modules.dat`) y avisa al menú con `ModuleStateChanged`.
+- Los datos de KDS, Inventario, Reservas, Delivery y Reportes son DEMO en memoria (`Models/ModuloModels.cs`).
+
+## Agregar una sección nueva
+
+1. *Agregar → Formulario (Windows Forms)* en `Forms/<Seccion>Form.cs`.
+2. Arrastra `ShellSidebar` (Dock = Left) y `ShellTopBar` (Dock = Top); pon `ActiveRoute` y `RouteText`.
+3. Arrastra un `RPanel` con Dock = Fill y diseña la sección dentro (mira `InventarioForm`: título, filtros, tabla y nota).
+4. Agrega la ruta en `ShellForm.GetOrCreateView` y un botón con ese `Tag` en `ShellSidebar`.
 
 ## Reglas para no romper el diseñador
 

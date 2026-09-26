@@ -32,24 +32,25 @@ Desktop/                                   ← raíz del repo (remote: MrDylanDe
 ├── README.md
 ├── requisitos-app-restaurante.md          ← spec de producto (§1–§13)
 ├── RestauranteGestor.sln / .slnx          ← solución (solo el proyecto WinForms)
-├── RestauranteGestor.Native/              ← versión WPF .NET 4.8 anterior (referencia visual, fuera de la solución)
 └── AppEscritorioWinForms/                 ← app actual: "app escritorio" (WinForms .NET 8)
     ├── Program.cs                         ← Login → ShellForm; "Cambiar perfil" vuelve al login
     ├── Shell/
     │   ├── ShellForm                      ← ventana principal: sidebar + barra superior + contenido
     │   ├── ShellSidebar                   ← menú lateral (Operación / Administración)
     │   └── ShellTopBar                    ← reloj, ruta, rol, "Cambiar perfil"
-    ├── UI/                                ← kit visual (RButton, RPanel, RLabel, RTextBox, RComboBox...)
-    │   └── LEEME_UI.md                    ← cómo usar el kit y migrar módulos
-    ├── Views/
-    │   ├── Pos/                           ← POS nuevo: PosView, ProductTile, TicketLineItem, Checkout/Note/Receipt
-    │   └── Mesas/                         ← Mesas nuevo: MesasView, TableCard, TableDialog
-    ├── Forms/                             ← módulos WinForms anteriores (KDS, Inventario, Reservas, Delivery,
-    │                                        Reportes, Configuración, Módulos, Login, PIN admin...)
-    ├── Form1.cs                           ← editor de carta ("Menú y productos")
-    ├── Controls/                          ← controles del editor de carta y del diseño anterior
-    ├── Data/                              ← TicketStore, MesaStore, LocalSettings, MenuStore, OrderHistoryStore
-    ├── Models/                            ← MenuItem, Category, OrderRecord
+    ├── UI/                                ← kit visual (RButton, RPanel, RLabel, RTextBox, RComboBox, RSwitch,
+    │   │                                    RDataGridView, RCalendar, RBarChart...)
+    │   └── LEEME_UI.md                    ← cómo usar el kit y editar las secciones
+    ├── Forms/                             ← UNA SECCIÓN = UN FORM (se ve la app completa en el diseñador):
+    │                                        PosForm, MesasForm, KdsForm, InventarioForm, ReservasForm, DeliveryForm,
+    │                                        ReportesForm, SettingsForm, ModulesForm + diálogos (Insumo, Reserva,
+    │                                        Delivery) + LoginForm, AdminCodeForm, OrderHistoryForm
+    ├── Form1.cs                           ← Menú y productos (editor de carta)
+    ├── Views/                             ← piezas reutilizables: ProductTile, TicketLineItem, TableCard,
+    │                                        KdsOrderCard, ModuleCard, Checkout/Note/Receipt/TableDialog
+    ├── Controls/                          ← controles del editor de carta (CategoryBar, MenuCard, StatusBar)
+    ├── Data/                              ← TicketStore, MesaStore, ModuleStore, LocalSettings, MenuStore, OrderHistoryStore
+    ├── Models/                            ← MenuItem, Category, OrderRecord, PosModels, ModuloModels (datos DEMO)
     └── Utils/Theme.cs                     ← paleta y tipografía únicas (copiadas de App.xaml de la versión WPF)
 ```
 
@@ -64,13 +65,11 @@ flowchart TB
     subgraph S["ShellForm (una sola ventana)"]
         SB["ShellSidebar\nNavigateRequested(ruta)"]
         TB["ShellTopBar\nreloj · ruta · rol"]
-        CH["contentHost\n(1 vista cacheada por ruta)"]
+        CH["contentHost\n(1 sección cacheada por ruta)"]
     end
-    subgraph Nuevas["Vistas nuevas (UserControl, kit UI)"]
-        POS["PosView"]
-        MES["MesasView"]
-    end
-    subgraph Legacy["Módulos anteriores (HostLegacyForm)"]
+    subgraph Secciones["Secciones (Forms/, HostSectionForm)"]
+        POS["PosForm"]
+        MES["MesasForm"]
         MOD["ModulesForm"]
         KDS["KdsForm"]
         INV["InventarioForm"]
@@ -87,8 +86,7 @@ flowchart TB
         TX[("tax.dat / settings.xml")]
     end
     SB --> CH
-    CH --> Nuevas
-    CH --> Legacy
+    CH --> Secciones
     MES -- "MesaParaPos" --> POS
     POS --> TS
     MES --> TS
@@ -98,12 +96,12 @@ flowchart TB
     POS --> TX
 ```
 
-- **Shell + intercambio de `UserControl`** (igual que `MainWindow` en WPF): `ShellForm.Navigate(ruta)` crea cada
-  vista una sola vez y la muestra en `contentHost`. Se acabó el "ocultar/mostrar formularios" que parpadeaba.
-- **Migración gradual:** los módulos que aún no se rediseñaron se muestran dentro de la ventana principal con
-  `HostLegacyForm`, que les oculta su sidebar y topbar viejos.
-- **Todo es diseñable:** cada pantalla, tarjeta y diálogo nuevo tiene su `*.Designer.cs` limpio (sin lambdas ni
-  código propio), así que se edita desde el diseñador de Visual Studio.
+- **Una sección = un Form** (`Forms/PosForm`, `KdsForm`, `SettingsForm`...). Cada uno trae en su diseñador el
+  `ShellSidebar` (con `ActiveRoute`), el `ShellTopBar` (con `RouteText`) y el contenido en `root`, así que al abrirlo
+  en Visual Studio se ve **la app completa** y todo el contenido se edita con el mouse.
+- **Una sola ventana al ejecutar:** `ShellForm.Navigate(ruta)` crea cada Form una vez, `HostSectionForm` le quita su
+  sidebar y su barra (son copias para el diseñador) y lo muestra en `contentHost`. Sin parpadeo al navegar.
+- **Todo es diseñable:** cada Form, tarjeta y diálogo tiene su `*.Designer.cs` limpio (sin lambdas ni código propio).
 
 ## Kit visual (`AppEscritorioWinForms/UI`)
 
@@ -118,6 +116,9 @@ Cuadro de herramientas y se configuran desde Propiedades → categoría **RestoO
 | `RTextBox` | `TextBox` con placeholder | `PlaceholderText`, `Multiline`, `LargeText` |
 | `RComboBox` | `ComboBox` oscuro | `Items` |
 | `RBadge` | chip (rol, "Operando local") | `Kind` |
+| `RSwitch` | `CheckBox` "Módulo activado" | `Checked` |
+| `RDataGridView` | `ListView`/`GridView` oscuro | columnas con `Tag = "chip"` / botones `"danger"`, `"primary"` |
+| `RCalendar` / `RBarChart` | `Calendar` / barras de ventas | `SelectedDate` / `SetData(...)` |
 | `RCardControl` | base para tarjetas propias | `Surface`, `HoverSurface`, `BorderColor` |
 | `RDialogForm` | ventana de diálogo oscura | *Agregar → Formulario heredado* |
 
@@ -142,8 +143,8 @@ Windows 10/11.
 ```mermaid
 sequenceDiagram
     actor M as Mesero/Cajero
-    participant MV as MesasView
-    participant PV as PosView
+    participant MV as MesasForm
+    participant PV as PosForm
     participant CK as CheckoutDialog
     participant RC as ReceiptDialog
     M->>MV: "Abrir en POS"
@@ -166,16 +167,16 @@ sequenceDiagram
 
 | Módulo | Pantalla | Lógica | Persiste |
 |---|---|---|---|
-| POS | **Nueva** (kit UI) | Ticket por mesa, notas, impuesto, cobro, recibo | No (tickets en memoria) |
-| Mesas y Salón | **Nueva** (kit UI) | CRUD, filtro por salón, detalle, abrir en POS | Sí, `mesas.dat` |
-| Selector de Módulos | Anterior | Flags reales | Sí, `modules.dat` |
-| Menú y productos | Anterior (`Form1`) | CRUD de carta, categorías, fotos, historial | Sí, `data\menu.xml` |
-| Configuración | Anterior | Datos del negocio, impuesto por defecto, respaldos | Sí, `settings.xml`, `tax.dat` |
-| Cocina KDS | Anterior | Kanban 3 estados (mock) | No |
-| Inventario | Anterior | CRUD + alertas de stock | No |
-| Reservas | Anterior | Calendario + CRUD | No |
-| Delivery | Anterior | Tabla + estados + CRUD | No |
-| Reportes | Anterior | KPIs y trazabilidad **mock** | No |
+| POS | `PosForm` (kit UI) | Ticket por mesa, notas, impuesto, cobro, recibo | No (tickets en memoria) |
+| Mesas y Salón | `MesasForm` (kit UI) | CRUD, filtro por salón, detalle, abrir en POS | Sí, `mesas.dat` |
+| Selector de Módulos | `ModulesForm` (kit UI) | Tarjetas `ModuleCard` con interruptor | Sí, `modules.dat` |
+| Menú y productos | `Form1` (menú y barra nuevos, contenido anterior) | CRUD de carta, categorías, fotos, historial | Sí, `data\menu.xml` |
+| Configuración | `SettingsForm` (kit UI) | Datos del negocio, impuesto por defecto, respaldos | Sí, `settings.xml`, `tax.dat` |
+| Cocina KDS | `KdsForm` (kit UI) | Kanban 3 columnas, estaciones, tiempos (DEMO) | No |
+| Inventario | `InventarioForm` (kit UI) | CRUD + alertas de stock (DEMO) | No |
+| Reservas | `ReservasForm` (kit UI) | Calendario + agenda + CRUD (DEMO) | No |
+| Delivery | `DeliveryForm` (kit UI) | Cola por plataforma, estados, CRUD (DEMO) | No |
+| Reportes | `ReportesForm` (kit UI) | KPIs, gráfico 7 días, top platos, por mesa, historial (datos DEMO calculados) | No |
 | DIAN / Delivery real | Pendiente (Fase 3) | — | — |
 
 ## Persistencia
@@ -205,7 +206,7 @@ dotnet build "AppEscritorioWinForms\app escritorio.csproj"
 dotnet run --project "AppEscritorioWinForms\app escritorio.csproj"
 ```
 
-> Para editar pantallas: compilar una vez y abrir el `.cs` con doble clic (diseñador). Reglas para no romper el
+> Para editar una sección: compilar una vez y abrir su Form en `Forms/` con doble clic (diseñador). Reglas para no romper el
 > diseñador en [`UI/LEEME_UI.md`](AppEscritorioWinForms/UI/LEEME_UI.md).
 
 ## Limitaciones conocidas
@@ -216,16 +217,15 @@ dotnet run --project "AppEscritorioWinForms\app escritorio.csproj"
 3. Los productos del POS están fijos en código; aún no se leen de la carta (`menu.xml`).
 4. El editor de carta usa la ruta relativa `data\menu.xml`: depende de la carpeta desde donde se ejecute, y la
    carta de ejemplo trae fotos con rutas de otro equipo.
-5. Reportes y KDS muestran datos de demostración (el KDS no recibe comandas del POS).
+5. KDS, Inventario, Reservas, Delivery y Reportes usan datos de demostración (el KDS no recibe comandas del POS).
 6. Solo 2 perfiles (spec §3/§6 pide dueño, cajero, mesero, cocina). El PIN de administrador es fijo (`1234`).
-7. KDS, Inventario, Reservas, Delivery, Menú, Módulos, Reportes y Configuración aún tienen el diseño anterior
-   (se migran uno a uno con el kit, ver `LEEME_UI.md`).
+7. El contenido de Menú (`Form1`) aún tiene el diseño anterior (ya usa el menú lateral y la barra nuevos).
 8. Sin tests, sin logging, sin respaldo automático.
 
 ## Historial
 
 - **Versión WPF (.NET Framework 4.8)** — `RestauranteGestor.Native/`. Primera interfaz completa con tema oscuro;
-  sirve de referencia visual. Ya no forma parte de la solución.
+  sirvió de referencia visual. Se quitó del repositorio (sigue en el historial de git).
 - **Versión WinForms (.NET 8)** — `AppEscritorioWinForms/`. Migración de todos los módulos a WinForms (partiendo del
   editor de carta de David), ventana principal única, kit visual con el mismo look de la versión WPF y pantallas
   editables en el diseñador de Visual Studio.

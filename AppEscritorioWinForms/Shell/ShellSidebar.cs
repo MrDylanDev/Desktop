@@ -24,9 +24,22 @@ namespace app_escritorio.Shell
         [Category("RestoOS")]
         public event NavigateEventHandler NavigateRequested;
 
+        private string _activeRoute = "";
+
         public ShellSidebar()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Ruta resaltada (pos, mesas, kds, inventario, reservas, delivery, menu, modulos, reportes, configuracion).
+        /// Cada Form de sección la pone en el diseñador para verse igual que en la app.
+        /// </summary>
+        [Category("RestoOS"), DefaultValue(""), Description("Ruta del botón resaltado.")]
+        public string ActiveRoute
+        {
+            get => _activeRoute;
+            set { _activeRoute = value ?? ""; SetActive(_activeRoute); }
         }
 
         private void NavButton_Click(object sender, EventArgs e)
@@ -77,6 +90,7 @@ namespace app_escritorio.Shell
         /// <summary>Resalta el botón de la ruta activa.</summary>
         public void SetActive(string route)
         {
+            _activeRoute = route ?? "";
             foreach (var b in NavButtons())
                 b.Selected = b != btnConfigModulos && string.Equals(b.Tag as string, route, StringComparison.OrdinalIgnoreCase);
         }
