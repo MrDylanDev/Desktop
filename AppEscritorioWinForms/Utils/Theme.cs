@@ -1,45 +1,86 @@
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace app_escritorio.Utils
 {
+    /// <summary>
+    /// Paleta y tipografía únicas de RestoOS, copiadas 1:1 de App.xaml de la versión WPF.
+    /// Los controles de app_escritorio.UI leen de aquí: si cambias un color, cambia en toda la app.
+    /// </summary>
     public static class Theme
     {
-        // Base (paridad con tema WPF: Surface)
-        public static readonly Color BackgroundDark = Color.FromArgb(17, 20, 21);       // #111415
-        public static readonly Color BackgroundMedium = Color.FromArgb(29, 32, 34);     // #1D2022
-        public static readonly Color BackgroundLight = Color.FromArgb(40, 42, 44);      // #282A2C
+        // ===== Paleta WPF (mismos nombres que App.xaml) =====
+        public static readonly Color Surface = ColorTranslator.FromHtml("#111415");
+        public static readonly Color SurfaceLowest = ColorTranslator.FromHtml("#0C0F10");
+        public static readonly Color SurfaceContainer = ColorTranslator.FromHtml("#1D2022");
+        public static readonly Color SurfaceHigh = ColorTranslator.FromHtml("#282A2C");
+        public static readonly Color SurfaceHighest = ColorTranslator.FromHtml("#333537");
+        public static readonly Color OnSurface = ColorTranslator.FromHtml("#E1E2E4");
+        public static readonly Color OnSurfaceVariant = ColorTranslator.FromHtml("#E1BFB5");
+        public static readonly Color Primary = ColorTranslator.FromHtml("#FFB59D");
+        public static readonly Color OnPrimary = ColorTranslator.FromHtml("#5D1800");
+        public static readonly Color PrimaryContainer = ColorTranslator.FromHtml("#F06536");
+        public static readonly Color Secondary = ColorTranslator.FromHtml("#FFB95F");
+        public static readonly Color Tertiary = ColorTranslator.FromHtml("#4EDEA3");
+        public static readonly Color OnTertiary = ColorTranslator.FromHtml("#003824");
+        public static readonly Color Error = ColorTranslator.FromHtml("#FFB4AB");
+        public static readonly Color ErrorContainer = ColorTranslator.FromHtml("#2E1A1A");
+        public static readonly Color ErrorContainerHover = ColorTranslator.FromHtml("#4A2424");
+        public static readonly Color Outline = ColorTranslator.FromHtml("#59413A");
 
-        // Acentos (paridad WPF)
-        public static readonly Color AccentPrimary = Color.FromArgb(240, 101, 54);      // #F06536
-        public static readonly Color AccentSecondary = Color.FromArgb(78, 222, 163);    // #4EDEA3
-        public static readonly Color AccentWarning = Color.FromArgb(255, 185, 95);      // #FFB95F
+        // ===== Alias usados por el código existente (Form1, OrderForm, MenuCard...) =====
+        public static readonly Color BackgroundDark = Surface;
+        public static readonly Color BackgroundMedium = SurfaceContainer;
+        public static readonly Color BackgroundLight = SurfaceHigh;
+        public static readonly Color AccentPrimary = PrimaryContainer;
+        public static readonly Color AccentSecondary = Tertiary;
+        public static readonly Color AccentWarning = Secondary;
+        public static readonly Color TextPrimary = OnSurface;
+        public static readonly Color TextSecondary = OnSurfaceVariant;
+        public static readonly Color TextMuted = OnSurfaceVariant;
+        public static readonly Color TertiaryText = OnTertiary;
+        public static readonly Color DangerBackground = ErrorContainer;
+        public static readonly Color StatusAvailable = Tertiary;
+        public static readonly Color StatusUnavailable = Error;
+        public static readonly Color StatusWarning = Secondary;
+        public static readonly Color ButtonPrimary = Primary;
+        public static readonly Color ButtonPrimaryText = OnPrimary;
+        public static readonly Color BorderLight = Outline;
+        public static readonly Color BorderDark = SurfaceLowest;
 
-        // Texto (paridad WPF)
-        public static readonly Color TextPrimary = Color.FromArgb(225, 226, 228);       // #E1E2E4
-        public static readonly Color TextSecondary = Color.FromArgb(225, 191, 181);     // #E1BFB5
-        public static readonly Color TextMuted = Color.FromArgb(225, 191, 181);         // #E1BFB5
-        public static readonly Color TertiaryText = Color.FromArgb(0, 56, 36);          // #003824 (texto sobre verde)
-        public static readonly Color DangerBackground = Color.FromArgb(46, 26, 26);     // #2E1A1A (fondo peligro)
+        // ===== Tipografía (cacheada: no crea un Font nuevo en cada uso) =====
+        public const string FontFamilyName = "Segoe UI";
+        private static readonly Dictionary<string, Font> _fonts = new Dictionary<string, Font>();
 
-        // Estado (paridad WPF)
-        public static readonly Color StatusAvailable = Color.FromArgb(78, 222, 163);    // #4EDEA3
-        public static readonly Color StatusUnavailable = Color.FromArgb(255, 180, 171); // #FFB4AB
-        public static readonly Color StatusWarning = Color.FromArgb(255, 185, 95);      // #FFB95F
+        /// <summary>Devuelve una fuente compartida. No la hagas Dispose.</summary>
+        public static Font GetFont(float sizePt, FontStyle style = FontStyle.Regular, string family = FontFamilyName)
+        {
+            string key = family + "|" + sizePt + "|" + (int)style;
+            lock (_fonts)
+            {
+                if (!_fonts.TryGetValue(key, out var f))
+                {
+                    f = new Font(family, sizePt, style, GraphicsUnit.Point);
+                    _fonts[key] = f;
+                }
+                return f;
+            }
+        }
 
-        // Botones estilo app (paridad con PrimaryButton del tema WPF: melocotón + texto oscuro)
-        public static readonly Color ButtonPrimary = Color.FromArgb(255, 181, 157);
-        public static readonly Color ButtonPrimaryText = Color.FromArgb(93, 24, 0);
+        public static Font FontPrimary => GetFont(10F);
+        public static Font FontPrimaryBold => GetFont(10F, FontStyle.Bold);
+        public static Font FontTitle => GetFont(14F, FontStyle.Bold);
+        public static Font FontSubtitle => GetFont(11F, FontStyle.Bold);
+        public static Font FontSmall => GetFont(8F);
+        public static Font FontLarge => GetFont(12F, FontStyle.Bold);
 
-        // Bordes (paridad WPF)
-        public static readonly Color BorderLight = Color.FromArgb(89, 65, 58);          // #59413A
-        public static readonly Color BorderDark = Color.FromArgb(12, 15, 16);           // #0C0F10
-
-        // Fonts
-        public static Font FontPrimary => new Font("Segoe UI", 10F, FontStyle.Regular);
-        public static Font FontPrimaryBold => new Font("Segoe UI", 10F, FontStyle.Bold);
-        public static Font FontTitle => new Font("Segoe UI", 14F, FontStyle.Bold);
-        public static Font FontSubtitle => new Font("Segoe UI", 11F, FontStyle.Bold);
-        public static Font FontSmall => new Font("Segoe UI", 8F, FontStyle.Regular);
-        public static Font FontLarge => new Font("Segoe UI", 12F, FontStyle.Bold);
+        /// <summary>Mezcla un color con el fondo (para simular Opacity de WPF).</summary>
+        public static Color Blend(Color fg, Color bg, double opacity)
+        {
+            return Color.FromArgb(
+                (int)(fg.R * opacity + bg.R * (1 - opacity)),
+                (int)(fg.G * opacity + bg.G * (1 - opacity)),
+                (int)(fg.B * opacity + bg.B * (1 - opacity)));
+        }
     }
 }

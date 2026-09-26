@@ -1,6 +1,13 @@
 # Documentación del código — "app escritorio"
 
-Aplicación de escritorio Windows Forms (.NET Framework 4.7.2) para **gestionar la carta de un restaurante y registrar pedidos**.
+Aplicación de escritorio Windows Forms (.NET 8, `net8.0-windows`) para **gestionar la carta de un restaurante y registrar pedidos**.
+
+> **Nota (septiembre 2026):** este documento describe el **editor de carta** original ("app escritorio").
+> Hoy ese proyecto es la base de **RestoOS en WinForms .NET 8**: el editor vive en el módulo *Menú y productos*
+> (`Form1`) dentro de la ventana principal `Shell/ShellForm`, junto con POS, Mesas, KDS, Inventario, Reservas,
+> Delivery, Reportes y Configuración. Arranque, arquitectura general, kit visual y estado de cada módulo:
+> ver el [README principal](../README.md) y [`UI/LEEME_UI.md`](UI/LEEME_UI.md).
+
 
 ---
 
@@ -9,7 +16,7 @@ Aplicación de escritorio Windows Forms (.NET Framework 4.7.2) para **gestionar 
 | Dato | Valor |
 |---|---|
 | Lenguaje | C# |
-| Framework | .NET Framework 4.7.2 (WinForms, `WinExe`) |
+| Framework | .NET 8 (`net8.0-windows`, WinForms, `WinExe`, proyecto SDK) — antes .NET Framework 4.7.2 |
 |.Namespace | `app_escritorio` |
 | Persistencia | Archivos XML locales (`data/menu.xml`, `data/orders.xml`, `data/settings.xml`) |
 | Sin dependencias externas | Solo assemblies de .NET (`System.Drawing`, `System.Windows.Forms`, `System.Xml`) |

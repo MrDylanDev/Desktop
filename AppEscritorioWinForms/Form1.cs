@@ -13,11 +13,7 @@ namespace app_escritorio
 {
     public partial class Form1 : Form
     {
-        private app_escritorio.Controls.CategoryBar categoryBar;
-        private FlowLayoutPanel flowPanel;
-        private Panel rightPanel;
-        private TextBox txtSearch;
-        private app_escritorio.Controls.StatusBar statusBar;
+        public string Role { get; set; }
         private string dataFile = "data/menu.xml";
         private app_escritorio.Data.MenuData menuData;
         private Guid? currentSelectedCategoryId = null;
@@ -26,159 +22,27 @@ namespace app_escritorio
         public Form1()
         {
             InitializeComponent();
-            BuildUi();
             this.Load += Form1_Load;
+
+            // Re-apply properties that designer might override
+            this.categoryBar.CategorySelected += CategoryBar_CategorySelected;
+            this.txtSearch.TextChanged += (s, e) => ApplySearch();
+            this.flowPanel.AllowDrop = true;
+            this.flowPanel.DragEnter += FlowPanel_DragEnter;
+            this.flowPanel.DragDrop += FlowPanel_DragDrop;
+            this.flowPanel.SizeChanged += (s, e) => FitCardsToWidth();
+
+            // Botones de la barra superior del menú (el Designer.cs los había perdido)
+            this.btnNewItem.Click += BtnNewItem_Handler;
+            this.btnCategories.Click += BtnCategories_Handler;
+            this.btnHistory.Click += BtnHistory_Handler;
         }
 
-        private void BuildUi()
-        {
-            this.Text = "Editor de Carta y Pedidos";
-            this.BackColor = app_escritorio.Utils.Theme.BackgroundDark;
-            this.Size = new Size(1500, 950);
-            this.StartPosition = FormStartPosition.CenterScreen;
-
-            // ========== TOOLBAR (Top Level 1) ==========
-            var toolBar = new Panel 
-            { 
-                Dock = DockStyle.Top, 
-                Height = 52, 
-                BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
-                Padding = new Padding(4),
-                BorderStyle = BorderStyle.FixedSingle
-            };
-
-            var toolFlow = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                WrapContents = false,
-                AutoScroll = true
-            };
-
-            // Toolbar buttons (misma estructura que las páginas WPF: 36px, un primario, resto secundarios)
-            var btnNewItem = CreateToolbarButton("+ Nuevo plato", 150, true);
-            btnNewItem.Click += (s, e) => BtnNewItem_Click();
-
-            var btnCategories = CreateToolbarButton("Categorías", 125);
-            btnCategories.Click += (s, e) => ManageCategories();
-
-            var btnHistory = CreateToolbarButton("Historial", 130);
-            btnHistory.Click += (s, e) => OpenOrderHistory();
-
-            toolFlow.Controls.Add(btnNewItem);
-            toolFlow.Controls.Add(btnCategories);
-            toolFlow.Controls.Add(btnHistory);
-
-            var spacer = new Label { Width = 30, Height = 40 };
-            toolFlow.Controls.Add(spacer);
-
-            toolBar.Controls.Add(toolFlow);
-
-            // ========== TOP BAR (Top Level 2): SEARCH + SAVE ==========
-            var topBar = new Panel 
-            { 
-                Dock = DockStyle.Top, 
-                Height = 44, 
-                BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
-                Padding = new Padding(8, 4, 8, 4)
-            };
-
-            txtSearch = new TextBox 
-            { 
-                Dock = DockStyle.Fill,
-                Font = app_escritorio.Utils.Theme.FontSmall,
-                BackColor = app_escritorio.Utils.Theme.BackgroundDark,
-                ForeColor = app_escritorio.Utils.Theme.TextPrimary,
-                Margin = new Padding(5)
-            };
-            txtSearch.TextChanged += (s, e) => ApplySearch();
-
-            statusBar = new app_escritorio.Controls.StatusBar { Dock = DockStyle.Fill, Width = 430, Height = 34, Padding = new Padding(3, 0, 3, 0) };
-            topBar.Controls.Add(statusBar);
-            topBar.Controls.Add(txtSearch);
-
-            // ========== CATEGORY BAR ==========
-            categoryBar = new app_escritorio.Controls.CategoryBar();
-            categoryBar.CategorySelected += CategoryBar_CategorySelected;
-
-            // ========== MAIN FLOW PANEL ==========
-            flowPanel = new FlowLayoutPanel 
-            { 
-                Dock = DockStyle.Fill, 
-                AutoScroll = true, 
-                WrapContents = true,
-                BackColor = app_escritorio.Utils.Theme.BackgroundDark,
-                Padding = new Padding(10)
-            };
-            flowPanel.AllowDrop = true;
-            flowPanel.DragEnter += FlowPanel_DragEnter;
-            flowPanel.DragDrop += FlowPanel_DragDrop;
-            flowPanel.SizeChanged += (s, e) => FitCardsToWidth();
-
-            // ========== RIGHT EDITOR PANEL ==========
-            rightPanel = new Panel 
-            { 
-                Dock = DockStyle.Right, 
-                Width = 250, 
-                BackColor = app_escritorio.Utils.Theme.BackgroundMedium,
-                Padding = new Padding(10),
-                AutoScroll = true
-            };
-
-            var leftContainer = new Panel { Dock = DockStyle.Fill, BackColor = app_escritorio.Utils.Theme.BackgroundDark };
-            leftContainer.Controls.Add(flowPanel);
-            leftContainer.Controls.Add(categoryBar);
-
-            var mainLayout = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 2,
-                RowCount = 1,
-                BackColor = app_escritorio.Utils.Theme.BackgroundDark,
-                Padding = new Padding(0)
-            };
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
-            mainLayout.Controls.Add(leftContainer, 0, 0);
-            mainLayout.Controls.Add(rightPanel, 1, 0);
-            rightPanel.Dock = DockStyle.Fill;
-            rightPanel.Width = 250;
-
-            this.Controls.Add(mainLayout);
-            this.Controls.Add(topBar);
-            this.Controls.Add(toolBar);
-        }
-
-        private Button CreateToolbarButton(string text, int width, bool primary = false)
-        {
-            var back = primary ? app_escritorio.Utils.Theme.ButtonPrimary : app_escritorio.Utils.Theme.BackgroundMedium;
-            var fore = primary ? app_escritorio.Utils.Theme.ButtonPrimaryText : System.Drawing.Color.White;
-            var button = new Button
-            {
-                Text = text,
-                Width = width,
-                Height = 36,
-                Font = app_escritorio.Utils.Theme.FontSmall,
-                BackColor = back,
-                ForeColor = fore,
-                FlatStyle = FlatStyle.Flat,
-                Margin = new Padding(4)
-            };
-            button.FlatAppearance.BorderSize = 0;
-            button.FlatAppearance.MouseOverBackColor = primary ? app_escritorio.Utils.Theme.ButtonPrimary : app_escritorio.Utils.Theme.BackgroundLight;
-            button.Region = new Region(RoundedRect(new Rectangle(0, 0, width, 36), 16));
-            return button;
-        }
-
-        private static System.Drawing.Drawing2D.GraphicsPath RoundedRect(Rectangle rect, int diameter)
-        {
-            var path = new System.Drawing.Drawing2D.GraphicsPath();
-            path.AddArc(rect.X, rect.Y, diameter, diameter, 180, 90);
-            path.AddArc(rect.Right - diameter, rect.Y, diameter, diameter, 270, 90);
-            path.AddArc(rect.Right - diameter, rect.Bottom - diameter, diameter, diameter, 0, 90);
-            path.AddArc(rect.X, rect.Bottom - diameter, diameter, diameter, 90, 90);
-            path.CloseFigure();
-            return path;
-        }
+        private void BtnNewItem_Handler(object sender, EventArgs e) => BtnNewItem_Click();
+        private void BtnCategories_Handler(object sender, EventArgs e) => ManageCategories();
+        private void BtnHistory_Handler(object sender, EventArgs e) => OpenOrderHistory();
+        private void TxtSearch_TextChanged(object sender, EventArgs e) => ApplySearch();
+        private void FlowPanel_SizeChanged(object sender, EventArgs e) => FitCardsToWidth();
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -228,8 +92,8 @@ namespace app_escritorio
         {
             flowPanel.Controls.Clear();
 
-            var itemsToShow = (categoryId == null 
-                ? menuData.Items 
+            var itemsToShow = (categoryId == null
+                ? menuData.Items
                 : menuData.Items.Where(i => i.CategoryId == categoryId).ToList())
                 .OrderBy(i => i.CategoryId)
                 .ThenBy(i => i.Position)
@@ -362,7 +226,7 @@ namespace app_escritorio
             header.Controls.Add(title);
             header.Controls.Add(btnClose);
             var image = new PictureBox { Dock = DockStyle.Top, Height = 145, SizeMode = PictureBoxSizeMode.Zoom, BackColor = app_escritorio.Utils.Theme.BackgroundDark, Margin = new Padding(5) };
-            var btnImage = CreateEditorButton("📷 Elegir foto", 130, app_escritorio.Utils.Theme.BackgroundLight);
+            var btnImage = CreateEditorButton("Elegir foto", 130, app_escritorio.Utils.Theme.BackgroundLight);
             btnImage.Click += (s, e) =>
             {
                 using (var dialog = new OpenFileDialog { Filter = "Imágenes|*.jpg;*.jpeg;*.png;*.bmp|Todos|*.*", Title = "Seleccionar foto del plato" })
@@ -640,5 +504,15 @@ namespace app_escritorio
                 if (dialog.ShowDialog(this) == DialogResult.OK) { categoryBar.SetCategories(menuData.Categories); SaveMenu(); PopulateCards(currentSelectedCategoryId); }
             }
         }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+
+
+
+
+

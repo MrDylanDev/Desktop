@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -27,9 +27,10 @@ namespace app_escritorio.Utils
                 var finalPath = Path.Combine(ImagesFolder, fileName);
 
                 // Descargar imagen
-                using (var wc = new WebClient())
+                using (var hc = new System.Net.Http.HttpClient())
                 {
-                    wc.DownloadFile(new Uri(url), tempPath);
+                    var bytes = hc.GetByteArrayAsync(url).Result;
+                    File.WriteAllBytes(tempPath, bytes);
                 }
 
                 // Redimensionar y optimizar
