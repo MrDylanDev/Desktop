@@ -1,95 +1,30 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using app_escritorio.Forms;
+using app_escritorio.Models;
+using app_escritorio.UI;
+using app_escritorio.Utils;
 
 namespace app_escritorio.Forms
 {
+    /// <summary>
+    /// Inventario (migración de InventarioView.xaml de WPF): insumos con filtros, estado de stock y acciones.
+    /// Los datos son DEMO en memoria; el diseño completo está en InventarioForm.Designer.cs.
+    /// </summary>
     public partial class InventarioForm : Form
     {
-        public string Role { get; set; }
-        public class Insumo
-        {
-            public string Name { get; set; }
-            public string Category { get; set; }
-            public decimal Stock { get; set; }
-            public string Unit { get; set; }
-            public decimal Min { get; set; }
-            public decimal Cost { get; set; }
-
-            public string StockText => $"{Stock:0.##} {Unit}";
-            public string MinText => $"{Min:0.##} {Unit}";
-            public string CostText => Cost.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("es-CO"));
-            public bool IsLow => Stock <= Min;
-            public bool IsCritical => Stock <= Min * 0.5m;
-            public string Estado => IsCritical ? "Crítico" : IsLow ? "Bajo" : "OK";
-
-            public Color EstadoColor => IsCritical ? Color.IndianRed : IsLow ? Color.FromArgb(255, 107, 53) : Color.MediumSeaGreen;
-
-            public Insumo(string name, string category, decimal stock, string unit, decimal min, decimal cost)
-            {
-                Name = name; Category = category; Stock = stock; Unit = unit; Min = min; Cost = cost;
-            }
-        }
-
-        private readonly BindingList<Insumo> _all = new BindingList<Insumo>();
-        private readonly BindingList<Insumo> _filtered = new BindingList<Insumo>();
+        private readonly List<Insumo> _all = new List<Insumo>();
 
         public InventarioForm()
         {
             InitializeComponent();
-            
-            categoryBox.Items.AddRange(new[] { "Todas", "Carnes", "Verduras", "Lácteos", "Bebidas", "Secos" });
-            categoryBox.SelectedIndex = 0;
-            
+            if (UiHelpers.IsDesignTime) return;
+
             LoadMock();
+            cmbCategory.SelectedIndex = 0;
             ApplyFilter();
-        }
-
-        private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < _filtered.Count)
-            {
-                var ins = _filtered[e.RowIndex];
-                if (grid.Columns[e.ColumnIndex].DataPropertyName == "Estado")
-                {
-                    e.CellStyle.ForeColor = ins.EstadoColor;
-                    e.CellStyle.Font = new Font(grid.Font, FontStyle.Bold);
-                }
-                if (grid.Columns[e.ColumnIndex].DataPropertyName == "StockText")
-                {
-                    e.CellStyle.ForeColor = ins.IsLow ? ins.EstadoColor : Color.Black;
-                    e.CellStyle.Font = new Font(grid.Font, FontStyle.Bold);
-                }
-            }
-        }
-
-        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < _filtered.Count)
-            {
-                var ins = _filtered[e.RowIndex];
-                if (e.ColumnIndex == grid.Columns.Count - 2) // Ajustar
-                {
-                    var dlg = new InsumoDialogForm(ins);
-                    if (dlg.ShowDialog(this) == DialogResult.OK && dlg.Result != null)
-                    {
-                        var idx = _all.IndexOf(ins);
-                        if (idx >= 0) _all[idx] = dlg.Result;
-                        ApplyFilter();
-                    }
-                }
-                else if (e.ColumnIndex == grid.Columns.Count - 1) // ×
-                {
-                    if (MessageBox.Show($"¿Eliminar {ins.Name}?", "RestoOS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        _all.Remove(ins);
-                        ApplyFilter();
-                    }
-                }
-            }
         }
 
         private void LoadMock()
@@ -106,37 +41,66 @@ namespace app_escritorio.Forms
 
         private void ApplyFilter()
         {
-            string text = searchBox.Text.Trim().ToLower();
-            string cat = categoryBox.SelectedItem?.ToString() ?? "Todas";
-            bool lowOnly = lowCheck.Checked;
+            string text = txtSearch.Text.Trim().ToLowerInvariant();
+            string cat = cmbCategory.SelectedItem?.ToString() ?? "Todas";
+            bool lowOnly = swLowOnly.Checked;
 
-            _filtered.Clear();
+            grid.Rows.Clear();
             foreach (var i in _all)
             {
                 if (cat != "Todas" && i.Category != cat) continue;
-                if (!string.IsNullOrEmpty(text) && !i.Name.ToLower().Contains(text)) continue;
+                if (text.Length > 0 && !i.Name.ToLowerInvariant().Contains(text)) continue;
                 if (lowOnly && !i.IsLow) continue;
-                _filtered.Add(i);
+
+                int r = grid.Rows.Add(i.Name, i.Category, i.StockText, i.MinText, i.Estado, i.CostText);
+                var row = grid.Rows[r];
+                row.Tag = i;
+                row.Cells[colStock.Index].Style.ForeColor = i.IsLow ? i.EstadoColor : Theme.OnSurface;
+                row.Cells[colStock.Index].Style.Font = Theme.GetFont(9.75F, FontStyle.Bold);
+                row.Cells[colEstado.Index].Style.ForeColor = i.EstadoColor;
             }
 
-            grid.DataSource = null;
-            grid.DataSource = _filtered;
-
             int alerts = _all.Count(i => i.IsLow);
-            lblAlerts.Text = $"{alerts} alertas stock bajo";
-            lblAlerts.Visible = alerts > 0;
+            lblAlerts.Text = alerts == 1 ? "1 alerta stock bajo" : alerts + " alertas stock bajo";
+            pnlAlert.Visible = alerts > 0;
         }
 
-        private void Add_Click(object sender, EventArgs e)
+        private void Filter_Changed(object sender, EventArgs e)
         {
-            var dlg = new InsumoDialogForm(null);
-            if (dlg.ShowDialog(this) == DialogResult.OK && dlg.Result != null)
+            if (!UiHelpers.IsDesignTime) ApplyFilter();
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new InsumoDialogForm(null))
+                if (dlg.ShowDialog(TopLevelControl ?? this) == DialogResult.OK && dlg.Result != null)
+                {
+                    _all.Add(dlg.Result);
+                    ApplyFilter();
+                }
+        }
+
+        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || !(grid.Rows[e.RowIndex].Tag is Insumo ins)) return;
+
+            if (e.ColumnIndex == colAjustar.Index)
             {
-                _all.Add(dlg.Result);
-                ApplyFilter();
+                using (var dlg = new InsumoDialogForm(ins))
+                    if (dlg.ShowDialog(TopLevelControl ?? this) == DialogResult.OK && dlg.Result != null)
+                    {
+                        _all[_all.IndexOf(ins)] = dlg.Result;
+                        ApplyFilter();
+                    }
+            }
+            else if (e.ColumnIndex == colDelete.Index)
+            {
+                if (MessageBox.Show("¿Eliminar " + ins.Name + "?", "RestoOS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _all.Remove(ins);
+                    ApplyFilter();
+                }
             }
         }
     }
 }
-
-

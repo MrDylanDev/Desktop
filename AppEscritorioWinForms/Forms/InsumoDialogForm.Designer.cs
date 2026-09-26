@@ -2,263 +2,235 @@
 {
     partial class InsumoDialogForm
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
+        /// <summary>Variable del diseñador requerida.</summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Código generado por el Diseñador
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.lblName = new System.Windows.Forms.Label();
-            this.lblCat = new System.Windows.Forms.Label();
-            this.lblStock = new System.Windows.Forms.Label();
-            this.lblUnit = new System.Windows.Forms.Label();
-            this.lblMin = new System.Windows.Forms.Label();
-            this.lblCost = new System.Windows.Forms.Label();
-            this.nameBox = new System.Windows.Forms.TextBox();
-            this.categoryBox = new System.Windows.Forms.ComboBox();
-            this.stockBox = new System.Windows.Forms.TextBox();
-            this.unitBox = new System.Windows.Forms.ComboBox();
-            this.minBox = new System.Windows.Forms.TextBox();
-            this.costBox = new System.Windows.Forms.TextBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOk = new System.Windows.Forms.Button();
+            this.root = new app_escritorio.UI.RPanel();
+            this.btnSave = new app_escritorio.UI.RButton();
+            this.btnCancel = new app_escritorio.UI.RButton();
+            this.txtCost = new app_escritorio.UI.RTextBox();
+            this.lblCost = new app_escritorio.UI.RLabel();
+            this.txtMin = new app_escritorio.UI.RTextBox();
+            this.lblMin = new app_escritorio.UI.RLabel();
+            this.txtStock = new app_escritorio.UI.RTextBox();
+            this.lblStock = new app_escritorio.UI.RLabel();
+            this.cmbUnit = new app_escritorio.UI.RComboBox();
+            this.lblUnit = new app_escritorio.UI.RLabel();
+            this.cmbCategory = new app_escritorio.UI.RComboBox();
+            this.lblCategory = new app_escritorio.UI.RLabel();
+            this.txtName = new app_escritorio.UI.RTextBox();
+            this.lblName = new app_escritorio.UI.RLabel();
+            this.lblTitle = new app_escritorio.UI.RLabel();
+            this.root.SuspendLayout();
             this.SuspendLayout();
             // 
-            // titleLabel
+            // root
             // 
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.titleLabel.Location = new System.Drawing.Point(20, 20);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(168, 30);
-            this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "Nuevo insumo";
+            this.root.Controls.Add(this.btnSave);
+            this.root.Controls.Add(this.btnCancel);
+            this.root.Controls.Add(this.txtCost);
+            this.root.Controls.Add(this.lblCost);
+            this.root.Controls.Add(this.txtMin);
+            this.root.Controls.Add(this.lblMin);
+            this.root.Controls.Add(this.txtStock);
+            this.root.Controls.Add(this.lblStock);
+            this.root.Controls.Add(this.cmbUnit);
+            this.root.Controls.Add(this.lblUnit);
+            this.root.Controls.Add(this.cmbCategory);
+            this.root.Controls.Add(this.lblCategory);
+            this.root.Controls.Add(this.txtName);
+            this.root.Controls.Add(this.lblName);
+            this.root.Controls.Add(this.lblTitle);
+            this.root.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.root.Location = new System.Drawing.Point(0, 0);
+            this.root.Name = "root";
+            this.root.Size = new System.Drawing.Size(444, 436);
+            this.root.Surface = app_escritorio.UI.SurfaceLevel.Surface;
+            this.root.TabIndex = 0;
             // 
-            // lblName
+            // btnSave
             // 
-            this.lblName.AutoSize = true;
-            this.lblName.ForeColor = System.Drawing.Color.LightGray;
-            this.lblName.Location = new System.Drawing.Point(20, 70);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(59, 13);
-            this.lblName.TabIndex = 1;
-            this.lblName.Text = "Nombre *";
+            this.btnSave.Location = new System.Drawing.Point(312, 378);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(110, 40);
+            this.btnSave.TabIndex = 6;
+            this.btnSave.Text = "Guardar";
+            this.btnSave.Variant = app_escritorio.UI.ButtonVariant.Primary;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
-            // nameBox
+            // btnCancel
             // 
-            this.nameBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.nameBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.nameBox.ForeColor = System.Drawing.Color.White;
-            this.nameBox.Location = new System.Drawing.Point(20, 90);
-            this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(280, 29);
-            this.nameBox.TabIndex = 2;
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(192, 378);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 40);
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.Text = "Cancelar";
+            this.btnCancel.Variant = app_escritorio.UI.ButtonVariant.Secondary;
             // 
-            // lblCat
+            // txtCost
             // 
-            this.lblCat.AutoSize = true;
-            this.lblCat.ForeColor = System.Drawing.Color.LightGray;
-            this.lblCat.Location = new System.Drawing.Point(20, 130);
-            this.lblCat.Name = "lblCat";
-            this.lblCat.Size = new System.Drawing.Size(54, 13);
-            this.lblCat.TabIndex = 3;
-            this.lblCat.Text = "Categoría";
+            this.txtCost.Location = new System.Drawing.Point(22, 318);
+            this.txtCost.Name = "txtCost";
+            this.txtCost.PlaceholderText = "0";
+            this.txtCost.Size = new System.Drawing.Size(400, 40);
+            this.txtCost.TabIndex = 5;
             // 
-            // categoryBox
+            // lblCost
             // 
-            this.categoryBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.categoryBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.categoryBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.categoryBox.ForeColor = System.Drawing.Color.White;
-            this.categoryBox.Items.AddRange(new object[] {
+            this.lblCost.Location = new System.Drawing.Point(22, 296);
+            this.lblCost.Name = "lblCost";
+            this.lblCost.Size = new System.Drawing.Size(400, 20);
+            this.lblCost.TabIndex = 65;
+            this.lblCost.Text = "Costo unitario ($)";
+            this.lblCost.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            // 
+            // txtMin
+            // 
+            this.txtMin.Location = new System.Drawing.Point(228, 242);
+            this.txtMin.Name = "txtMin";
+            this.txtMin.PlaceholderText = "0";
+            this.txtMin.Size = new System.Drawing.Size(194, 40);
+            this.txtMin.TabIndex = 4;
+            // 
+            // lblMin
+            // 
+            this.lblMin.Location = new System.Drawing.Point(228, 220);
+            this.lblMin.Name = "lblMin";
+            this.lblMin.Size = new System.Drawing.Size(194, 20);
+            this.lblMin.TabIndex = 64;
+            this.lblMin.Text = "Stock mínimo";
+            this.lblMin.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            // 
+            // txtStock
+            // 
+            this.txtStock.Location = new System.Drawing.Point(22, 242);
+            this.txtStock.Name = "txtStock";
+            this.txtStock.PlaceholderText = "0";
+            this.txtStock.Size = new System.Drawing.Size(194, 40);
+            this.txtStock.TabIndex = 3;
+            // 
+            // lblStock
+            // 
+            this.lblStock.Location = new System.Drawing.Point(22, 220);
+            this.lblStock.Name = "lblStock";
+            this.lblStock.Size = new System.Drawing.Size(194, 20);
+            this.lblStock.TabIndex = 63;
+            this.lblStock.Text = "Stock actual";
+            this.lblStock.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            // 
+            // cmbUnit
+            // 
+            this.cmbUnit.Items.AddRange(new object[] {
+            "kg",
+            "g",
+            "L",
+            "und"});
+            this.cmbUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.cmbUnit.Location = new System.Drawing.Point(228, 174);
+            this.cmbUnit.Name = "cmbUnit";
+            this.cmbUnit.Size = new System.Drawing.Size(194, 32);
+            this.cmbUnit.TabIndex = 2;
+            // 
+            // lblUnit
+            // 
+            this.lblUnit.Location = new System.Drawing.Point(228, 152);
+            this.lblUnit.Name = "lblUnit";
+            this.lblUnit.Size = new System.Drawing.Size(194, 20);
+            this.lblUnit.TabIndex = 62;
+            this.lblUnit.Text = "Unidad";
+            this.lblUnit.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            // 
+            // cmbCategory
+            // 
+            this.cmbCategory.Items.AddRange(new object[] {
             "Carnes",
             "Verduras",
             "Lácteos",
             "Bebidas",
             "Secos"});
-            this.categoryBox.Location = new System.Drawing.Point(20, 150);
-            this.categoryBox.Name = "categoryBox";
-            this.categoryBox.Size = new System.Drawing.Size(280, 29);
-            this.categoryBox.TabIndex = 4;
+            this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.cmbCategory.Location = new System.Drawing.Point(22, 174);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(194, 32);
+            this.cmbCategory.TabIndex = 1;
             // 
-            // lblStock
+            // lblCategory
             // 
-            this.lblStock.AutoSize = true;
-            this.lblStock.ForeColor = System.Drawing.Color.LightGray;
-            this.lblStock.Location = new System.Drawing.Point(20, 190);
-            this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(66, 13);
-            this.lblStock.TabIndex = 5;
-            this.lblStock.Text = "Stock actual";
+            this.lblCategory.Location = new System.Drawing.Point(22, 152);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(194, 20);
+            this.lblCategory.TabIndex = 61;
+            this.lblCategory.Text = "Categoría";
+            this.lblCategory.TextStyle = app_escritorio.UI.TextStyle.Muted;
             // 
-            // stockBox
+            // txtName
             // 
-            this.stockBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.stockBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.stockBox.ForeColor = System.Drawing.Color.White;
-            this.stockBox.Location = new System.Drawing.Point(20, 210);
-            this.stockBox.Name = "stockBox";
-            this.stockBox.Size = new System.Drawing.Size(280, 29);
-            this.stockBox.TabIndex = 6;
+            this.txtName.Location = new System.Drawing.Point(22, 98);
+            this.txtName.Name = "txtName";
+            this.txtName.PlaceholderText = "Ej: Queso mozzarella";
+            this.txtName.Size = new System.Drawing.Size(400, 40);
+            this.txtName.TabIndex = 0;
             // 
-            // lblUnit
+            // lblName
             // 
-            this.lblUnit.AutoSize = true;
-            this.lblUnit.ForeColor = System.Drawing.Color.LightGray;
-            this.lblUnit.Location = new System.Drawing.Point(20, 250);
-            this.lblUnit.Name = "lblUnit";
-            this.lblUnit.Size = new System.Drawing.Size(41, 13);
-            this.lblUnit.TabIndex = 7;
-            this.lblUnit.Text = "Unidad";
+            this.lblName.Location = new System.Drawing.Point(22, 76);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(400, 20);
+            this.lblName.TabIndex = 60;
+            this.lblName.Text = "Nombre *";
+            this.lblName.TextStyle = app_escritorio.UI.TextStyle.Muted;
             // 
-            // unitBox
+            // lblTitle
             // 
-            this.unitBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.unitBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.unitBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.unitBox.ForeColor = System.Drawing.Color.White;
-            this.unitBox.Items.AddRange(new object[] {
-            "kg",
-            "L",
-            "und",
-            "g"});
-            this.unitBox.Location = new System.Drawing.Point(20, 270);
-            this.unitBox.Name = "unitBox";
-            this.unitBox.Size = new System.Drawing.Size(280, 29);
-            this.unitBox.TabIndex = 8;
-            // 
-            // lblMin
-            // 
-            this.lblMin.AutoSize = true;
-            this.lblMin.ForeColor = System.Drawing.Color.LightGray;
-            this.lblMin.Location = new System.Drawing.Point(20, 310);
-            this.lblMin.Name = "lblMin";
-            this.lblMin.Size = new System.Drawing.Size(70, 13);
-            this.lblMin.TabIndex = 9;
-            this.lblMin.Text = "Mínimo alerta";
-            // 
-            // minBox
-            // 
-            this.minBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.minBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.minBox.ForeColor = System.Drawing.Color.White;
-            this.minBox.Location = new System.Drawing.Point(20, 330);
-            this.minBox.Name = "minBox";
-            this.minBox.Size = new System.Drawing.Size(280, 29);
-            this.minBox.TabIndex = 10;
-            // 
-            // lblCost
-            // 
-            this.lblCost.AutoSize = true;
-            this.lblCost.ForeColor = System.Drawing.Color.LightGray;
-            this.lblCost.Location = new System.Drawing.Point(20, 370);
-            this.lblCost.Name = "lblCost";
-            this.lblCost.Size = new System.Drawing.Size(74, 13);
-            this.lblCost.TabIndex = 11;
-            this.lblCost.Text = "Costo unitario";
-            // 
-            // costBox
-            // 
-            this.costBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.costBox.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.costBox.ForeColor = System.Drawing.Color.White;
-            this.costBox.Location = new System.Drawing.Point(20, 390);
-            this.costBox.Name = "costBox";
-            this.costBox.Size = new System.Drawing.Size(280, 29);
-            this.costBox.TabIndex = 12;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(42)))), ((int)(((byte)(44)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Location = new System.Drawing.Point(80, 430);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 40);
-            this.btnCancel.TabIndex = 13;
-            this.btnCancel.Text = "Cancelar";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
-            // 
-            // btnOk
-            // 
-            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(107)))), ((int)(((byte)(53)))));
-            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.ForeColor = System.Drawing.Color.Black;
-            this.btnOk.Location = new System.Drawing.Point(200, 430);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 40);
-            this.btnOk.TabIndex = 14;
-            this.btnOk.Text = "Guardar";
-            this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.BtnOk_Click);
+            this.lblTitle.Location = new System.Drawing.Point(22, 20);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(400, 36);
+            this.lblTitle.TabIndex = 50;
+            this.lblTitle.Text = "Nuevo insumo";
+            this.lblTitle.TextStyle = app_escritorio.UI.TextStyle.Display;
             // 
             // InsumoDialogForm
             // 
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(21)))));
-            this.Size = new System.Drawing.Size(350, 520);
-            this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.costBox);
-            this.Controls.Add(this.lblCost);
-            this.Controls.Add(this.minBox);
-            this.Controls.Add(this.lblMin);
-            this.Controls.Add(this.unitBox);
-            this.Controls.Add(this.lblUnit);
-            this.Controls.Add(this.stockBox);
-            this.Controls.Add(this.lblStock);
-            this.Controls.Add(this.categoryBox);
-            this.Controls.Add(this.lblCat);
-            this.Controls.Add(this.nameBox);
-            this.Controls.Add(this.lblName);
-            this.Controls.Add(this.titleLabel);
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.AcceptButton = this.btnSave;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(444, 436);
             this.Name = "InsumoDialogForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nuevo insumo";
+            this.Controls.Add(this.root);
+            this.root.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.Label lblCat;
-        private System.Windows.Forms.Label lblStock;
-        private System.Windows.Forms.Label lblUnit;
-        private System.Windows.Forms.Label lblMin;
-        private System.Windows.Forms.Label lblCost;
-        private System.Windows.Forms.TextBox nameBox;
-        private System.Windows.Forms.ComboBox categoryBox;
-        private System.Windows.Forms.TextBox stockBox;
-        private System.Windows.Forms.ComboBox unitBox;
-        private System.Windows.Forms.TextBox minBox;
-        private System.Windows.Forms.TextBox costBox;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnOk;
+        private app_escritorio.UI.RPanel root;
+        private app_escritorio.UI.RButton btnSave;
+        private app_escritorio.UI.RButton btnCancel;
+        private app_escritorio.UI.RTextBox txtCost;
+        private app_escritorio.UI.RLabel lblCost;
+        private app_escritorio.UI.RTextBox txtMin;
+        private app_escritorio.UI.RLabel lblMin;
+        private app_escritorio.UI.RTextBox txtStock;
+        private app_escritorio.UI.RLabel lblStock;
+        private app_escritorio.UI.RComboBox cmbUnit;
+        private app_escritorio.UI.RLabel lblUnit;
+        private app_escritorio.UI.RComboBox cmbCategory;
+        private app_escritorio.UI.RLabel lblCategory;
+        private app_escritorio.UI.RTextBox txtName;
+        private app_escritorio.UI.RLabel lblName;
+        private app_escritorio.UI.RLabel lblTitle;
     }
 }

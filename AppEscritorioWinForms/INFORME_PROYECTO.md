@@ -13,7 +13,10 @@
 > Hoy ese proyecto es la base de **RestoOS en WinForms .NET 8**: el editor vive en el módulo *Menú y productos*
 > (`Form1`) dentro de la ventana principal `Shell/ShellForm`, junto con POS, Mesas, KDS, Inventario, Reservas,
 > Delivery, Reportes y Configuración. Arranque, arquitectura general, kit visual y estado de cada módulo:
-> ver el [README principal](../README.md) y [`UI/LEEME_UI.md`](UI/LEEME_UI.md).
+> ver el [README principal](../README.md), [`DOCUMENTACION_CODIGO.md`](DOCUMENTACION_CODIGO.md) y
+> [`UI/LEEME_UI.md`](UI/LEEME_UI.md). Varias piezas que se describen aquí ya no existen en el código
+> (`OrderForm`, `SettingsStore`, `RestaurantSettings`, `ImageFetcher`, `App.config`); el estado actual está en la
+> sección [20](#20-estado-actual-restoos).
 
 ---
 
@@ -637,4 +640,15 @@ La aplicación `app escritorio` puede describirse como un **prototipo funcional 
 
 Su evolución natural sería convertir el prototipo en un sistema más robusto, incorporando una base de datos, control de inventario en tiempo real, generación real de QR, sincronización móvil, impresión de comandas y mayor validación de los datos.
 
+---
 
+## 20. Estado actual (RestoOS)
+
+- **Una ventana, muchas secciones:** `Program.cs` abre `LoginForm` (Administrador con PIN o Empleados) y luego
+  `Shell/ShellForm`, que tiene el menú lateral (`ShellSidebar`), la barra superior (`ShellTopBar`) y el área de contenido.
+- **Una sección = un Form** en `Forms/`: `PosForm`, `MesasForm`, `KdsForm`, `InventarioForm`, `ReservasForm`,
+  `DeliveryForm`, `ReportesForm`, `SettingsForm`, `ModulesForm` y `Form1` (Menú). En el diseñador de Visual Studio cada
+  uno se ve con la app completa y se edita con el mouse.
+- **Kit visual** en `UI/` (botones, paneles, textos, tablas, calendario, gráfico) con los colores de `Utils/Theme.cs`.
+- **Datos:** carta e historial en `data\` (XML); mesas, módulos activos, impuesto y datos del negocio en
+  `%LocalAppData%\RestoOS\`. KDS, Inventario, Reservas, Delivery y Reportes usan datos de demostración en memoria.

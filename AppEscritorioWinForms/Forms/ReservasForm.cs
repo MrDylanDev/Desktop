@@ -1,117 +1,30 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Drawing;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using app_escritorio.Forms;
+using app_escritorio.Models;
+using app_escritorio.UI;
 
 namespace app_escritorio.Forms
 {
+    /// <summary>
+    /// Reservas (migración de ReservasView.xaml de WPF): calendario a la izquierda y agenda del día a la derecha.
+    /// Datos DEMO en memoria.
+    /// </summary>
     public partial class ReservasForm : Form
     {
-        public string Role { get; set; }
-        public class Reserva
-        {
-            public DateTime Fecha { get; set; }
-            public string Cliente { get; set; }
-            public int Personas { get; set; }
-            public string Mesa { get; set; }
-            public string Estado { get; set; }
-            public string Telefono { get; set; }
-
-            public string HoraText => Fecha.ToString("HH:mm");
-            public string PersonasText => $"{Personas} p";
-
-            public Color EstadoColor
-            {
-                get
-                {
-                    if (Estado == "Confirmada") return Color.MediumSeaGreen;
-                    if (Estado == "En curso") return Color.FromArgb(255, 107, 53);
-                    return Color.IndianRed; // Cancelada
-                }
-            }
-
-            public Reserva(DateTime fecha, string cliente, int personas, string mesa, string estado, string tel)
-            {
-                Fecha = fecha; Cliente = cliente; Personas = personas; Mesa = mesa; Estado = estado; Telefono = tel;
-            }
-        }
-
-        private readonly BindingList<Reserva> _all = new BindingList<Reserva>();
-        private readonly BindingList<Reserva> _filtered = new BindingList<Reserva>();
+        private static readonly CultureInfo Co = CultureInfo.GetCultureInfo("es-CO");
+        private readonly List<Reserva> _all = new List<Reserva>();
 
         public ReservasForm()
         {
             InitializeComponent();
-            
-            estadoBox.Items.AddRange(new[] { "Todos", "Confirmada", "En curso", "Cancelada" });
-            estadoBox.SelectedIndex = 0;
-            
-            calendar.SetDate(DateTime.Today);
-            
+            if (UiHelpers.IsDesignTime) return;
+
             LoadMock();
+            cmbEstado.SelectedIndex = 0;
             ApplyFilter();
-        }
-
-        private void Header_Resize(object sender, EventArgs e)
-        {
-            if (btnAdd != null && header != null)
-                btnAdd.Left = header.Width - btnAdd.Width - 20;
-        }
-
-        private void Calendar_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            ApplyFilter();
-        }
-
-        private void SearchBox_TextChanged(object sender, EventArgs e)
-        {
-            ApplyFilter();
-        }
-
-        private void EstadoBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ApplyFilter();
-        }
-
-        private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < _filtered.Count)
-            {
-                if (grid.Columns[e.ColumnIndex].DataPropertyName == "Estado")
-                {
-                    var r = _filtered[e.RowIndex];
-                    e.CellStyle.ForeColor = r.EstadoColor;
-                    e.CellStyle.Font = new Font(grid.Font, FontStyle.Bold);
-                }
-            }
-        }
-
-        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex < _filtered.Count)
-            {
-                var r = _filtered[e.RowIndex];
-                if (e.ColumnIndex == grid.Columns.Count - 2) // Editar
-                {
-                    var dlg = new ReservaDialogForm(r, r.Fecha.Date);
-                    if (dlg.ShowDialog(this) == DialogResult.OK && dlg.Result != null)
-                    {
-                        var idx = _all.IndexOf(r);
-                        if (idx >= 0) _all[idx] = dlg.Result;
-                        ApplyFilter();
-                    }
-                }
-                else if (e.ColumnIndex == grid.Columns.Count - 1) // ×
-                {
-                    if (MessageBox.Show($"¿Eliminar reserva de {r.Cliente}?", "RestoOS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        _all.Remove(r);
-                        ApplyFilter();
-                    }
-                }
-            }
         }
 
         private void LoadMock()
@@ -126,41 +39,64 @@ namespace app_escritorio.Forms
 
         private void ApplyFilter()
         {
-            DateTime selectedDate = calendar.SelectionStart.Date;
-            lblFecha.Text = selectedDate.ToString("dddd d MMM", System.Globalization.CultureInfo.GetCultureInfo("es-CO"));
+            DateTime day = calendar.SelectedDate;
+            lblFecha.Text = day == DateTime.Today ? "Hoy · " + day.ToString("dddd d MMM", Co) : day.ToString("dddd d MMM yyyy", Co);
+            string text = txtSearch.Text.Trim().ToLowerInvariant();
+            string estado = cmbEstado.SelectedItem?.ToString() ?? "Todos";
 
-            string text = searchBox.Text.Trim().ToLower();
-            string estado = estadoBox.SelectedItem?.ToString() ?? "Todos";
-
-            _filtered.Clear();
-            var sorted = _all.Where(r => 
-                r.Fecha.Date == selectedDate &&
-                (estado == "Todos" || r.Estado == estado) &&
-                (string.IsNullOrEmpty(text) || r.Cliente.ToLower().Contains(text) || r.Mesa.ToLower().Contains(text))
-            ).OrderBy(r => r.Fecha).ToList();
-
-            foreach (var item in sorted)
+            grid.Rows.Clear();
+            foreach (var r in _all.Where(r => r.Fecha.Date == day
+                                              && (estado == "Todos" || r.Estado == estado)
+                                              && (text.Length == 0 || r.Cliente.ToLowerInvariant().Contains(text) || r.Mesa.ToLowerInvariant().Contains(text)))
+                                  .OrderBy(r => r.Fecha))
             {
-                _filtered.Add(item);
+                int i = grid.Rows.Add(r.HoraText, r.Cliente, r.PersonasText, r.Mesa, r.Estado, r.Telefono);
+                grid.Rows[i].Tag = r;
+                grid.Rows[i].Cells[colEstado.Index].Style.ForeColor = r.EstadoColor;
             }
-
-            grid.DataSource = null;
-            grid.DataSource = _filtered;
         }
 
-        private void Add_Click(object sender, EventArgs e)
+        private void Filter_Changed(object sender, EventArgs e)
         {
-            var dlg = new ReservaDialogForm(null, calendar.SelectionStart.Date);
-            if (dlg.ShowDialog(this) == DialogResult.OK && dlg.Result != null)
+            if (!UiHelpers.IsDesignTime) ApplyFilter();
+        }
+
+        private void Calendar_DateChanged(object sender, EventArgs e)
+        {
+            if (!UiHelpers.IsDesignTime) ApplyFilter();
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            using (var dlg = new ReservaDialogForm(null, calendar.SelectedDate))
+                if (dlg.ShowDialog(TopLevelControl ?? this) == DialogResult.OK && dlg.Result != null)
+                {
+                    _all.Add(dlg.Result);
+                    calendar.SelectedDate = dlg.Result.Fecha.Date; // refresca la agenda de ese día
+                }
+        }
+
+        private void Grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || !(grid.Rows[e.RowIndex].Tag is Reserva r)) return;
+
+            if (e.ColumnIndex == colEditar.Index)
             {
-                _all.Add(dlg.Result);
-                calendar.SetDate(dlg.Result.Fecha.Date); // This triggers DateChanged and ApplyFilter
-                ApplyFilter(); // Just in case it was already the same date
+                using (var dlg = new ReservaDialogForm(r, r.Fecha.Date))
+                    if (dlg.ShowDialog(TopLevelControl ?? this) == DialogResult.OK && dlg.Result != null)
+                    {
+                        _all[_all.IndexOf(r)] = dlg.Result;
+                        calendar.SelectedDate = dlg.Result.Fecha.Date;
+                    }
+            }
+            else if (e.ColumnIndex == colDelete.Index)
+            {
+                if (MessageBox.Show("¿Eliminar la reserva de " + r.Cliente + "?", "RestoOS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    _all.Remove(r);
+                    ApplyFilter();
+                }
             }
         }
     }
 }
-
-
-
-

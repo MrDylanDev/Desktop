@@ -24,9 +24,6 @@ namespace app_escritorio
                     role = loginForm.Role;
                 }
 
-                // Los formularios viejos (Mesas, KDS, Menú...) todavía leen el rol desde aquí.
-                Forms.NavigationManager.CurrentRole = role;
-
                 using (var shell = new Shell.ShellForm(role))
                 {
                     Application.Run(shell);

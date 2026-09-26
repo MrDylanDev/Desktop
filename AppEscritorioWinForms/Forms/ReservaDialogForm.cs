@@ -1,78 +1,71 @@
 ﻿using System;
-using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
-
+using app_escritorio.Models;
+using app_escritorio.UI;
 
 namespace app_escritorio.Forms
 {
-    public partial class ReservaDialogForm : Form
+    /// <summary>Crear o editar una reserva.</summary>
+    public partial class ReservaDialogForm : RDialogForm
     {
-        public ReservasForm.Reserva Result { get; private set; }
+        public Reserva Result { get; private set; }
 
-        public ReservaDialogForm(ReservasForm.Reserva r, DateTime defaultDate)
+        public ReservaDialogForm() : this(null, DateTime.Today) { }
+
+        public ReservaDialogForm(Reserva r, DateTime defaultDate)
         {
             InitializeComponent();
-
-            this.Text = r == null ? "Nueva reserva" : "Editar reserva";
-            titleLabel.Text = this.Text;
-
-            if (r != null)
+            if (r == null)
             {
-                fechaPicker.Value = r.Fecha.Date;
-                horaBox.Text = r.Fecha.ToString("HH:mm");
-                clienteBox.Text = r.Cliente;
-                personasBox.Text = r.Personas.ToString();
-                mesaBox.Text = r.Mesa;
-                telBox.Text = r.Telefono;
-                estadoBox.SelectedItem = r.Estado;
-            }
-            else
-            {
-                fechaPicker.Value = defaultDate.Date;
-                horaBox.Text = "19:00";
-                personasBox.Text = "2";
-                mesaBox.Text = "Mesa 1";
-                estadoBox.SelectedIndex = 0;
-            }
-        }
-
-        private void BtnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void BtnOk_Click(object sender, EventArgs e)
-        {
-            string cliente = clienteBox.Text.Trim();
-            if (string.IsNullOrEmpty(cliente))
-            {
-                MessageBox.Show("Cliente requerido.", "RestoOS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Text = lblTitle.Text = "Nueva reserva";
+                txtFecha.Text = defaultDate.ToString("dd/MM/yyyy");
+                txtHora.Text = "19:00";
+                cmbPersonas.Text = "2";
+                cmbMesa.Text = "Mesa 1";
+                cmbEstado.SelectedIndex = 0;
                 return;
             }
+            Text = lblTitle.Text = "Editar reserva";
+            txtCliente.Text = r.Cliente;
+            txtFecha.Text = r.Fecha.ToString("dd/MM/yyyy");
+            txtHora.Text = r.Fecha.ToString("HH:mm");
+            cmbPersonas.Text = r.Personas.ToString();
+            cmbMesa.Text = r.Mesa;
+            txtTel.Text = r.Telefono;
+            int e = cmbEstado.Items.IndexOf(r.Estado);
+            cmbEstado.SelectedIndex = e >= 0 ? e : 0;
+        }
 
-            DateTime fecha = fechaPicker.Value.Date;
-            if (TimeSpan.TryParse(horaBox.Text.Trim(), out TimeSpan hora))
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            txtCliente.Focus();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            string cliente = txtCliente.Text.Trim();
+            if (cliente.Length == 0)
             {
-                fecha = fecha.Add(hora);
+                MessageBox.Show("Cliente requerido.", "RestoOS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtCliente.Focus();
+                return;
             }
-            else
+            if (!DateTime.TryParseExact(txtFecha.Text.Trim(), new[] { "dd/MM/yyyy", "d/M/yyyy", "dd-MM-yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fecha))
             {
-                fecha = fecha.AddHours(19);
+                MessageBox.Show("Fecha inválida. Usa el formato dd/mm/aaaa.", "RestoOS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtFecha.Focus();
+                return;
             }
+            fecha = TimeSpan.TryParse(txtHora.Text.Trim(), out TimeSpan hora) ? fecha.Add(hora) : fecha.AddHours(19);
+            int personas = int.TryParse(cmbPersonas.Text.Trim(), out int p) && p > 0 ? p : 2;
+            string mesa = string.IsNullOrWhiteSpace(cmbMesa.Text) ? "Mesa 1" : cmbMesa.Text.Trim();
+            string estado = cmbEstado.SelectedItem?.ToString() ?? "Confirmada";
 
-            int personas = 2;
-            if (int.TryParse(personasBox.Text.Trim(), out int p) && p > 0) personas = p;
-
-            string mesa = mesaBox.Text.Trim();
-            if (string.IsNullOrEmpty(mesa)) mesa = "Mesa 1";
-
-            string estado = estadoBox.SelectedItem?.ToString() ?? "Confirmada";
-            string tel = telBox.Text.Trim();
-
-            Result = new ReservasForm.Reserva(fecha, cliente, personas, mesa, estado, tel);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            Result = new Reserva(fecha, cliente, personas, mesa, estado, txtTel.Text.Trim());
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

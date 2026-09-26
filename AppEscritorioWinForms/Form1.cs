@@ -22,15 +22,11 @@ namespace app_escritorio
         public Form1()
         {
             InitializeComponent();
-            this.Load += Form1_Load;
+            // Load, txtSearch.TextChanged y flowPanel (SizeChanged, DragEnter, DragDrop) ya se conectan en Form1.Designer.cs;
+            // conectarlos también aquí hacía que cada evento corriera dos veces.
 
-            // Re-apply properties that designer might override
             this.categoryBar.CategorySelected += CategoryBar_CategorySelected;
-            this.txtSearch.TextChanged += (s, e) => ApplySearch();
             this.flowPanel.AllowDrop = true;
-            this.flowPanel.DragEnter += FlowPanel_DragEnter;
-            this.flowPanel.DragDrop += FlowPanel_DragDrop;
-            this.flowPanel.SizeChanged += (s, e) => FitCardsToWidth();
 
             // Botones de la barra superior del menú (el Designer.cs los había perdido)
             this.btnNewItem.Click += BtnNewItem_Handler;

@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using app_escritorio.Controls;
 using app_escritorio.Data;
 using app_escritorio.Forms;
 using app_escritorio.UI;
-using app_escritorio.Views.Mesas;
-using app_escritorio.Views.Pos;
 
 namespace app_escritorio.Shell
 {
     /// <summary>
     /// Ventana principal única (equivale a MainWindow de WPF): sidebar + barra superior + área de contenido.
-    /// Cada módulo es un UserControl que se crea una vez y se intercambia en <c>contentHost</c>.
-    /// Los módulos que todavía no se migraron (KDS, Inventario, Reservas, Delivery, Menú, Módulos, Reportes, Configuración) se muestran con <see cref="HostLegacyForm"/>.
+    /// Cada sección es un Form de Forms/* (PosForm, MesasForm, KdsForm...). En el diseñador cada uno se ve con la app completa;
+    /// aquí se crea una vez, se le quitan su sidebar y su barra superior y se muestra dentro de <c>contentHost</c> (ver <see cref="HostSectionForm"/>).
     /// </summary>
     public partial class ShellForm : Form
     {
@@ -37,9 +34,9 @@ namespace app_escritorio.Shell
             sidebar.SetRole(isAdmin);
             sidebar.SetBranch(LocalSettings.LoadRestaurantName(), LocalSettings.LoadAddress());
 
-            foreach (var module in new[] { "salon", "menu", "kds", "inventario", "reservas", "delivery", "reportes" })
-                sidebar.SetModuleEnabled(module, LocalSettings.IsModuleEnabled(module));
-            ModulesForm.ModuleStateChanged += ModulesForm_ModuleStateChanged;
+            foreach (var module in ModuleStore.Keys)
+                sidebar.SetModuleEnabled(module, ModuleStore.IsEnabled(module));
+            ModuleStore.ModuleStateChanged += ModuleStore_ModuleStateChanged;
 
             Navigate(isAdmin ? "modulos" : "pos");
         }
@@ -54,7 +51,7 @@ namespace app_escritorio.Shell
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            ModulesForm.ModuleStateChanged -= ModulesForm_ModuleStateChanged;
+            ModuleStore.ModuleStateChanged -= ModuleStore_ModuleStateChanged;
             base.OnFormClosed(e);
         }
 
@@ -129,50 +126,61 @@ namespace app_escritorio.Shell
         {
             if (_views.TryGetValue(route, out var existing)) return existing;
 
-            Control view;
+            Form form;
             switch (route)
             {
-                case "pos":
-                    view = new PosView();
-                    break;
+                case "pos": form = new PosForm(); break;
                 case "mesas":
-                    var mesas = new MesasView();
+                    var mesas = new MesasForm();
                     mesas.MesaParaPos += ShowPosForTable;
-                    view = mesas;
+                    form = mesas;
                     break;
-                case "kds": view = HostLegacyForm(new KdsForm { Role = _role }); break;
-                case "inventario": view = HostLegacyForm(new InventarioForm { Role = _role }); break;
-                case "reservas": view = HostLegacyForm(new ReservasForm { Role = _role }); break;
-                case "delivery": view = HostLegacyForm(new DeliveryForm { Role = _role }); break;
-                case "reportes": view = HostLegacyForm(new ReportesForm { Role = _role }); break;
-                case "configuracion": view = HostLegacyForm(new SettingsForm { Role = _role }); break;
-                case "menu": view = HostLegacyForm(new Form1 { Role = _role }); break;
+                case "kds": form = new KdsForm(); break;
+                case "inventario": form = new InventarioForm(); break;
+                case "reservas": form = new ReservasForm(); break;
+                case "delivery": form = new DeliveryForm(); break;
+                case "reportes": form = new ReportesForm(); break;
+                case "configuracion":
+                    var config = new SettingsForm();
+                    config.RestaurantSaved += Config_RestaurantSaved;
+                    form = config;
+                    break;
+                case "menu": form = new Form1 { Role = _role }; break;
                 default:
                     route = "modulos";
                     if (_views.TryGetValue(route, out existing)) return existing;
-                    view = HostLegacyForm(new ModulesForm { Role = _role });
+                    form = new ModulesForm();
                     break;
             }
-            view.Dock = DockStyle.Fill;
+            var view = HostSectionForm(form);
             _views[route] = view;
             return view;
         }
 
         private void OnViewShown(string route, Control view)
         {
-            if (view is PosView pos) pos.ReloadTax();
+            if (view is PosForm pos) pos.ReloadTax();
 
-            if (view is MesasView mesas) mesas.RefreshView();
+            if (view is MesasForm mesas) mesas.RefreshView();
+
+            if (view is ModulesForm modules) modules.LoadState();
+
+            if (view is SettingsForm config) config.LoadData();
+        }
+
+        private void Config_RestaurantSaved(object sender, EventArgs e)
+        {
+            sidebar.SetBranch(LocalSettings.LoadRestaurantName(), LocalSettings.LoadAddress());
         }
 
         private void ShowPosForTable(string mesa)
         {
-            var pos = (PosView)GetOrCreateView("pos");
+            var pos = (PosForm)GetOrCreateView("pos");
             pos.SetMesa(mesa);
             Navigate("pos");
         }
 
-        private void ModulesForm_ModuleStateChanged(string module, bool enabled)
+        private void ModuleStore_ModuleStateChanged(string module, bool enabled)
         {
             sidebar.SetModuleEnabled(module, enabled);
             if (enabled) return;
@@ -181,21 +189,28 @@ namespace app_escritorio.Shell
         }
 
         /// <summary>
-        /// Muestra dentro de la ventana principal un formulario viejo (con su propio sidebar/topbar),
-        /// ocultando esas barras duplicadas. Se usa mientras cada módulo se migra a UserControl.
+        /// Convierte el Form de una sección en contenido de la ventana principal:
+        /// le quita el borde, lo acopla a <c>contentHost</c> y elimina su sidebar y su barra superior
+        /// (esas copias solo están para que el diseñador muestre la app completa).
         /// </summary>
-        private static Control HostLegacyForm(Form form)
+        private static Form HostSectionForm(Form form)
         {
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
-            foreach (Control c in form.Controls)
-                if (c is SidebarControl || c is TopBarControl) c.Visible = false;
+            form.MinimumSize = System.Drawing.Size.Empty;
 
-            var host = new RPanel { Surface = SurfaceLevel.Surface, Dock = DockStyle.Fill };
-            host.Controls.Add(form);
+            var chrome = new List<Control>();
+            foreach (Control c in form.Controls)
+                if (c is ShellSidebar || c is ShellTopBar) chrome.Add(c);
+            foreach (var c in chrome)
+            {
+                form.Controls.Remove(c);
+                c.Dispose();
+            }
+
             form.Show();
-            return host;
+            return form;
         }
     }
 }

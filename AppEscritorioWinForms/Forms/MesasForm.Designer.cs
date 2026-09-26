@@ -1,212 +1,334 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace app_escritorio.Forms
+﻿namespace app_escritorio.Forms
 {
     partial class MesasForm
     {
-        private IContainer components = null;
-        private FlowLayoutPanel tablesPanel;
-        private ComboBox sectorBox;
-        private Label detailName;
-        private Label detailStatus;
-        private Label detailInfo;
-        private Label detailItems;
-        private Label detailTotal;
-        private Button btnOpenPos;
+        /// <summary>Variable del diseñador requerida.</summary>
+        private System.ComponentModel.IContainer components = null;
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
+            if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
 
+        #region Código generado por el Diseñador de componentes
+
         private void InitializeComponent()
         {
-            leftPanel = new Panel();
-            tablesPanel = new FlowLayoutPanel();
-            headerLeft = new Panel();
-            lblTitle = new Label();
-            btnNew = new Button();
-            sectorBox = new ComboBox();
-            rightPanel = new Panel();
-            lblDetailTitle = new Label();
-            detailName = new Label();
-            detailStatus = new Label();
-            detailInfo = new Label();
-            detailItems = new Label();
-            lblTotalText = new Label();
-            detailTotal = new Label();
-            btnOpenPos = new Button();
-            leftPanel.SuspendLayout();
-            this.sidebarControl1 = new app_escritorio.Controls.SidebarControl();
-            headerLeft.SuspendLayout();
-            rightPanel.SuspendLayout();
-            SuspendLayout();
+            this.root = new app_escritorio.UI.RPanel();
+            this.topBar = new app_escritorio.Shell.ShellTopBar();
+            this.sidebar = new app_escritorio.Shell.ShellSidebar();
+            this.leftLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.headerFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.lblTitle = new app_escritorio.UI.RLabel();
+            this.btnNew = new app_escritorio.UI.RButton();
+            this.cmbSector = new app_escritorio.UI.RComboBox();
+            this.flowTables = new app_escritorio.UI.RFlowPanel();
+            this.splitter = new System.Windows.Forms.Splitter();
+            this.detailPanel = new app_escritorio.UI.RPanel();
+            this.lblDetailTitle = new app_escritorio.UI.RLabel();
+            this.lblDetailName = new app_escritorio.UI.RLabel();
+            this.lblDetailStatus = new app_escritorio.UI.RLabel();
+            this.lblDetailInfo = new app_escritorio.UI.RLabel();
+            this.itemsCard = new app_escritorio.UI.RPanel();
+            this.lblDetailItems = new app_escritorio.UI.RLabel();
+            this.lblTotalCaption = new app_escritorio.UI.RLabel();
+            this.lblDetailTotal = new app_escritorio.UI.RLabel();
+            this.btnOpenPos = new app_escritorio.UI.RButton();
+            this.lblNote = new app_escritorio.UI.RLabel();
+            this.root.SuspendLayout();
+            this.leftLayout.SuspendLayout();
+            this.headerFlow.SuspendLayout();
+            this.detailPanel.SuspendLayout();
+            this.itemsCard.SuspendLayout();
+            this.SuspendLayout();
             // 
-            // leftPanel
+            // root
             // 
-            leftPanel.Controls.Add(tablesPanel);
-            leftPanel.Controls.Add(headerLeft);
-            leftPanel.Location = new Point(0, 0);
-            leftPanel.Name = "leftPanel";
-            leftPanel.Size = new Size(200, 100);
-            leftPanel.TabIndex = 0;
+            this.root.Controls.Add(this.leftLayout);
+            this.root.Controls.Add(this.splitter);
+            this.root.Controls.Add(this.detailPanel);
+            this.root.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.root.Location = new System.Drawing.Point(272, 64);
+            this.root.Name = "root";
+            this.root.Padding = new System.Windows.Forms.Padding(20);
+            this.root.Size = new System.Drawing.Size(1100, 780);
+            this.root.Surface = app_escritorio.UI.SurfaceLevel.Surface;
+            this.root.TabIndex = 0;
             // 
-            // tablesPanel
+            // leftLayout
             // 
-            tablesPanel.Location = new Point(0, 0);
-            tablesPanel.Name = "tablesPanel";
-            tablesPanel.Size = new Size(200, 100);
-            tablesPanel.TabIndex = 0;
+            this.leftLayout.ColumnCount = 1;
+            this.leftLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.leftLayout.Controls.Add(this.headerFlow, 0, 0);
+            this.leftLayout.Controls.Add(this.flowTables, 0, 1);
+            this.leftLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftLayout.Location = new System.Drawing.Point(20, 20);
+            this.leftLayout.Name = "leftLayout";
+            this.leftLayout.RowCount = 2;
+            this.leftLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.leftLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.leftLayout.Size = new System.Drawing.Size(692, 740);
+            this.leftLayout.TabIndex = 0;
             // 
-            // headerLeft
+            // headerFlow
             // 
-            headerLeft.Controls.Add(lblTitle);
-            headerLeft.Controls.Add(btnNew);
-            headerLeft.Controls.Add(sectorBox);
-            headerLeft.Location = new Point(0, 0);
-            headerLeft.Name = "headerLeft";
-            headerLeft.Size = new Size(200, 100);
-            headerLeft.TabIndex = 1;
+            this.headerFlow.Controls.Add(this.lblTitle);
+            this.headerFlow.Controls.Add(this.btnNew);
+            this.headerFlow.Controls.Add(this.cmbSector);
+            this.headerFlow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headerFlow.Location = new System.Drawing.Point(0, 0);
+            this.headerFlow.Margin = new System.Windows.Forms.Padding(0, 0, 0, 16);
+            this.headerFlow.Name = "headerFlow";
+            this.headerFlow.Size = new System.Drawing.Size(692, 48);
+            this.headerFlow.TabIndex = 0;
+            this.headerFlow.WrapContents = false;
             // 
             // lblTitle
             // 
-            lblTitle.Location = new Point(0, 0);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(100, 23);
-            lblTitle.TabIndex = 0;
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Location = new System.Drawing.Point(0, 0);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(0);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Mesas y Salón";
+            this.lblTitle.TextStyle = app_escritorio.UI.TextStyle.Hero;
             // 
             // btnNew
             // 
-            btnNew.Location = new Point(0, 0);
-            btnNew.Name = "btnNew";
-            btnNew.Size = new Size(75, 23);
-            btnNew.TabIndex = 1;
-            btnNew.Click += NewTable_Click;
+            this.btnNew.Location = new System.Drawing.Point(222, 6);
+            this.btnNew.Margin = new System.Windows.Forms.Padding(20, 6, 0, 0);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(132, 36);
+            this.btnNew.TabIndex = 1;
+            this.btnNew.Text = "+ Nueva mesa";
+            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
             // 
-            // sectorBox
+            // cmbSector
             // 
-            sectorBox.Items.AddRange(new object[] { "Todos los salones", "Principal", "Terraza", "Barra", "VIP" });
-            sectorBox.Location = new Point(0, 0);
-            sectorBox.Name = "sectorBox";
-            sectorBox.Size = new Size(121, 23);
-            sectorBox.TabIndex = 2;
-            sectorBox.SelectedIndexChanged += SectorBox_SelectedIndexChanged;
+            this.cmbSector.Items.AddRange(new object[] {
+            "Todos los salones",
+            "Principal",
+            "Terraza",
+            "Barra",
+            "VIP"});
+            this.cmbSector.Location = new System.Drawing.Point(366, 8);
+            this.cmbSector.Margin = new System.Windows.Forms.Padding(12, 8, 0, 0);
+            this.cmbSector.Name = "cmbSector";
+            this.cmbSector.Size = new System.Drawing.Size(180, 32);
+            this.cmbSector.TabIndex = 2;
+            this.cmbSector.SelectedIndexChanged += new System.EventHandler(this.CmbSector_SelectedIndexChanged);
             // 
-            // rightPanel
+            // flowTables
             // 
-            rightPanel.Controls.Add(lblDetailTitle);
-            rightPanel.Controls.Add(detailName);
-            rightPanel.Controls.Add(detailStatus);
-            rightPanel.Controls.Add(detailInfo);
-            rightPanel.Controls.Add(detailItems);
-            rightPanel.Controls.Add(lblTotalText);
-            rightPanel.Controls.Add(detailTotal);
-            rightPanel.Controls.Add(btnOpenPos);
-            rightPanel.Location = new Point(0, 0);
-            rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(200, 100);
-            rightPanel.TabIndex = 1;
+            this.flowTables.AutoScroll = true;
+            this.flowTables.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowTables.Location = new System.Drawing.Point(0, 64);
+            this.flowTables.Margin = new System.Windows.Forms.Padding(0);
+            this.flowTables.Name = "flowTables";
+            this.flowTables.Size = new System.Drawing.Size(692, 676);
+            this.flowTables.TabIndex = 1;
+            // 
+            // splitter
+            // 
+            this.splitter.Dock = System.Windows.Forms.DockStyle.Right;
+            this.splitter.Location = new System.Drawing.Point(712, 20);
+            this.splitter.MinExtra = 340;
+            this.splitter.MinSize = 300;
+            this.splitter.Name = "splitter";
+            this.splitter.Size = new System.Drawing.Size(8, 740);
+            this.splitter.TabIndex = 1;
+            this.splitter.TabStop = false;
+            // 
+            // detailPanel
+            // 
+            this.detailPanel.Controls.Add(this.lblNote);
+            this.detailPanel.Controls.Add(this.btnOpenPos);
+            this.detailPanel.Controls.Add(this.lblDetailTotal);
+            this.detailPanel.Controls.Add(this.lblTotalCaption);
+            this.detailPanel.Controls.Add(this.itemsCard);
+            this.detailPanel.Controls.Add(this.lblDetailInfo);
+            this.detailPanel.Controls.Add(this.lblDetailStatus);
+            this.detailPanel.Controls.Add(this.lblDetailName);
+            this.detailPanel.Controls.Add(this.lblDetailTitle);
+            this.detailPanel.CornerRadius = 14;
+            this.detailPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.detailPanel.Location = new System.Drawing.Point(720, 20);
+            this.detailPanel.MaximumSize = new System.Drawing.Size(400, 0);
+            this.detailPanel.MinimumSize = new System.Drawing.Size(300, 0);
+            this.detailPanel.Name = "detailPanel";
+            this.detailPanel.Size = new System.Drawing.Size(360, 740);
+            this.detailPanel.TabIndex = 2;
             // 
             // lblDetailTitle
             // 
-            lblDetailTitle.Location = new Point(0, 0);
-            lblDetailTitle.Name = "lblDetailTitle";
-            lblDetailTitle.Size = new Size(100, 23);
-            lblDetailTitle.TabIndex = 0;
+            this.lblDetailTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDetailTitle.Location = new System.Drawing.Point(18, 18);
+            this.lblDetailTitle.Name = "lblDetailTitle";
+            this.lblDetailTitle.Size = new System.Drawing.Size(324, 32);
+            this.lblDetailTitle.TabIndex = 0;
+            this.lblDetailTitle.Text = "Detalle de mesa";
+            this.lblDetailTitle.TextStyle = app_escritorio.UI.TextStyle.Title;
             // 
-            // detailName
+            // lblDetailName
             // 
-            detailName.Location = new Point(0, 0);
-            detailName.Name = "detailName";
-            detailName.Size = new Size(100, 23);
-            detailName.TabIndex = 1;
+            this.lblDetailName.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDetailName.AutoEllipsis = true;
+            this.lblDetailName.Location = new System.Drawing.Point(18, 66);
+            this.lblDetailName.Name = "lblDetailName";
+            this.lblDetailName.Size = new System.Drawing.Size(324, 38);
+            this.lblDetailName.TabIndex = 1;
+            this.lblDetailName.Text = "Selecciona una mesa";
+            this.lblDetailName.TextStyle = app_escritorio.UI.TextStyle.TotalLarge;
             // 
-            // detailStatus
+            // lblDetailStatus
             // 
-            detailStatus.Location = new Point(0, 0);
-            detailStatus.Name = "detailStatus";
-            detailStatus.Size = new Size(100, 23);
-            detailStatus.TabIndex = 2;
+            this.lblDetailStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDetailStatus.ColorOverride = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(222)))), ((int)(((byte)(163)))));
+            this.lblDetailStatus.Location = new System.Drawing.Point(18, 106);
+            this.lblDetailStatus.Name = "lblDetailStatus";
+            this.lblDetailStatus.Size = new System.Drawing.Size(324, 20);
+            this.lblDetailStatus.TabIndex = 2;
+            this.lblDetailStatus.Text = "";
+            this.lblDetailStatus.TextStyle = app_escritorio.UI.TextStyle.BodyBold;
             // 
-            // detailInfo
+            // lblDetailInfo
             // 
-            detailInfo.Location = new Point(0, 0);
-            detailInfo.Name = "detailInfo";
-            detailInfo.Size = new Size(100, 23);
-            detailInfo.TabIndex = 3;
+            this.lblDetailInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDetailInfo.Location = new System.Drawing.Point(18, 130);
+            this.lblDetailInfo.Name = "lblDetailInfo";
+            this.lblDetailInfo.Size = new System.Drawing.Size(324, 20);
+            this.lblDetailInfo.TabIndex = 3;
+            this.lblDetailInfo.Text = "";
+            this.lblDetailInfo.TextStyle = app_escritorio.UI.TextStyle.Muted;
             // 
-            // detailItems
+            // itemsCard
             // 
-            detailItems.Location = new Point(0, 0);
-            detailItems.Name = "detailItems";
-            detailItems.Size = new Size(100, 23);
-            detailItems.TabIndex = 4;
+            this.itemsCard.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.itemsCard.Controls.Add(this.lblDetailItems);
+            this.itemsCard.CornerRadius = 10;
+            this.itemsCard.Location = new System.Drawing.Point(18, 168);
+            this.itemsCard.Name = "itemsCard";
+            this.itemsCard.Padding = new System.Windows.Forms.Padding(14);
+            this.itemsCard.Size = new System.Drawing.Size(324, 112);
+            this.itemsCard.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
+            this.itemsCard.TabIndex = 4;
             // 
-            // lblTotalText
+            // lblDetailItems
             // 
-            lblTotalText.Location = new Point(0, 0);
-            lblTotalText.Name = "lblTotalText";
-            lblTotalText.Size = new Size(100, 23);
-            lblTotalText.TabIndex = 5;
+            this.lblDetailItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblDetailItems.Location = new System.Drawing.Point(14, 14);
+            this.lblDetailItems.Name = "lblDetailItems";
+            this.lblDetailItems.Size = new System.Drawing.Size(296, 84);
+            this.lblDetailItems.TabIndex = 0;
+            this.lblDetailItems.Text = "Sin pedido activo.";
+            this.lblDetailItems.TextStyle = app_escritorio.UI.TextStyle.Muted;
             // 
-            // detailTotal
+            // lblTotalCaption
             // 
-            detailTotal.Location = new Point(0, 0);
-            detailTotal.Name = "detailTotal";
-            detailTotal.Size = new Size(100, 23);
-            detailTotal.TabIndex = 6;
+            this.lblTotalCaption.Location = new System.Drawing.Point(18, 302);
+            this.lblTotalCaption.Name = "lblTotalCaption";
+            this.lblTotalCaption.Size = new System.Drawing.Size(150, 20);
+            this.lblTotalCaption.TabIndex = 5;
+            this.lblTotalCaption.Text = "Total consumido";
+            this.lblTotalCaption.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            // 
+            // lblDetailTotal
+            // 
+            this.lblDetailTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
+            this.lblDetailTotal.Location = new System.Drawing.Point(160, 296);
+            this.lblDetailTotal.Name = "lblDetailTotal";
+            this.lblDetailTotal.Size = new System.Drawing.Size(182, 30);
+            this.lblDetailTotal.TabIndex = 6;
+            this.lblDetailTotal.Text = "";
+            this.lblDetailTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblDetailTotal.TextStyle = app_escritorio.UI.TextStyle.Total;
             // 
             // btnOpenPos
             // 
-            btnOpenPos.Location = new Point(0, 0);
-            btnOpenPos.Name = "btnOpenPos";
-            btnOpenPos.Size = new Size(75, 23);
-            btnOpenPos.TabIndex = 7;
-            btnOpenPos.Click += OpenSelectedPos_Click;
+            this.btnOpenPos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.btnOpenPos.Enabled = false;
+            this.btnOpenPos.Location = new System.Drawing.Point(18, 342);
+            this.btnOpenPos.Name = "btnOpenPos";
+            this.btnOpenPos.Size = new System.Drawing.Size(324, 52);
+            this.btnOpenPos.TabIndex = 7;
+            this.btnOpenPos.Text = "Abrir en POS";
+            this.btnOpenPos.Click += new System.EventHandler(this.BtnOpenPos_Click);
+            // 
+            // lblNote
+            // 
+            this.lblNote.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
+            this.lblNote.Location = new System.Drawing.Point(18, 408);
+            this.lblNote.Name = "lblNote";
+            this.lblNote.Size = new System.Drawing.Size(324, 32);
+            this.lblNote.TabIndex = 8;
+            this.lblNote.Text = "Los datos mostrados son locales de demostración.";
+            this.lblNote.TextStyle = app_escritorio.UI.TextStyle.Caption;
+            // 
+            // topBar
+            // 
+            this.topBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topBar.Location = new System.Drawing.Point(272, 0);
+            this.topBar.Name = "topBar";
+            this.topBar.RoleText = "Administrador";
+            this.topBar.RouteText = "Mesas y Salón";
+            this.topBar.Size = new System.Drawing.Size(1100, 64);
+            this.topBar.TabIndex = 1;
+            // 
+            // sidebar
+            // 
+            this.sidebar.ActiveRoute = "mesas";
+            this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.sidebar.Location = new System.Drawing.Point(0, 0);
+            this.sidebar.Name = "sidebar";
+            this.sidebar.Size = new System.Drawing.Size(272, 844);
+            this.sidebar.TabIndex = 2;
             // 
             // MesasForm
             // 
-            BackColor = Color.FromArgb(17, 20, 21);
-            ClientSize = new Size(998, 360);
-            Controls.Add(leftPanel);
-            Controls.Add(rightPanel);
-            ForeColor = Color.White;
-            Name = "MesasForm";
-            leftPanel.ResumeLayout(false);
-            headerLeft.ResumeLayout(false);
-            rightPanel.ResumeLayout(false);
-            this.Controls.Add(this.sidebarControl1);
-            // 
-            // sidebarControl1
-            // 
-            this.sidebarControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.sidebarControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebarControl1.Location = new System.Drawing.Point(0, 0);
-            this.sidebarControl1.Name = "sidebarControl1";
-            this.sidebarControl1.Size = new System.Drawing.Size(250, 900);
-            this.sidebarControl1.TabIndex = 100;
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(21)))));
+            this.ClientSize = new System.Drawing.Size(1372, 844);
+            this.Controls.Add(this.root);
+            this.Controls.Add(this.topBar);
+            this.Controls.Add(this.sidebar);
+            this.MinimumSize = new System.Drawing.Size(1100, 700);
+            this.Name = "MesasForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RestoOS - Modular Core";
+            this.itemsCard.ResumeLayout(false);
+            this.detailPanel.ResumeLayout(false);
+            this.headerFlow.ResumeLayout(false);
+            this.headerFlow.PerformLayout();
+            this.leftLayout.ResumeLayout(false);
+            this.leftLayout.PerformLayout();
+            this.root.ResumeLayout(false);
+            this.ResumeLayout(false);
         }
 
-        private Panel leftPanel;
-        private Panel headerLeft;
-        private Label lblTitle;
-        private Button btnNew;
-        private Panel rightPanel;
-        private Label lblDetailTitle;
-        private Label lblTotalText;
-        private app_escritorio.Controls.SidebarControl sidebarControl1;
+        #endregion
+
+        private app_escritorio.UI.RPanel root;
+        private app_escritorio.Shell.ShellTopBar topBar;
+        private app_escritorio.Shell.ShellSidebar sidebar;
+        private System.Windows.Forms.TableLayoutPanel leftLayout;
+        private System.Windows.Forms.FlowLayoutPanel headerFlow;
+        private app_escritorio.UI.RLabel lblTitle;
+        private app_escritorio.UI.RButton btnNew;
+        private app_escritorio.UI.RComboBox cmbSector;
+        private app_escritorio.UI.RFlowPanel flowTables;
+        private System.Windows.Forms.Splitter splitter;
+        private app_escritorio.UI.RPanel detailPanel;
+        private app_escritorio.UI.RLabel lblDetailTitle;
+        private app_escritorio.UI.RLabel lblDetailName;
+        private app_escritorio.UI.RLabel lblDetailStatus;
+        private app_escritorio.UI.RLabel lblDetailInfo;
+        private app_escritorio.UI.RPanel itemsCard;
+        private app_escritorio.UI.RLabel lblDetailItems;
+        private app_escritorio.UI.RLabel lblTotalCaption;
+        private app_escritorio.UI.RLabel lblDetailTotal;
+        private app_escritorio.UI.RButton btnOpenPos;
+        private app_escritorio.UI.RLabel lblNote;
     }
 }
-
-
-
-
-
