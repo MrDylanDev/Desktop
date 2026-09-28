@@ -147,7 +147,7 @@
             // 
             // cardMenu
             // 
-            this.cardMenu.Description = "Catálogo de categorías, platos, precios y disponibilidad.";
+            this.cardMenu.Description = "Carta digital con fotos, precios salón/delivery, etiquetas dietéticas y pausa por falta de stock.";
             this.cardMenu.Glyph = "▤";
             this.cardMenu.GlyphColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(181)))), ((int)(((byte)(157)))));
             this.cardMenu.Margin = new System.Windows.Forms.Padding(0, 0, 12, 12);
@@ -155,7 +155,7 @@
             this.cardMenu.Name = "cardMenu";
             this.cardMenu.Size = new System.Drawing.Size(360, 232);
             this.cardMenu.TabIndex = 2;
-            this.cardMenu.Title = "Menú y productos";
+            this.cardMenu.Title = "Menú digital";
             this.cardMenu.ModuleToggled += new System.EventHandler(this.Card_ModuleToggled);
             // 
             // cardKds

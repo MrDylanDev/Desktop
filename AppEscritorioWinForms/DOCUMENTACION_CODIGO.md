@@ -29,18 +29,17 @@ AppEscritorioWinForms/
 │   ├── ShellSidebar      Menú lateral (Operación / Administración); cada botón lleva la ruta en Tag
 │   └── ShellTopBar       Reloj, ruta actual, rol y botón "Cambiar perfil"
 ├── Forms/                UNA SECCIÓN = UN FORM + diálogos + login
-│   ├── PosForm, MesasForm, KdsForm, InventarioForm, ReservasForm, DeliveryForm,
-│   │   ReportesForm, SettingsForm (Configuración), ModulesForm (Selector de módulos)
-│   ├── InsumoDialogForm, ReservaDialogForm, DeliveryDialogForm
+│   ├── PosForm, MesasForm, MenuForm (Menú digital), KdsForm, InventarioForm, ReservasForm,
+│   │   DeliveryForm, ReportesForm, SettingsForm (Configuración), ModulesForm (Selector de módulos)
+│   ├── InsumoDialogForm, ReservaDialogForm, DeliveryDialogForm, CategoriasDialogForm, InsumoLinkDialogForm
 │   └── LoginForm, AdminCodeForm (PIN de administrador), OrderHistoryForm
-├── Form1.cs              Sección "Menú y productos" (editor de carta)
 ├── Views/                Piezas reutilizables de las secciones
 │   ├── Pos/              ProductTile, TicketLineItem, CheckoutDialog, NoteDialog, ReceiptDialog
 │   ├── Mesas/            TableCard, TableDialog
+│   ├── Carta/            DishCard, DishImage, InsumoLinkRow, CartaUi (Menú digital)
 │   ├── Kds/              KdsOrderCard
 │   └── Modulos/          ModuleCard
-├── Controls/             Controles del editor de carta: CategoryBar, MenuCard, StatusBar
-├── UI/                   Kit visual (RButton, RPanel, RLabel, RTextBox, RComboBox, RBadge, RSwitch,
+├── UI/                   Kit visual (RButton, RPanel, RLabel, RTextBox, RComboBox, RBadge, RChip, RSwitch,
 │                         RDataGridView, RCalendar, RBarChart, RCardControl, RDialogForm, UiHelpers)
 ├── Data/                 Acceso a datos (patrón "Store": métodos estáticos Load/Save que no lanzan excepciones)
 ├── Models/               Clases de datos
@@ -87,7 +86,7 @@ Program ──► LoginForm ──► ShellForm ──────────�
 | `ReportesForm` | KPIs por período y origen, gráfico de 7 días, top platos, ventas por mesa, historial de cobros con detalle | `RBarChart`, `RDataGridView` |
 | `SettingsForm` | Datos del negocio, impuesto por defecto, respaldos y ubicación de los archivos | — |
 | `ModulesForm` | Activa o desactiva módulos | `ModuleCard` (propiedades `Title`, `Description`, `Glyph`, `IsCore`, `ModuleEnabled`) |
-| `Form1` | Editor de carta (ver §6) | `CategoryBar`, `MenuCard`, `StatusBar`, `OrderHistoryForm` |
+| `MenuForm` | Menú digital (ver §6) | `DishCard`, `DishImage`, `InsumoLinkRow`, `CategoriasDialogForm`, `InsumoLinkDialogForm`, `OrderHistoryForm` |
 
 Los datos de KDS, Inventario, Reservas, Delivery y Reportes son **DEMO en memoria** (`Models/ModuloModels.cs`):
 se generan al abrir la sección y se pierden al cerrar la app.
@@ -103,20 +102,29 @@ se generan al abrir la sección y se pierden al cerrar la app.
 - `UiHelpers.ApplyDarkTitleBar` / `ApplyDarkScrollbars`: barra de título y scrollbars oscuros en Windows 10/11.
 - Detalle de cada control y reglas para no romper el diseñador: [`UI/LEEME_UI.md`](UI/LEEME_UI.md).
 
-## 6. Menú y productos (`Form1.cs`)
+## 6. Menú digital (`Forms/MenuForm.cs`)
+
+Pantalla de la carta con el estilo de tarjetas: barra de contadores (Disponibles / Agotados hoy / Sugerencias del
+Chef, que también son filtros), buscador, chips de categoría, grilla de `DishCard` y el panel **Edición Rápida**.
 
 | Método | Qué hace |
 |---|---|
-| `Form1_Load` | `MenuStore.Load("data/menu.xml")`; si está vacío usa `SampleData()`; asegura las categorías base y pinta todo |
-| `PopulateCards(categoryId)` | Crea una `MenuCard` por plato de la categoría (o todos) y ajusta el ancho (`FitCardsToWidth`) |
-| `ShowEditorFor(item, isNew)` / `ShowEmptyEditor` | Panel derecho de edición: nombre, precio, stock, disponibilidad, foto... |
-| `SaveMenu` | Guarda la carta con `MenuStore.Save` |
-| `ApplySearch` | Filtra las tarjetas por el texto del buscador |
-| `FlowPanel_DragDrop` / `UpdateMenuOrderFromUI` | Reordenar platos arrastrando tarjetas; reescribe `Position` |
-| `ManageCategories` | Diálogo para agregar/eliminar categorías |
-| `OpenOrderHistory` | Abre `OrderHistoryForm` con `data/orders.xml` |
+| `RenderDishes` | Crea una `DishCard` por plato según categoría, contador elegido y búsqueda (nombre, descripción, etiquetas, alérgenos e insumos) |
+| `FitCards` | Reparte el ancho en columnas (tarjetas de 250 a 360 px) |
+| `LoadEditor(item, isNew)` | Llena el panel de edición; si hay cambios sin publicar pregunta antes de cambiar de plato |
+| `BtnPublicar_Click` (Ctrl+S) | Valida, aplica los cambios al plato y llama a `MenuStore.Publish()` (guarda y avisa al POS) |
+| `Card_PauseClicked` | "Pausar por falta de stock" / "Reactivar": se publica al instante |
+| `BtnNuevo_Click` (Ctrl+N), `BtnDuplicar_Click`, `BtnEliminar_Click` | Crear, duplicar y eliminar platos |
+| `BtnCalcDelivery_Click` | Precio delivery = salón + comisión (15 %), redondeado a la centena |
+| `BtnVincular_Click` / `InsumoLinkRow` | Insumos que se descuentan del almacén por cada plato vendido |
+| `FlowDishes_DragDrop` | Reordenar la carta arrastrando una tarjeta desde su foto |
+| `BtnCategorias_Click` | `CategoriasDialogForm`: agregar, ordenar y eliminar categorías (no deja borrar una con platos) |
 
-`Form1` conserva su diseño interno anterior; el menú lateral y la barra superior ya son los del Shell.
+- **Etiquetas:** filtros dietéticos y alérgenos (`DietaryFilters`: Sin TACC, Vegetariano, Picante, Sin Lactosa,
+  Gluten, Lácteos), `IsSuggestion` (Sugerencia Chef) y la etiqueta "Plato Más Vendido" (sello dorado en la foto).
+- **Estado del plato:** `IsAvailable = false` o `Stock = 0` → "⚠ AGOTADO HOY" (foto oscurecida); `Stock` de 1 a 5 →
+  "● QUEDAN n"; `Stock = -1` → ilimitado.
+- **Fotos:** `ImageUrl` es la ruta de un archivo del equipo; sin foto se dibuja un fondo con el ícono de la categoría.
 
 ## 7. Persistencia
 
@@ -126,7 +134,7 @@ se generan al abrir la sección y se pierden al cerrar la app.
 | `Data/MesaStore` | `%LocalAppData%\RestoOS\mesas.dat` | Mesas del salón |
 | `Data/LocalSettings` | `%LocalAppData%\RestoOS\tax.dat`, `settings.xml` | Impuesto por defecto; nombre y dirección del negocio (los escribe `SettingsForm`) |
 | `SettingsForm` | `%LocalAppData%\RestoOS\backups\respaldo_yyyyMMdd_HHmmss\` | Respaldos manuales de todos los archivos |
-| `Data/MenuStore` | `data\menu.xml` (relativo a la carpeta de ejecución) | Carta: categorías y platos (`XmlSerializer`) |
+| `Data/MenuStore` | `data\menu.xml` (relativo a la carpeta de ejecución) | Carta compartida (`MenuStore.Current`): categorías y platos. `Publish()` guarda y dispara `MenuChanged`, que recarga los productos del POS |
 | `Data/OrderHistoryStore` | `data\orders.xml` | Historial de pedidos del editor de carta |
 | `Data/TicketStore` | memoria | Ticket abierto por mesa; evento `TicketChanged` (lo escuchan POS y Mesas) |
 
@@ -134,7 +142,7 @@ se generan al abrir la sección y se pierden al cerrar la app.
 
 | Archivo | Clases |
 |---|---|
-| `Category.cs`, `MenuItem.cs` | Carta del editor de menú (`MenuItem` con precio, stock, disponibilidad, foto, variantes) |
+| `Category.cs`, `MenuItem.cs` | Carta: `MenuItem` (precios salón/delivery, comisión, stock, disponibilidad, foto, etiquetas, filtros dietéticos, insumos) e `InsumoLink` |
 | `OrderRecord.cs` | `OrderRecord`, `OrderRecordLine` (historial) |
 | `PosModels.cs` | `Product`, `OrderLine` del POS (namespace `app_escritorio.Forms`) |
 | `ModuloModels.cs` | `KdsOrder`/`KdsItem`, `Insumo`, `Reserva`, `PedidoDelivery`, `Venta`/`VentaItem` (datos DEMO) |

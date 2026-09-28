@@ -103,5 +103,10 @@ namespace app_escritorio.Forms
                 foreach (Control c in list.Controls)
                     if (c is KdsOrderCard card) card.RefreshElapsed();
         }
+
+        private void topBar_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

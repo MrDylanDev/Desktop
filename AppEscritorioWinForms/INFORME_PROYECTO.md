@@ -647,7 +647,7 @@ Su evolución natural sería convertir el prototipo en un sistema más robusto, 
 - **Una ventana, muchas secciones:** `Program.cs` abre `LoginForm` (Administrador con PIN o Empleados) y luego
   `Shell/ShellForm`, que tiene el menú lateral (`ShellSidebar`), la barra superior (`ShellTopBar`) y el área de contenido.
 - **Una sección = un Form** en `Forms/`: `PosForm`, `MesasForm`, `KdsForm`, `InventarioForm`, `ReservasForm`,
-  `DeliveryForm`, `ReportesForm`, `SettingsForm`, `ModulesForm` y `Form1` (Menú). En el diseñador de Visual Studio cada
+  `DeliveryForm`, `ReportesForm`, `SettingsForm`, `ModulesForm` y `MenuForm` (Menú digital, que también alimenta los productos del POS). En el diseñador de Visual Studio cada
   uno se ve con la app completa y se edita con el mouse.
 - **Kit visual** en `UI/` (botones, paneles, textos, tablas, calendario, gráfico) con los colores de `Utils/Theme.cs`.
 - **Datos:** carta e historial en `data\` (XML); mesas, módulos activos, impuesto y datos del negocio en

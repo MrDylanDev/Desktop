@@ -39,16 +39,16 @@ Desktop/                                   ← raíz del repo (remote: MrDylanDe
     │   ├── ShellSidebar                   ← menú lateral (Operación / Administración)
     │   └── ShellTopBar                    ← reloj, ruta, rol, "Cambiar perfil"
     ├── UI/                                ← kit visual (RButton, RPanel, RLabel, RTextBox, RComboBox, RSwitch,
-    │   │                                    RDataGridView, RCalendar, RBarChart...)
+    │   │                                    RChip, RDataGridView, RCalendar, RBarChart...)
     │   └── LEEME_UI.md                    ← cómo usar el kit y editar las secciones
     ├── Forms/                             ← UNA SECCIÓN = UN FORM (se ve la app completa en el diseñador):
-    │                                        PosForm, MesasForm, KdsForm, InventarioForm, ReservasForm, DeliveryForm,
-    │                                        ReportesForm, SettingsForm, ModulesForm + diálogos (Insumo, Reserva,
-    │                                        Delivery) + LoginForm, AdminCodeForm, OrderHistoryForm
-    ├── Form1.cs                           ← Menú y productos (editor de carta)
+    │                                        PosForm, MesasForm, MenuForm (Menú digital), KdsForm, InventarioForm,
+    │                                        ReservasForm, DeliveryForm, ReportesForm, SettingsForm, ModulesForm
+    │                                        + diálogos (Insumo, Reserva, Delivery, Categorías, Vincular insumo)
+    │                                        + LoginForm, AdminCodeForm, OrderHistoryForm
     ├── Views/                             ← piezas reutilizables: ProductTile, TicketLineItem, TableCard,
-    │                                        KdsOrderCard, ModuleCard, Checkout/Note/Receipt/TableDialog
-    ├── Controls/                          ← controles del editor de carta (CategoryBar, MenuCard, StatusBar)
+    │                                        KdsOrderCard, ModuleCard, DishCard, DishImage, InsumoLinkRow,
+    │                                        Checkout/Note/Receipt/TableDialog
     ├── Data/                              ← TicketStore, MesaStore, ModuleStore, LocalSettings, MenuStore, OrderHistoryStore
     ├── Models/                            ← MenuItem, Category, OrderRecord, PosModels, ModuloModels (datos DEMO)
     └── Utils/Theme.cs                     ← paleta y tipografía únicas (copiadas de App.xaml de la versión WPF)
@@ -77,7 +77,7 @@ flowchart TB
         DEL["DeliveryForm"]
         REP["ReportesForm"]
         CFG["SettingsForm"]
-        MENU["Form1 (Menú)"]
+        MENU["MenuForm (Menú digital)"]
     end
     subgraph Datos["Datos"]
         TS[("TicketStore\n(memoria)")]
@@ -88,6 +88,7 @@ flowchart TB
     SB --> CH
     CH --> Secciones
     MES -- "MesaParaPos" --> POS
+    MENU -- "MenuChanged (carta)" --> POS
     POS --> TS
     MES --> TS
     MES --> MS
@@ -170,7 +171,7 @@ sequenceDiagram
 | POS | `PosForm` (kit UI) | Ticket por mesa, notas, impuesto, cobro, recibo | No (tickets en memoria) |
 | Mesas y Salón | `MesasForm` (kit UI) | CRUD, filtro por salón, detalle, abrir en POS | Sí, `mesas.dat` |
 | Selector de Módulos | `ModulesForm` (kit UI) | Tarjetas `ModuleCard` con interruptor | Sí, `modules.dat` |
-| Menú y productos | `Form1` (menú y barra nuevos, contenido anterior) | CRUD de carta, categorías, fotos, historial | Sí, `data\menu.xml` |
+| Menú digital | `MenuForm` (kit UI) | Tarjetas con foto y estado, filtros, búsqueda por ingrediente/alérgeno, edición rápida, etiquetas dietéticas, insumos vinculados, pausa por falta de stock, duplicar, reordenar arrastrando. Alimenta al POS | Sí, `data\menu.xml` |
 | Configuración | `SettingsForm` (kit UI) | Datos del negocio, impuesto por defecto, respaldos | Sí, `settings.xml`, `tax.dat` |
 | Cocina KDS | `KdsForm` (kit UI) | Kanban 3 columnas, estaciones, tiempos (DEMO) | No |
 | Inventario | `InventarioForm` (kit UI) | CRUD + alertas de stock (DEMO) | No |
@@ -188,7 +189,7 @@ sequenceDiagram
 | `tax.dat` | `%LocalAppData%\RestoOS\` | Impuesto por defecto (0 / 8 / 19 / 27) |
 | `settings.xml` | `%LocalAppData%\RestoOS\` | Nombre, dirección, teléfono, moneda, logo |
 | `backups\` | `%LocalAppData%\RestoOS\` | Respaldos manuales desde Configuración |
-| `menu.xml`, `orders.xml` | `data\` (relativo a la carpeta de ejecución) | Carta e historial de pedidos del editor de menú |
+| `menu.xml`, `orders.xml` | `data\` (relativo a la carpeta de ejecución) | Carta del Menú digital (la usa también el POS) e historial de pedidos |
 
 Tickets del POS, inventario, reservas, delivery y ventas viven en memoria y **se pierden al cerrar**.
 
@@ -214,12 +215,12 @@ dotnet run --project "AppEscritorioWinForms\app escritorio.csproj"
 1. **Sin base de datos** (spec §5 pide SQLite): ventas, tickets, inventario, reservas y delivery no se guardan.
 2. **.NET 8 no corre en Windows 8/8.1** (mínimo Windows 10 1607). La spec (§4) pide compatibilidad desde Windows 8;
    la versión WPF anterior (.NET Framework 4.8) sí la cumplía. Decisión pendiente.
-3. Los productos del POS están fijos en código; aún no se leen de la carta (`menu.xml`).
-4. El editor de carta usa la ruta relativa `data\menu.xml`: depende de la carpeta desde donde se ejecute, y la
-   carta de ejemplo trae fotos con rutas de otro equipo.
+3. El POS cobra siempre el precio de salón (aún no usa el precio de delivery en pedidos a domicilio).
+4. La carta usa la ruta relativa `data\menu.xml`: depende de la carpeta desde donde se ejecute. Las fotos se guardan
+   como ruta a un archivo del equipo.
 5. KDS, Inventario, Reservas, Delivery y Reportes usan datos de demostración (el KDS no recibe comandas del POS).
 6. Solo 2 perfiles (spec §3/§6 pide dueño, cajero, mesero, cocina). El PIN de administrador es fijo (`1234`).
-7. El contenido de Menú (`Form1`) aún tiene el diseño anterior (ya usa el menú lateral y la barra nuevos).
+7. Los insumos vinculados a cada plato todavía no descuentan stock real del Inventario (este es DEMO).
 8. Sin tests, sin logging, sin respaldo automático.
 
 ## Historial

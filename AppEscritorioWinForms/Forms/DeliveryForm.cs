@@ -108,5 +108,10 @@ namespace app_escritorio.Forms
                 ApplyFilter();
             }
         }
+
+        private void sidebar_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
