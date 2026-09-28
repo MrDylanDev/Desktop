@@ -89,6 +89,26 @@ namespace app_escritorio.UI
             base.OnParentBackColorChanged(e);
             Invalidate();
         }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            if (AutoScroll) UiHelpers.ApplyDarkScrollbars(this);
+        }
+
+        // Al desplazar, Windows copia los píxeles ya pintados (esquinas redondeadas incluidas) y quedan "partidos".
+        // Se repinta todo el panel después de cada desplazamiento.
+        protected override void OnScroll(ScrollEventArgs se)
+        {
+            base.OnScroll(se);
+            Invalidate(true);
+        }
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            if (AutoScroll) Invalidate(true);
+        }
     }
 
     /// <summary>FlowLayoutPanel con fondo de paleta y scrollbars oscuros (listas de productos, ticket...).</summary>

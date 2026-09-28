@@ -56,6 +56,40 @@ namespace app_escritorio.UI
             UiHelpers.ApplyDarkScrollbars(this);
         }
 
+        // El estilo Flat de Windows dibuja un marco blanco y una flecha clara: se repintan con los colores del tema.
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            const int WM_PAINT = 0x000F, WM_NCPAINT = 0x0085;
+            if ((m.Msg != WM_PAINT && m.Msg != WM_NCPAINT) || !IsHandleCreated) return;
+            using (var g = Graphics.FromHwnd(Handle))
+            {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                var outer = new Rectangle(0, 0, Width - 1, Height - 1);
+                var parentBg = UiHelpers.EffectiveBackColor(this);
+
+                // Esquinas redondeadas: lo que queda fuera se pinta del color del fondo
+                using (var path = UiHelpers.RoundedRect(outer, 8))
+                using (var outside = new Region(new Rectangle(0, 0, Width, Height)))
+                {
+                    outside.Exclude(path);
+                    using (var b = new SolidBrush(parentBg)) g.FillRegion(b, outside);
+                }
+
+                // Zona de la flecha
+                var arrow = new Rectangle(Width - 26, 2, 24, Height - 4);
+                using (var b = new SolidBrush(Theme.SurfaceHigh)) g.FillRectangle(b, arrow);
+                int cx = arrow.X + arrow.Width / 2, cy = Height / 2;
+                using (var pen = new Pen(Enabled ? Theme.OnSurfaceVariant : Theme.Blend(Theme.OnSurfaceVariant, Theme.SurfaceHigh, 0.45), 1.6f))
+                    g.DrawLines(pen, new[] { new Point(cx - 4, cy - 2), new Point(cx, cy + 2), new Point(cx + 4, cy - 2) });
+
+                UiHelpers.DrawRounded(g, Focused || DroppedDown ? Theme.Primary : Theme.SurfaceHighest, outer, 8, 1f);
+            }
+        }
+
+        protected override void OnGotFocus(EventArgs e) { base.OnGotFocus(e); Invalidate(); }
+        protected override void OnLostFocus(EventArgs e) { base.OnLostFocus(e); Invalidate(); }
+
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
             bool isEdit = (e.State & DrawItemState.ComboBoxEdit) == DrawItemState.ComboBoxEdit;

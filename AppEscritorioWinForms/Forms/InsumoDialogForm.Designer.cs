@@ -15,203 +15,199 @@
 
         private void InitializeComponent()
         {
-            this.root = new app_escritorio.UI.RPanel();
-            this.btnSave = new app_escritorio.UI.RButton();
-            this.btnCancel = new app_escritorio.UI.RButton();
-            this.txtCost = new app_escritorio.UI.RTextBox();
-            this.lblCost = new app_escritorio.UI.RLabel();
-            this.txtMin = new app_escritorio.UI.RTextBox();
-            this.lblMin = new app_escritorio.UI.RLabel();
-            this.txtStock = new app_escritorio.UI.RTextBox();
-            this.lblStock = new app_escritorio.UI.RLabel();
-            this.cmbUnit = new app_escritorio.UI.RComboBox();
-            this.lblUnit = new app_escritorio.UI.RLabel();
-            this.cmbCategory = new app_escritorio.UI.RComboBox();
-            this.lblCategory = new app_escritorio.UI.RLabel();
-            this.txtName = new app_escritorio.UI.RTextBox();
-            this.lblName = new app_escritorio.UI.RLabel();
-            this.lblTitle = new app_escritorio.UI.RLabel();
-            this.root.SuspendLayout();
-            this.SuspendLayout();
+            root = new app_escritorio.UI.RPanel();
+            btnSave = new app_escritorio.UI.RButton();
+            btnCancel = new app_escritorio.UI.RButton();
+            txtCost = new app_escritorio.UI.RTextBox();
+            lblCost = new app_escritorio.UI.RLabel();
+            txtMin = new app_escritorio.UI.RTextBox();
+            lblMin = new app_escritorio.UI.RLabel();
+            txtStock = new app_escritorio.UI.RTextBox();
+            lblStock = new app_escritorio.UI.RLabel();
+            cmbUnit = new app_escritorio.UI.RComboBox();
+            lblUnit = new app_escritorio.UI.RLabel();
+            cmbCategory = new app_escritorio.UI.RComboBox();
+            lblCategory = new app_escritorio.UI.RLabel();
+            txtName = new app_escritorio.UI.RTextBox();
+            lblName = new app_escritorio.UI.RLabel();
+            lblTitle = new app_escritorio.UI.RLabel();
+            root.SuspendLayout();
+            SuspendLayout();
             // 
             // root
             // 
-            this.root.Controls.Add(this.btnSave);
-            this.root.Controls.Add(this.btnCancel);
-            this.root.Controls.Add(this.txtCost);
-            this.root.Controls.Add(this.lblCost);
-            this.root.Controls.Add(this.txtMin);
-            this.root.Controls.Add(this.lblMin);
-            this.root.Controls.Add(this.txtStock);
-            this.root.Controls.Add(this.lblStock);
-            this.root.Controls.Add(this.cmbUnit);
-            this.root.Controls.Add(this.lblUnit);
-            this.root.Controls.Add(this.cmbCategory);
-            this.root.Controls.Add(this.lblCategory);
-            this.root.Controls.Add(this.txtName);
-            this.root.Controls.Add(this.lblName);
-            this.root.Controls.Add(this.lblTitle);
-            this.root.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.root.Location = new System.Drawing.Point(0, 0);
-            this.root.Name = "root";
-            this.root.Size = new System.Drawing.Size(444, 436);
-            this.root.Surface = app_escritorio.UI.SurfaceLevel.Surface;
-            this.root.TabIndex = 0;
+            root.Controls.Add(btnSave);
+            root.Controls.Add(btnCancel);
+            root.Controls.Add(txtCost);
+            root.Controls.Add(lblCost);
+            root.Controls.Add(txtMin);
+            root.Controls.Add(lblMin);
+            root.Controls.Add(txtStock);
+            root.Controls.Add(lblStock);
+            root.Controls.Add(cmbUnit);
+            root.Controls.Add(lblUnit);
+            root.Controls.Add(cmbCategory);
+            root.Controls.Add(lblCategory);
+            root.Controls.Add(txtName);
+            root.Controls.Add(lblName);
+            root.Controls.Add(lblTitle);
+            root.Dock = DockStyle.Fill;
+            root.Location = new Point(0, 0);
+            root.Name = "root";
+            root.Size = new Size(444, 436);
+            root.Surface = UI.SurfaceLevel.Surface;
+            root.TabIndex = 0;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(312, 378);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(110, 40);
-            this.btnSave.TabIndex = 6;
-            this.btnSave.Text = "Guardar";
-            this.btnSave.Variant = app_escritorio.UI.ButtonVariant.Primary;
-            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            btnSave.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnSave.Location = new Point(312, 378);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(110, 40);
+            btnSave.TabIndex = 6;
+            btnSave.Text = "Guardar";
+            btnSave.Click += BtnSave_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(192, 378);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(110, 40);
-            this.btnCancel.TabIndex = 7;
-            this.btnCancel.Text = "Cancelar";
-            this.btnCancel.Variant = app_escritorio.UI.ButtonVariant.Secondary;
+            btnCancel.DialogResult = DialogResult.Cancel;
+            btnCancel.Font = new Font("Segoe UI", 9.75F);
+            btnCancel.Location = new Point(192, 378);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(110, 40);
+            btnCancel.TabIndex = 7;
+            btnCancel.Text = "Cancelar";
+            btnCancel.Variant = UI.ButtonVariant.Secondary;
             // 
             // txtCost
             // 
-            this.txtCost.Location = new System.Drawing.Point(22, 318);
-            this.txtCost.Name = "txtCost";
-            this.txtCost.PlaceholderText = "0";
-            this.txtCost.Size = new System.Drawing.Size(400, 40);
-            this.txtCost.TabIndex = 5;
+            txtCost.Location = new Point(22, 318);
+            txtCost.Name = "txtCost";
+            txtCost.Padding = new Padding(10, 8, 10, 8);
+            txtCost.PlaceholderText = "0";
+            txtCost.Size = new Size(400, 40);
+            txtCost.TabIndex = 5;
             // 
             // lblCost
             // 
-            this.lblCost.Location = new System.Drawing.Point(22, 296);
-            this.lblCost.Name = "lblCost";
-            this.lblCost.Size = new System.Drawing.Size(400, 20);
-            this.lblCost.TabIndex = 65;
-            this.lblCost.Text = "Costo unitario ($)";
-            this.lblCost.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblCost.Location = new Point(22, 296);
+            lblCost.Name = "lblCost";
+            lblCost.Size = new Size(400, 20);
+            lblCost.TabIndex = 65;
+            lblCost.Text = "Costo unitario ($)";
+            lblCost.TextStyle = UI.TextStyle.Muted;
             // 
             // txtMin
             // 
-            this.txtMin.Location = new System.Drawing.Point(228, 242);
-            this.txtMin.Name = "txtMin";
-            this.txtMin.PlaceholderText = "0";
-            this.txtMin.Size = new System.Drawing.Size(194, 40);
-            this.txtMin.TabIndex = 4;
+            txtMin.Location = new Point(228, 242);
+            txtMin.Name = "txtMin";
+            txtMin.Padding = new Padding(10, 8, 10, 8);
+            txtMin.PlaceholderText = "0";
+            txtMin.Size = new Size(194, 40);
+            txtMin.TabIndex = 4;
             // 
             // lblMin
             // 
-            this.lblMin.Location = new System.Drawing.Point(228, 220);
-            this.lblMin.Name = "lblMin";
-            this.lblMin.Size = new System.Drawing.Size(194, 20);
-            this.lblMin.TabIndex = 64;
-            this.lblMin.Text = "Stock mínimo";
-            this.lblMin.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblMin.Location = new Point(228, 220);
+            lblMin.Name = "lblMin";
+            lblMin.Size = new Size(194, 20);
+            lblMin.TabIndex = 64;
+            lblMin.Text = "Stock mínimo";
+            lblMin.TextStyle = UI.TextStyle.Muted;
             // 
             // txtStock
             // 
-            this.txtStock.Location = new System.Drawing.Point(22, 242);
-            this.txtStock.Name = "txtStock";
-            this.txtStock.PlaceholderText = "0";
-            this.txtStock.Size = new System.Drawing.Size(194, 40);
-            this.txtStock.TabIndex = 3;
+            txtStock.Location = new Point(22, 242);
+            txtStock.Name = "txtStock";
+            txtStock.Padding = new Padding(10, 8, 10, 8);
+            txtStock.PlaceholderText = "0";
+            txtStock.Size = new Size(194, 40);
+            txtStock.TabIndex = 3;
             // 
             // lblStock
             // 
-            this.lblStock.Location = new System.Drawing.Point(22, 220);
-            this.lblStock.Name = "lblStock";
-            this.lblStock.Size = new System.Drawing.Size(194, 20);
-            this.lblStock.TabIndex = 63;
-            this.lblStock.Text = "Stock actual";
-            this.lblStock.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblStock.Location = new Point(22, 220);
+            lblStock.Name = "lblStock";
+            lblStock.Size = new Size(194, 20);
+            lblStock.TabIndex = 63;
+            lblStock.Text = "Stock actual";
+            lblStock.TextStyle = UI.TextStyle.Muted;
             // 
             // cmbUnit
             // 
-            this.cmbUnit.Items.AddRange(new object[] {
-            "kg",
-            "g",
-            "L",
-            "und"});
-            this.cmbUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.cmbUnit.Location = new System.Drawing.Point(228, 174);
-            this.cmbUnit.Name = "cmbUnit";
-            this.cmbUnit.Size = new System.Drawing.Size(194, 32);
-            this.cmbUnit.TabIndex = 2;
+            cmbUnit.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbUnit.Items.AddRange(new object[] { "kg", "g", "L", "und" });
+            cmbUnit.Location = new Point(228, 174);
+            cmbUnit.Name = "cmbUnit";
+            cmbUnit.Size = new Size(194, 32);
+            cmbUnit.TabIndex = 2;
             // 
             // lblUnit
             // 
-            this.lblUnit.Location = new System.Drawing.Point(228, 152);
-            this.lblUnit.Name = "lblUnit";
-            this.lblUnit.Size = new System.Drawing.Size(194, 20);
-            this.lblUnit.TabIndex = 62;
-            this.lblUnit.Text = "Unidad";
-            this.lblUnit.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblUnit.Location = new Point(228, 152);
+            lblUnit.Name = "lblUnit";
+            lblUnit.Size = new Size(194, 20);
+            lblUnit.TabIndex = 62;
+            lblUnit.Text = "Unidad";
+            lblUnit.TextStyle = UI.TextStyle.Muted;
             // 
             // cmbCategory
             // 
-            this.cmbCategory.Items.AddRange(new object[] {
-            "Carnes",
-            "Verduras",
-            "Lácteos",
-            "Bebidas",
-            "Secos"});
-            this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
-            this.cmbCategory.Location = new System.Drawing.Point(22, 174);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(194, 32);
-            this.cmbCategory.TabIndex = 1;
+            cmbCategory.DropDownStyle = ComboBoxStyle.DropDown;
+            cmbCategory.Items.AddRange(new object[] { "Carnes", "Verduras", "Lácteos", "Bebidas", "Secos" });
+            cmbCategory.Location = new Point(22, 174);
+            cmbCategory.Name = "cmbCategory";
+            cmbCategory.Size = new Size(194, 32);
+            cmbCategory.TabIndex = 1;
             // 
             // lblCategory
             // 
-            this.lblCategory.Location = new System.Drawing.Point(22, 152);
-            this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(194, 20);
-            this.lblCategory.TabIndex = 61;
-            this.lblCategory.Text = "Categoría";
-            this.lblCategory.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblCategory.Location = new Point(22, 152);
+            lblCategory.Name = "lblCategory";
+            lblCategory.Size = new Size(194, 20);
+            lblCategory.TabIndex = 61;
+            lblCategory.Text = "Categoría";
+            lblCategory.TextStyle = UI.TextStyle.Muted;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(22, 98);
-            this.txtName.Name = "txtName";
-            this.txtName.PlaceholderText = "Ej: Queso mozzarella";
-            this.txtName.Size = new System.Drawing.Size(400, 40);
-            this.txtName.TabIndex = 0;
+            txtName.Location = new Point(22, 98);
+            txtName.Name = "txtName";
+            txtName.Padding = new Padding(10, 8, 10, 8);
+            txtName.PlaceholderText = "Ej: Queso mozzarella";
+            txtName.Size = new Size(400, 40);
+            txtName.TabIndex = 0;
             // 
             // lblName
             // 
-            this.lblName.Location = new System.Drawing.Point(22, 76);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(400, 20);
-            this.lblName.TabIndex = 60;
-            this.lblName.Text = "Nombre *";
-            this.lblName.TextStyle = app_escritorio.UI.TextStyle.Muted;
+            lblName.Location = new Point(22, 76);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(400, 20);
+            lblName.TabIndex = 60;
+            lblName.Text = "Nombre *";
+            lblName.TextStyle = UI.TextStyle.Muted;
             // 
             // lblTitle
             // 
-            this.lblTitle.Location = new System.Drawing.Point(22, 20);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(400, 36);
-            this.lblTitle.TabIndex = 50;
-            this.lblTitle.Text = "Nuevo insumo";
-            this.lblTitle.TextStyle = app_escritorio.UI.TextStyle.Display;
+            lblTitle.Location = new Point(22, 20);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(400, 36);
+            lblTitle.TabIndex = 50;
+            lblTitle.Text = "Nuevo insumo";
+            lblTitle.TextStyle = UI.TextStyle.Display;
             // 
             // InsumoDialogForm
             // 
-            this.AcceptButton = this.btnSave;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(444, 436);
-            this.Name = "InsumoDialogForm";
-            this.Text = "Nuevo insumo";
-            this.Controls.Add(this.root);
-            this.root.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AcceptButton = btnSave;
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnCancel;
+            ClientSize = new Size(444, 436);
+            Controls.Add(root);
+            Name = "InsumoDialogForm";
+            Text = "Nuevo insumo";
+            root.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

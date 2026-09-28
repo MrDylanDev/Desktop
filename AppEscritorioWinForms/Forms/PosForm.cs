@@ -31,7 +31,8 @@ namespace app_escritorio.Forms
             if (UiHelpers.IsDesignTime) return;
 
             LoadProducts();
-            cmbCategory.SelectedIndex = 0;
+            MenuStore.MenuChanged += MenuStore_MenuChanged;
+            HandleDestroyed += (s, e) => MenuStore.MenuChanged -= MenuStore_MenuChanged;
             _ticket = TicketStore.GetTicketFor(_table);
             ReloadTax();
             SetupTipoPedido();
@@ -67,16 +68,30 @@ namespace app_escritorio.Forms
 
         // ===================== Productos =====================
 
+        /// <summary>
+        /// Productos = platos disponibles del Menú digital (MenuStore). Los platos pausados o agotados no aparecen.
+        /// </summary>
         private void LoadProducts()
         {
-            _products.Add(new Product("Pizza Napolitana Familiar", "Pizzas y pastas", 14500));
-            _products.Add(new Product("Bife de Chorizo 400g", "Carnes y parrilla", 22000));
-            _products.Add(new Product("Hamburguesa Doble Queso", "Hamburguesas", 12000));
-            _products.Add(new Product("Cerveza Tirada IPA", "Bebidas", 5000));
-            _products.Add(new Product("Limonada Menta y Jengibre", "Bebidas", 4500));
-            _products.Add(new Product("Ensalada César con Pollo", "Carnes y parrilla", 9500));
-            _products.Add(new Product("Tiramisú Casero", "Postres y café", 6000));
-            _products.Add(new Product("Ravioles 4 Quesos", "Pizzas y pastas", 13500));
+            _products.Clear();
+            var menu = MenuStore.Current;
+            foreach (var cat in menu.Categories)
+                foreach (var item in menu.Items.Where(i => i.CategoryId == cat.Id && i.IsAvailable && i.Stock != 0).OrderBy(i => i.Position))
+                    _products.Add(new Product(item.Name, cat.Name, item.PriceSalon));
+
+            string selected = cmbCategory.SelectedItem?.ToString();
+            cmbCategory.Items.Clear();
+            cmbCategory.Items.Add("Todos");
+            foreach (var name in _products.Select(p => p.Category).Distinct()) cmbCategory.Items.Add(name);
+            int idx = selected == null ? 0 : cmbCategory.Items.IndexOf(selected);
+            cmbCategory.SelectedIndex = idx < 0 ? 0 : idx;
+        }
+
+        /// <summary>El Menú digital publicó cambios (precio, pausa por falta de stock...): se recarga al instante.</summary>
+        private void MenuStore_MenuChanged()
+        {
+            LoadProducts();
+            RenderProducts();
         }
 
         private void RenderProducts()

@@ -117,7 +117,7 @@ namespace app_escritorio.Shell
                 case "delivery": return "Delivery · DEMO";
                 case "reportes": return "Reportes · Solo Admin";
                 case "configuracion": return "Configuración · Solo Admin";
-                case "menu": return "Menú y productos";
+                case "menu": return "Menú digital";
                 default: return "Módulos";
             }
         }
@@ -145,7 +145,7 @@ namespace app_escritorio.Shell
                     config.RestaurantSaved += Config_RestaurantSaved;
                     form = config;
                     break;
-                case "menu": form = new Form1 { Role = _role }; break;
+                case "menu": form = new MenuForm(); break;
                 default:
                     route = "modulos";
                     if (_views.TryGetValue(route, out existing)) return existing;

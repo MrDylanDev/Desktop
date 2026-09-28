@@ -15,369 +15,392 @@
 
         private void InitializeComponent()
         {
-            this.root = new app_escritorio.UI.RPanel();
-            this.layout = new System.Windows.Forms.TableLayoutPanel();
-            this.header = new app_escritorio.UI.RPanel();
-            this.btnNew = new app_escritorio.UI.RButton();
-            this.btnSync = new app_escritorio.UI.RButton();
-            this.lblDemo = new app_escritorio.UI.RLabel();
-            this.pnlAggregator = new app_escritorio.UI.RPanel();
-            this.lblAggregator = new app_escritorio.UI.RLabel();
-            this.lblAggregatorDot = new app_escritorio.UI.RLabel();
-            this.lblTitle = new app_escritorio.UI.RLabel();
-            this.filters = new app_escritorio.UI.RPanel();
-            this.cmbEstado = new app_escritorio.UI.RComboBox();
-            this.cmbPlataforma = new app_escritorio.UI.RComboBox();
-            this.txtSearch = new app_escritorio.UI.RTextBox();
-            this.gridCard = new app_escritorio.UI.RPanel();
-            this.grid = new app_escritorio.UI.RDataGridView();
-            this.colHora = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPlataforma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDetalle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEditar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colDelete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.colAvanzar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.lblFootnote = new app_escritorio.UI.RLabel();
-            this.topBar = new app_escritorio.Shell.ShellTopBar();
-            this.sidebar = new app_escritorio.Shell.ShellSidebar();
-            this.root.SuspendLayout();
-            this.layout.SuspendLayout();
-            this.header.SuspendLayout();
-            this.pnlAggregator.SuspendLayout();
-            this.filters.SuspendLayout();
-            this.gridCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            root = new app_escritorio.UI.RPanel();
+            layout = new TableLayoutPanel();
+            header = new app_escritorio.UI.RPanel();
+            btnNew = new app_escritorio.UI.RButton();
+            btnSync = new app_escritorio.UI.RButton();
+            lblDemo = new app_escritorio.UI.RLabel();
+            pnlAggregator = new app_escritorio.UI.RPanel();
+            lblAggregator = new app_escritorio.UI.RLabel();
+            lblAggregatorDot = new app_escritorio.UI.RLabel();
+            lblTitle = new app_escritorio.UI.RLabel();
+            filters = new app_escritorio.UI.RPanel();
+            cmbEstado = new app_escritorio.UI.RComboBox();
+            cmbPlataforma = new app_escritorio.UI.RComboBox();
+            txtSearch = new app_escritorio.UI.RTextBox();
+            gridCard = new app_escritorio.UI.RPanel();
+            grid = new app_escritorio.UI.RDataGridView();
+            colHora = new DataGridViewTextBoxColumn();
+            colPlataforma = new DataGridViewTextBoxColumn();
+            colId = new DataGridViewTextBoxColumn();
+            colCliente = new DataGridViewTextBoxColumn();
+            colDetalle = new DataGridViewTextBoxColumn();
+            colTotal = new DataGridViewTextBoxColumn();
+            colEstado = new DataGridViewTextBoxColumn();
+            colEditar = new DataGridViewButtonColumn();
+            colDelete = new DataGridViewButtonColumn();
+            colAvanzar = new DataGridViewButtonColumn();
+            lblFootnote = new app_escritorio.UI.RLabel();
+            topBar = new app_escritorio.Shell.ShellTopBar();
+            sidebar = new app_escritorio.Shell.ShellSidebar();
+            root.SuspendLayout();
+            layout.SuspendLayout();
+            header.SuspendLayout();
+            pnlAggregator.SuspendLayout();
+            filters.SuspendLayout();
+            gridCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
+            SuspendLayout();
             // 
             // root
             // 
-            this.root.Controls.Add(this.layout);
-            this.root.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.root.Location = new System.Drawing.Point(272, 64);
-            this.root.Name = "root";
-            this.root.Padding = new System.Windows.Forms.Padding(24);
-            this.root.Size = new System.Drawing.Size(1100, 780);
-            this.root.Surface = app_escritorio.UI.SurfaceLevel.Surface;
-            this.root.TabIndex = 0;
+            root.Controls.Add(layout);
+            root.Dock = DockStyle.Fill;
+            root.Location = new Point(272, 64);
+            root.Name = "root";
+            root.Padding = new Padding(24);
+            root.Size = new Size(1098, 685);
+            root.Surface = UI.SurfaceLevel.Surface;
+            root.TabIndex = 0;
             // 
             // layout
             // 
-            this.layout.ColumnCount = 1;
-            this.layout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0F));
-            this.layout.Controls.Add(this.header, 0, 0);
-            this.layout.Controls.Add(this.filters, 0, 1);
-            this.layout.Controls.Add(this.gridCard, 0, 2);
-            this.layout.Controls.Add(this.lblFootnote, 0, 3);
-            this.layout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout.Location = new System.Drawing.Point(24, 24);
-            this.layout.Name = "layout";
-            this.layout.RowCount = 4;
-            this.layout.Size = new System.Drawing.Size(1052, 732);
-            this.layout.TabIndex = 0;
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60.0F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56.0F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0F));
-            this.layout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48.0F));
+            layout.ColumnCount = 1;
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            layout.Controls.Add(header, 0, 0);
+            layout.Controls.Add(filters, 0, 1);
+            layout.Controls.Add(gridCard, 0, 2);
+            layout.Controls.Add(lblFootnote, 0, 3);
+            layout.Dock = DockStyle.Fill;
+            layout.Location = new Point(24, 24);
+            layout.Name = "layout";
+            layout.RowCount = 4;
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 56F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));
+            layout.Size = new Size(1050, 637);
+            layout.TabIndex = 0;
             // 
             // header
             // 
-            this.header.Controls.Add(this.btnNew);
-            this.header.Controls.Add(this.btnSync);
-            this.header.Controls.Add(this.lblDemo);
-            this.header.Controls.Add(this.pnlAggregator);
-            this.header.Controls.Add(this.lblTitle);
-            this.header.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.header.Location = new System.Drawing.Point(0, 0);
-            this.header.Margin = new System.Windows.Forms.Padding(0);
-            this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(1052, 60);
-            this.header.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
-            this.header.TabIndex = 0;
+            header.Controls.Add(btnNew);
+            header.Controls.Add(btnSync);
+            header.Controls.Add(lblDemo);
+            header.Controls.Add(pnlAggregator);
+            header.Controls.Add(lblTitle);
+            header.Dock = DockStyle.Fill;
+            header.Location = new Point(0, 0);
+            header.Margin = new Padding(0);
+            header.Name = "header";
+            header.Size = new Size(1050, 60);
+            header.Surface = UI.SurfaceLevel.Transparent;
+            header.TabIndex = 0;
             // 
             // btnNew
             // 
-            this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
-            this.btnNew.Location = new System.Drawing.Point(916, 10);
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(136, 38);
-            this.btnNew.TabIndex = 4;
-            this.btnNew.Text = "+ Nuevo pedido";
-            this.btnNew.Variant = app_escritorio.UI.ButtonVariant.Primary;
-            this.btnNew.Click += new System.EventHandler(this.BtnNew_Click);
+            btnNew.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnNew.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            btnNew.Location = new Point(914, 10);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(136, 38);
+            btnNew.TabIndex = 4;
+            btnNew.Text = "+ Nuevo pedido";
+            btnNew.Click += BtnNew_Click;
             // 
             // btnSync
             // 
-            this.btnSync.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
-            this.btnSync.Location = new System.Drawing.Point(724, 10);
-            this.btnSync.Name = "btnSync";
-            this.btnSync.Size = new System.Drawing.Size(180, 38);
-            this.btnSync.TabIndex = 3;
-            this.btnSync.Text = "↻  Sincronizar menú";
-            this.btnSync.Variant = app_escritorio.UI.ButtonVariant.Secondary;
-            this.btnSync.Click += new System.EventHandler(this.BtnSync_Click);
+            btnSync.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSync.Font = new Font("Segoe UI", 9.75F);
+            btnSync.Location = new Point(722, 10);
+            btnSync.Name = "btnSync";
+            btnSync.Size = new Size(180, 38);
+            btnSync.TabIndex = 3;
+            btnSync.Text = "↻  Sincronizar menú";
+            btnSync.Variant = UI.ButtonVariant.Secondary;
+            btnSync.Click += BtnSync_Click;
             // 
             // lblDemo
             // 
-            this.lblDemo.Location = new System.Drawing.Point(446, 12);
-            this.lblDemo.Name = "lblDemo";
-            this.lblDemo.Size = new System.Drawing.Size(120, 32);
-            this.lblDemo.TabIndex = 2;
-            this.lblDemo.Text = "DEMO frontend";
-            this.lblDemo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblDemo.TextStyle = app_escritorio.UI.TextStyle.Overline;
+            lblDemo.Location = new Point(446, 12);
+            lblDemo.Name = "lblDemo";
+            lblDemo.Size = new Size(120, 32);
+            lblDemo.TabIndex = 2;
+            lblDemo.Text = "DEMO frontend";
+            lblDemo.TextAlign = ContentAlignment.MiddleLeft;
+            lblDemo.TextStyle = UI.TextStyle.Overline;
             // 
             // pnlAggregator
             // 
-            this.pnlAggregator.Controls.Add(this.lblAggregator);
-            this.pnlAggregator.Controls.Add(this.lblAggregatorDot);
-            this.pnlAggregator.CornerRadius = 8;
-            this.pnlAggregator.Location = new System.Drawing.Point(176, 12);
-            this.pnlAggregator.Name = "pnlAggregator";
-            this.pnlAggregator.Size = new System.Drawing.Size(256, 32);
-            this.pnlAggregator.Surface = app_escritorio.UI.SurfaceLevel.Container;
-            this.pnlAggregator.TabIndex = 1;
+            pnlAggregator.Controls.Add(lblAggregator);
+            pnlAggregator.Controls.Add(lblAggregatorDot);
+            pnlAggregator.CornerRadius = 8;
+            pnlAggregator.Location = new Point(176, 12);
+            pnlAggregator.Name = "pnlAggregator";
+            pnlAggregator.Size = new Size(256, 32);
+            pnlAggregator.TabIndex = 1;
             // 
             // lblAggregator
             // 
-            this.lblAggregator.Location = new System.Drawing.Point(26, 0);
-            this.lblAggregator.Name = "lblAggregator";
-            this.lblAggregator.Size = new System.Drawing.Size(220, 32);
-            this.lblAggregator.TabIndex = 1;
-            this.lblAggregator.Text = "Agregador conectado (DEMO)";
-            this.lblAggregator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblAggregator.TextStyle = app_escritorio.UI.TextStyle.Caption;
+            lblAggregator.Location = new Point(26, 0);
+            lblAggregator.Name = "lblAggregator";
+            lblAggregator.Size = new Size(220, 32);
+            lblAggregator.TabIndex = 1;
+            lblAggregator.Text = "Agregador conectado (DEMO)";
+            lblAggregator.TextAlign = ContentAlignment.MiddleLeft;
+            lblAggregator.TextStyle = UI.TextStyle.Caption;
             // 
             // lblAggregatorDot
             // 
-            this.lblAggregatorDot.Location = new System.Drawing.Point(8, 0);
-            this.lblAggregatorDot.Name = "lblAggregatorDot";
-            this.lblAggregatorDot.Size = new System.Drawing.Size(18, 32);
-            this.lblAggregatorDot.TabIndex = 0;
-            this.lblAggregatorDot.Text = "●";
-            this.lblAggregatorDot.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblAggregatorDot.TextStyle = app_escritorio.UI.TextStyle.Positive;
+            lblAggregatorDot.Location = new Point(8, 0);
+            lblAggregatorDot.Name = "lblAggregatorDot";
+            lblAggregatorDot.Size = new Size(18, 32);
+            lblAggregatorDot.TabIndex = 0;
+            lblAggregatorDot.Text = "●";
+            lblAggregatorDot.TextAlign = ContentAlignment.MiddleLeft;
+            lblAggregatorDot.TextStyle = UI.TextStyle.Positive;
             // 
             // lblTitle
             // 
-            this.lblTitle.Location = new System.Drawing.Point(0, 4);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(170, 48);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "Delivery";
-            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblTitle.TextStyle = app_escritorio.UI.TextStyle.Hero;
+            lblTitle.Location = new Point(0, 4);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(170, 48);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Delivery";
+            lblTitle.TextAlign = ContentAlignment.MiddleLeft;
+            lblTitle.TextStyle = UI.TextStyle.Hero;
             // 
             // filters
             // 
-            this.filters.Controls.Add(this.cmbEstado);
-            this.filters.Controls.Add(this.cmbPlataforma);
-            this.filters.Controls.Add(this.txtSearch);
-            this.filters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.filters.Location = new System.Drawing.Point(0, 60);
-            this.filters.Margin = new System.Windows.Forms.Padding(0);
-            this.filters.Name = "filters";
-            this.filters.Size = new System.Drawing.Size(1052, 56);
-            this.filters.Surface = app_escritorio.UI.SurfaceLevel.Transparent;
-            this.filters.TabIndex = 1;
+            filters.Controls.Add(cmbEstado);
+            filters.Controls.Add(cmbPlataforma);
+            filters.Controls.Add(txtSearch);
+            filters.Dock = DockStyle.Fill;
+            filters.Location = new Point(0, 60);
+            filters.Margin = new Padding(0);
+            filters.Name = "filters";
+            filters.Size = new Size(1050, 56);
+            filters.Surface = UI.SurfaceLevel.Transparent;
+            filters.TabIndex = 1;
             // 
             // cmbEstado
             // 
-            this.cmbEstado.Items.AddRange(new object[] {
-            "Todos",
-            "Nuevo",
-            "En preparación",
-            "Listo para rider",
-            "Entregado"});
-            this.cmbEstado.Location = new System.Drawing.Point(502, 12);
-            this.cmbEstado.Name = "cmbEstado";
-            this.cmbEstado.Size = new System.Drawing.Size(190, 32);
-            this.cmbEstado.TabIndex = 2;
-            this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            cmbEstado.Items.AddRange(new object[] { "Todos", "Nuevo", "En preparación", "Listo para rider", "Entregado" });
+            cmbEstado.Location = new Point(502, 12);
+            cmbEstado.Name = "cmbEstado";
+            cmbEstado.Size = new Size(190, 32);
+            cmbEstado.TabIndex = 2;
+            cmbEstado.SelectedIndexChanged += Filter_Changed;
             // 
             // cmbPlataforma
             // 
-            this.cmbPlataforma.Items.AddRange(new object[] {
-            "Todas",
-            "Rappi",
-            "Uber Eats",
-            "DiDi Food"});
-            this.cmbPlataforma.Location = new System.Drawing.Point(316, 12);
-            this.cmbPlataforma.Name = "cmbPlataforma";
-            this.cmbPlataforma.Size = new System.Drawing.Size(170, 32);
-            this.cmbPlataforma.TabIndex = 1;
-            this.cmbPlataforma.SelectedIndexChanged += new System.EventHandler(this.Filter_Changed);
+            cmbPlataforma.Items.AddRange(new object[] { "Todas", "Rappi", "Uber Eats", "DiDi Food" });
+            cmbPlataforma.Location = new Point(316, 12);
+            cmbPlataforma.Name = "cmbPlataforma";
+            cmbPlataforma.Size = new Size(170, 32);
+            cmbPlataforma.TabIndex = 1;
+            cmbPlataforma.SelectedIndexChanged += Filter_Changed;
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(0, 8);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Buscar pedido, cliente...";
-            this.txtSearch.Size = new System.Drawing.Size(300, 40);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.Filter_Changed);
+            txtSearch.Location = new Point(0, 8);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Padding = new Padding(10, 8, 10, 8);
+            txtSearch.PlaceholderText = "Buscar pedido, cliente...";
+            txtSearch.Size = new Size(300, 40);
+            txtSearch.TabIndex = 0;
+            txtSearch.TextChanged += Filter_Changed;
             // 
             // gridCard
             // 
-            this.gridCard.Controls.Add(this.grid);
-            this.gridCard.CornerRadius = 14;
-            this.gridCard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridCard.Location = new System.Drawing.Point(0, 116);
-            this.gridCard.Margin = new System.Windows.Forms.Padding(0);
-            this.gridCard.Name = "gridCard";
-            this.gridCard.Padding = new System.Windows.Forms.Padding(8);
-            this.gridCard.Size = new System.Drawing.Size(1052, 516);
-            this.gridCard.Surface = app_escritorio.UI.SurfaceLevel.Lowest;
-            this.gridCard.TabIndex = 2;
+            gridCard.Controls.Add(grid);
+            gridCard.CornerRadius = 14;
+            gridCard.Dock = DockStyle.Fill;
+            gridCard.Location = new Point(0, 116);
+            gridCard.Margin = new Padding(0);
+            gridCard.Name = "gridCard";
+            gridCard.Padding = new Padding(8);
+            gridCard.Size = new Size(1050, 473);
+            gridCard.Surface = UI.SurfaceLevel.Lowest;
+            gridCard.TabIndex = 2;
             // 
             // grid
             // 
-            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colHora,
-            this.colPlataforma,
-            this.colId,
-            this.colCliente,
-            this.colDetalle,
-            this.colTotal,
-            this.colEstado,
-            this.colEditar,
-            this.colDelete,
-            this.colAvanzar});
-            this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grid.Location = new System.Drawing.Point(8, 8);
-            this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(1036, 500);
-            this.grid.TabIndex = 0;
-            this.grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Grid_CellClick);
+            grid.AllowUserToAddRows = false;
+            grid.AllowUserToDeleteRows = false;
+            grid.AllowUserToResizeRows = false;
+            grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid.BackgroundColor = Color.FromArgb(12, 15, 16);
+            grid.BorderStyle = BorderStyle.None;
+            grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(12, 15, 16);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(225, 191, 181);
+            dataGridViewCellStyle1.Padding = new Padding(6, 0, 0, 0);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(12, 15, 16);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(225, 191, 181);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            grid.ColumnHeadersHeight = 36;
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            grid.Columns.AddRange(new DataGridViewColumn[] { colHora, colPlataforma, colId, colCliente, colDetalle, colTotal, colEstado, colEditar, colDelete, colAvanzar });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(12, 15, 16);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.75F);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(225, 226, 228);
+            dataGridViewCellStyle2.Padding = new Padding(6, 0, 6, 0);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(40, 42, 44);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(225, 226, 228);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            grid.DefaultCellStyle = dataGridViewCellStyle2;
+            grid.Dock = DockStyle.Fill;
+            grid.EnableHeadersVisualStyles = false;
+            grid.GridColor = Color.FromArgb(40, 42, 44);
+            grid.Location = new Point(8, 8);
+            grid.MultiSelect = false;
+            grid.Name = "grid";
+            grid.ReadOnly = true;
+            grid.RowHeadersVisible = false;
+            grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            grid.Size = new Size(1034, 457);
+            grid.TabIndex = 0;
+            grid.CellClick += Grid_CellClick;
             // 
             // colHora
             // 
-            this.colHora.FillWeight = 55F;
-            this.colHora.HeaderText = "Hora";
-            this.colHora.Name = "colHora";
+            colHora.FillWeight = 55F;
+            colHora.HeaderText = "Hora";
+            colHora.Name = "colHora";
+            colHora.ReadOnly = true;
             // 
             // colPlataforma
             // 
-            this.colPlataforma.FillWeight = 95F;
-            this.colPlataforma.HeaderText = "Plataforma";
-            this.colPlataforma.Name = "colPlataforma";
-            this.colPlataforma.Tag = "chip";
+            colPlataforma.FillWeight = 95F;
+            colPlataforma.HeaderText = "Plataforma";
+            colPlataforma.Name = "colPlataforma";
+            colPlataforma.ReadOnly = true;
             // 
             // colId
             // 
-            this.colId.FillWeight = 75F;
-            this.colId.HeaderText = "ID";
-            this.colId.Name = "colId";
+            colId.FillWeight = 75F;
+            colId.HeaderText = "ID";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
             // 
             // colCliente
             // 
-            this.colCliente.FillWeight = 110F;
-            this.colCliente.HeaderText = "Cliente";
-            this.colCliente.Name = "colCliente";
+            colCliente.FillWeight = 110F;
+            colCliente.HeaderText = "Cliente";
+            colCliente.Name = "colCliente";
+            colCliente.ReadOnly = true;
             // 
             // colDetalle
             // 
-            this.colDetalle.FillWeight = 230F;
-            this.colDetalle.HeaderText = "Detalle";
-            this.colDetalle.Name = "colDetalle";
+            colDetalle.FillWeight = 230F;
+            colDetalle.HeaderText = "Detalle";
+            colDetalle.Name = "colDetalle";
+            colDetalle.ReadOnly = true;
             // 
             // colTotal
             // 
-            this.colTotal.FillWeight = 80F;
-            this.colTotal.HeaderText = "Total";
-            this.colTotal.Name = "colTotal";
+            colTotal.FillWeight = 80F;
+            colTotal.HeaderText = "Total";
+            colTotal.Name = "colTotal";
+            colTotal.ReadOnly = true;
             // 
             // colEstado
             // 
-            this.colEstado.FillWeight = 115F;
-            this.colEstado.HeaderText = "Estado";
-            this.colEstado.Name = "colEstado";
-            this.colEstado.Tag = "chip";
+            colEstado.FillWeight = 115F;
+            colEstado.HeaderText = "Estado";
+            colEstado.Name = "colEstado";
+            colEstado.ReadOnly = true;
             // 
             // colEditar
             // 
-            this.colEditar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colEditar.HeaderText = "";
-            this.colEditar.Name = "colEditar";
-            this.colEditar.Tag = "";
-            this.colEditar.Text = "Editar";
-            this.colEditar.UseColumnTextForButtonValue = true;
-            this.colEditar.Width = 76;
+            colEditar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colEditar.HeaderText = "";
+            colEditar.Name = "colEditar";
+            colEditar.ReadOnly = true;
+            colEditar.Text = "Editar";
+            colEditar.UseColumnTextForButtonValue = true;
+            colEditar.Width = 76;
             // 
             // colDelete
             // 
-            this.colDelete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colDelete.HeaderText = "";
-            this.colDelete.Name = "colDelete";
-            this.colDelete.Tag = "danger";
-            this.colDelete.Text = "×";
-            this.colDelete.UseColumnTextForButtonValue = true;
-            this.colDelete.Width = 46;
+            colDelete.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colDelete.HeaderText = "";
+            colDelete.Name = "colDelete";
+            colDelete.ReadOnly = true;
+            colDelete.Text = "×";
+            colDelete.UseColumnTextForButtonValue = true;
+            colDelete.Width = 46;
             // 
             // colAvanzar
             // 
-            this.colAvanzar.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colAvanzar.HeaderText = "";
-            this.colAvanzar.Name = "colAvanzar";
-            this.colAvanzar.Tag = "primary";
-            this.colAvanzar.Width = 124;
+            colAvanzar.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colAvanzar.HeaderText = "";
+            colAvanzar.Name = "colAvanzar";
+            colAvanzar.ReadOnly = true;
+            colAvanzar.Width = 124;
             // 
             // lblFootnote
             // 
-            this.lblFootnote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblFootnote.Location = new System.Drawing.Point(0, 0);
-            this.lblFootnote.Margin = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.lblFootnote.Name = "lblFootnote";
-            this.lblFootnote.Size = new System.Drawing.Size(1052, 40);
-            this.lblFootnote.TabIndex = 3;
-            this.lblFootnote.Text = "* Integración vía agregador/middleware simulada: Rappi/Uber Eats/DiDi Food llegan a la misma cola que salón. Sincronizar empuja precio/disponibilidad de Menú a plataformas.";
-            this.lblFootnote.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblFootnote.TextStyle = app_escritorio.UI.TextStyle.Caption;
+            lblFootnote.Dock = DockStyle.Fill;
+            lblFootnote.Location = new Point(0, 597);
+            lblFootnote.Margin = new Padding(0, 8, 0, 0);
+            lblFootnote.Name = "lblFootnote";
+            lblFootnote.Size = new Size(1050, 40);
+            lblFootnote.TabIndex = 3;
+            lblFootnote.Text = "* Integración vía agregador/middleware simulada: Rappi/Uber Eats/DiDi Food llegan a la misma cola que salón. Sincronizar empuja precio/disponibilidad de Menú a plataformas.";
+            lblFootnote.TextAlign = ContentAlignment.MiddleLeft;
+            lblFootnote.TextStyle = UI.TextStyle.Caption;
             // 
             // topBar
             // 
-            this.topBar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topBar.Location = new System.Drawing.Point(272, 0);
-            this.topBar.Name = "topBar";
-            this.topBar.RoleText = "Administrador";
-            this.topBar.RouteText = "Delivery · DEMO";
-            this.topBar.Size = new System.Drawing.Size(1100, 64);
-            this.topBar.TabIndex = 1;
+            topBar.Dock = DockStyle.Top;
+            topBar.Location = new Point(272, 0);
+            topBar.Name = "topBar";
+            topBar.RoleText = "Administrador";
+            topBar.RouteText = "Delivery · DEMO";
+            topBar.Size = new Size(1098, 64);
+            topBar.TabIndex = 1;
             // 
             // sidebar
             // 
-            this.sidebar.ActiveRoute = "delivery";
-            this.sidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sidebar.Location = new System.Drawing.Point(0, 0);
-            this.sidebar.Name = "sidebar";
-            this.sidebar.Size = new System.Drawing.Size(272, 844);
-            this.sidebar.TabIndex = 2;
+            sidebar.ActiveRoute = "delivery";
+            sidebar.Dock = DockStyle.Left;
+            sidebar.Location = new Point(0, 0);
+            sidebar.Name = "sidebar";
+            sidebar.Size = new Size(272, 749);
+            sidebar.TabIndex = 2;
+            sidebar.Load += sidebar_Load;
             // 
             // DeliveryForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(20)))), ((int)(((byte)(21)))));
-            this.ClientSize = new System.Drawing.Size(1372, 844);
-            this.MinimumSize = new System.Drawing.Size(1100, 700);
-            this.Name = "DeliveryForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "RestoOS - Modular Core";
-            this.Controls.Add(this.root);
-            this.Controls.Add(this.topBar);
-            this.Controls.Add(this.sidebar);
-            this.gridCard.ResumeLayout(false);
-            this.filters.ResumeLayout(false);
-            this.pnlAggregator.ResumeLayout(false);
-            this.header.ResumeLayout(false);
-            this.layout.ResumeLayout(false);
-            this.layout.PerformLayout();
-            this.root.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(17, 20, 21);
+            ClientSize = new Size(1370, 749);
+            Controls.Add(root);
+            Controls.Add(topBar);
+            Controls.Add(sidebar);
+            MinimumSize = new Size(1100, 700);
+            Name = "DeliveryForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "RestoOS - Modular Core";
+            root.ResumeLayout(false);
+            layout.ResumeLayout(false);
+            header.ResumeLayout(false);
+            pnlAggregator.ResumeLayout(false);
+            filters.ResumeLayout(false);
+            gridCard.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)grid).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion

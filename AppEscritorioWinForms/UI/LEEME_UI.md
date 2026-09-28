@@ -17,6 +17,7 @@ Réplica en WinForms del tema de la versión WPF (`App.xaml`). Todo se edita des
 | `RTextBox` | `TextBox` con placeholder | `PlaceholderText`, `Multiline`, `LargeText` |
 | `RComboBox` | `ComboBox` oscuro | `Items` |
 | `RBadge` | chip (rol, "Operando local") | `Kind` |
+| `RChip` | chip / etiqueta (filtros, "Sin TACC", "● DISPONIBLE") | `ChipStyle` (Plain, Soft, Outline, Solid), `AccentColor`, `Glyph`, `Selected` |
 | `RSwitch` | `CheckBox` "Módulo activado" | `Checked`, evento `CheckedChanged` |
 | `RDataGridView` | `ListView`/`GridView` oscuro | columnas con `Tag = "chip"` (insignia) o botón con `Tag = "danger"`/`"primary"` |
 | `RCalendar` | `Calendar` oscuro | `SelectedDate`, evento `DateChanged` |
@@ -34,6 +35,7 @@ Los colores y las fuentes salen de `Utils/Theme.cs`: si cambias un color ahí, c
 |---|---|---|
 | `PosForm` | POS | `ProductTile`, `TicketLineItem`, `CheckoutDialog`, `NoteDialog`, `ReceiptDialog` |
 | `MesasForm` | Mesas y Salón | `TableCard`, `TableDialog` |
+| `MenuForm` | Menú digital | `DishCard`, `DishImage`, `InsumoLinkRow`, `CategoriasDialogForm`, `InsumoLinkDialogForm` |
 | `KdsForm` | Cocina KDS | `KdsOrderCard` (propiedad `Stage`: Nuevo / Preparación / Listo) |
 | `InventarioForm` | Inventario | `InsumoDialogForm` |
 | `ReservasForm` | Reservas | `ReservaDialogForm` |
@@ -41,7 +43,6 @@ Los colores y las fuentes salen de `Utils/Theme.cs`: si cambias un color ahí, c
 | `ReportesForm` | Reportes + Trazabilidad | — |
 | `SettingsForm` | Configuración | — |
 | `ModulesForm` | Módulos | `ModuleCard` (propiedades `Title`, `Description`, `Glyph`, `IsCore`...) |
-| `Form1` | Menú y productos | `CategoryBar`, `MenuCard`, `StatusBar` |
 
 - En cada Form, `sidebar` y `topBar` son los controles reales de `Shell/ShellSidebar` y `Shell/ShellTopBar`. Para cambiar el menú o la barra, edítalos ahí: el cambio aparece en todas las secciones. En cada Form solo se ajusta `sidebar.ActiveRoute` (botón resaltado) y `topBar.RouteText` (título).
 - Al ejecutar hay una sola ventana: `Shell/ShellForm` crea el Form de la sección, le quita su sidebar y su barra (son copias para el diseñador) y lo muestra en `contentHost`.
