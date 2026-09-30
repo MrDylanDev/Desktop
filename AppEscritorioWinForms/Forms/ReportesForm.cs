@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using app_escritorio.Data;
 using app_escritorio.Models;
 using app_escritorio.UI;
 using app_escritorio.Utils;
@@ -49,6 +50,7 @@ namespace app_escritorio.Forms
             var mesas = new[] { "Mesa 2", "Mesa 3", "Mesa 5", "Barra 1", "Terraza 1", "VIP 1" };
             var cajeros = new[] { "Ana", "Carlos" };
             var rnd = new Random(2026);
+            int configuredTax = LocalSettings.LoadTaxPercent();
 
             for (int d = 29; d >= 0; d--)
             {
@@ -68,6 +70,7 @@ namespace app_escritorio.Forms
                         v.Items.Add(new VentaItem(p.Name, 1 + rnd.Next(3), p.Price));
                     }
                     v.Total = v.Items.Sum(x => x.Subtotal);
+                    v.TaxPct = configuredTax;
                     v.Detalle = string.Join(", ", v.Items.Select(x => "x" + x.Cantidad + " " + x.Plato));
                     _ventas.Add(v);
                 }
@@ -103,7 +106,8 @@ namespace app_escritorio.Forms
             lblTotal.Text = Money(total);
             lblTotalSub.Text = tickets + " tickets · " + cmbPeriodo.Text.ToLower(Co);
             lblTicket.Text = Money(tickets == 0 ? 0 : Math.Round(total / tickets));
-            lblTax.Text = Money(Math.Round(total - total / 1.08m));
+            lblTax.Text = Money(Math.Round(cobradas.Sum(v => v.TaxAmount())));
+            lblTaxSub.Text = "Estimado con tasa configurada (" + LocalSettings.LoadTaxPercent() + "%)";
             lblMetodo.Text = Money(cobradas.Where(v => v.Metodo == "Efectivo").Sum(v => v.Total)) + " / " +
                              Money(cobradas.Where(v => v.Metodo == "Tarjeta").Sum(v => v.Total));
 

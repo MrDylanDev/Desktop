@@ -176,6 +176,16 @@ namespace app_escritorio.Models
         public string Estado { get; set; }
         public string Origen { get; set; }
         public List<VentaItem> Items { get; } = new List<VentaItem>();
+        /// <summary>Tasa de impuesto aplicada a esta venta en % (0, 8, 19, 27). Evita el 8% hardcodeado en Reportes.</summary>
+        public int TaxPct { get; set; } = 8;
+
+        /// <summary>Impuesto estimado incluido en el Total con la tasa de esta venta.</summary>
+        public decimal TaxAmount()
+        {
+            if (TaxPct <= 0) return 0m;
+            decimal rate = TaxPct / 100m;
+            return Total - Total / (1 + rate);
+        }
 
         public Venta(DateTime fecha, string mesa, string detalle, decimal total, string metodo, string cajero, string estado, string origen = "Salón")
         {
