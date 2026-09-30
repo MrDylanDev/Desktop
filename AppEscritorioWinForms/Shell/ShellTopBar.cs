@@ -13,6 +13,7 @@ namespace app_escritorio.Shell
         public ShellTopBar()
         {
             InitializeComponent();
+            HandleDestroyed += (s, e) => { try { clockTimer?.Stop(); } catch { } };
         }
 
         /// <summary>Texto de la ruta actual ("POS", "Mesas y Salón"...).</summary>
@@ -37,7 +38,11 @@ namespace app_escritorio.Shell
             clockTimer.Start();
         }
 
-        private void ClockTimer_Tick(object sender, EventArgs e) => UpdateClock();
+        private void ClockTimer_Tick(object sender, EventArgs e)
+        {
+            if (IsDisposed || Disposing || badgeClock == null || badgeClock.IsDisposed) return;
+            UpdateClock();
+        }
 
         private void UpdateClock() => badgeClock.Text = DateTime.Now.ToString("HH:mm:ss");
 

@@ -45,8 +45,9 @@ namespace app_escritorio.Forms
         /// <summary>Abre el ticket de una mesa (desde Mesas y Salón).</summary>
         public void SetMesa(string mesa)
         {
+            if (IsDisposed || Disposing) return;
             _table = string.IsNullOrWhiteSpace(mesa) ? TicketStore.NoTable : mesa;
-            lblMesa.Text = _table;
+            if (lblMesa != null && !lblMesa.IsDisposed) lblMesa.Text = _table;
             _ticket = TicketStore.GetTicketFor(_table);
             if (cmbTipo.Items.Count > 0) cmbTipo.SelectedIndex = 0;
             RefreshTicket();
@@ -73,13 +74,15 @@ namespace app_escritorio.Forms
         /// </summary>
         private void LoadProducts()
         {
+            if (IsDisposed || Disposing) return;
             _products.Clear();
             var menu = MenuStore.Current;
             foreach (var cat in menu.Categories)
                 foreach (var item in menu.Items.Where(i => i.CategoryId == cat.Id && i.IsAvailable && i.Stock != 0).OrderBy(i => i.Position))
                     _products.Add(new Product(item.Name, cat.Name, item.PriceSalon));
 
-            string selected = cmbCategory.SelectedItem?.ToString();
+            string selected = cmbCategory?.SelectedItem?.ToString();
+            if (cmbCategory == null || cmbCategory.IsDisposed) return;
             cmbCategory.Items.Clear();
             cmbCategory.Items.Add("Todos");
             foreach (var name in _products.Select(p => p.Category).Distinct()) cmbCategory.Items.Add(name);
@@ -90,13 +93,15 @@ namespace app_escritorio.Forms
         /// <summary>El Menú digital publicó cambios (precio, pausa por falta de stock...): se recarga al instante.</summary>
         private void MenuStore_MenuChanged()
         {
+            if (IsDisposed || Disposing) return;
             LoadProducts();
             RenderProducts();
         }
 
         private void RenderProducts()
         {
-            string text = (txtSearch.Text ?? string.Empty).Trim();
+            if (IsDisposed || Disposing || flowProducts == null || flowProducts.IsDisposed) return;
+            string text = (txtSearch?.Text ?? string.Empty).Trim();
             string category = cmbCategory.SelectedItem?.ToString() ?? "Todos";
 
             flowProducts.SuspendLayout();
@@ -133,7 +138,9 @@ namespace app_escritorio.Forms
 
         private void RefreshTicket()
         {
+            if (IsDisposed || Disposing) return;
             if (_ticket == null) _ticket = TicketStore.GetTicketFor(_table);
+            if (flowTicket == null || flowTicket.IsDisposed) return;
 
             flowTicket.SuspendLayout();
             foreach (var item in flowTicket.Controls.OfType<TicketLineItem>().ToList())
@@ -163,12 +170,13 @@ namespace app_escritorio.Forms
 
         private void RefreshTotals()
         {
+            if (IsDisposed || Disposing) return;
             decimal subtotal = _ticket?.Sum(x => x.LineTotal) ?? 0m;
             decimal tax = subtotal * _taxRate;
-            lblSubtotal.Text = Money(subtotal);
-            lblTaxLabel.Text = "Impuesto (" + (_taxRate * 100).ToString("0") + "%)";
-            lblTax.Text = Money(tax);
-            lblTotal.Text = Money(subtotal + tax);
+            if (lblSubtotal != null && !lblSubtotal.IsDisposed) lblSubtotal.Text = Money(subtotal);
+            if (lblTaxLabel != null && !lblTaxLabel.IsDisposed) lblTaxLabel.Text = "Impuesto (" + (_taxRate * 100).ToString("0") + "%)";
+            if (lblTax != null && !lblTax.IsDisposed) lblTax.Text = Money(tax);
+            if (lblTotal != null && !lblTotal.IsDisposed) lblTotal.Text = Money(subtotal + tax);
             btnCobrar.Enabled = _ticket != null && _ticket.Count > 0;
             btnVaciar.Enabled = btnCobrar.Enabled;
         }

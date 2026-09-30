@@ -25,6 +25,7 @@ namespace app_escritorio.Forms
             cmbStation.SelectedIndex = 0; // dispara RefreshAll
             lblClock.Text = DateTime.Now.ToString("HH:mm:ss");
             clockTimer.Start();
+            HandleDestroyed += (s, e) => { try { clockTimer?.Stop(); } catch { } };
         }
 
         private void LoadMock()
@@ -98,6 +99,7 @@ namespace app_escritorio.Forms
 
         private void ClockTimer_Tick(object sender, EventArgs e)
         {
+            if (IsDisposed || Disposing || lblClock == null || lblClock.IsDisposed) return;
             lblClock.Text = DateTime.Now.ToString("HH:mm:ss");
             foreach (var list in new Control[] { listNuevo, listPrep, listListo })
                 foreach (Control c in list.Controls)

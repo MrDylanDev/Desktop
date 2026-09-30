@@ -37,20 +37,23 @@ namespace app_escritorio.Forms
         /// <summary>Vuelve a pintar las tarjetas y el detalle (totales del POS al día).</summary>
         public void RefreshView()
         {
+            if (IsDisposed || Disposing) return;
             RenderTables();
             if (_selected != null) ShowDetail(_mesas.FirstOrDefault(m => m.Name == _selected.Name));
         }
 
         private void TicketStore_TicketChanged()
         {
-            if (Visible) RefreshView();
+            if (IsDisposed || Disposing || !Visible) return;
+            RefreshView();
         }
 
         // ===================== Tarjetas =====================
 
         private void RenderTables()
         {
-            string sector = cmbSector.SelectedItem?.ToString() ?? "Todos los salones";
+            if (IsDisposed || Disposing || flowTables == null || flowTables.IsDisposed) return;
+            string sector = cmbSector?.SelectedItem?.ToString() ?? "Todos los salones";
 
             flowTables.SuspendLayout();
             foreach (Control c in flowTables.Controls.Cast<Control>().ToList()) c.Dispose();
@@ -76,6 +79,8 @@ namespace app_escritorio.Forms
         private void ShowDetail(MesaInfo mesa)
         {
             _selected = mesa;
+            if (IsDisposed || Disposing) return;
+            if (lblDetailName == null || lblDetailName.IsDisposed) return;
             if (mesa == null)
             {
                 lblDetailName.Text = "Selecciona una mesa";
