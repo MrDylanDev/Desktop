@@ -146,7 +146,10 @@ namespace app_escritorio.Forms
                 }
                 int index = _mesas.IndexOf(mesa);
                 if (index < 0) return;
+                string oldName = mesa.Name;
                 _mesas[index] = dialog.Result;
+                if (!string.Equals(oldName, dialog.Result.Name, StringComparison.Ordinal))
+                    TicketStore.Rename(oldName, dialog.Result.Name);
                 MesaStore.Save(_mesas);
                 RenderTables();
                 if (_selected == mesa) ShowDetail(dialog.Result);
@@ -157,6 +160,7 @@ namespace app_escritorio.Forms
         {
             if (MessageBox.Show("¿Eliminar " + mesa.Name + "?", "RestoOS", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             _mesas.Remove(mesa);
+            TicketStore.RemoveTicket(mesa.Name);
             MesaStore.Save(_mesas);
             if (_selected == mesa) ShowDetail(null);
             RenderTables();
